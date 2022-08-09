@@ -9,7 +9,7 @@
 
 ## Tentang Aplikasi Absensi Marketing
 
-Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload gambar yang sudah terdapat lokasi gps gambar tersebut.
+Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload gambar yang sudah terdapat lokasi gps pada gambar tersebut.
 
 ## Cara Install Aplikasi Absensi Marketing
 
