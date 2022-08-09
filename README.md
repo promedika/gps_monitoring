@@ -9,7 +9,7 @@
 
 ## Tentang Aplikasi Absensi Marketing
 
-Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload gambar yang sudah terdapat lokasi gps gambar tersebut.
+Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload gambar yang sudah terdapat lokasi gps pada gambar tersebut.
 
 ## Cara Install Aplikasi Absensi Marketing
 
@@ -18,7 +18,9 @@ Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload
 - Buka command line dan pindah ke directory root absensi marketing.
 - Jalankan "composer install"
 - Jalankan "php artisan storage:link"
+- Setting database
 - Jalankan "php artisan migrate"
+- Jalakan "php artisan db:seed --class=AdminUserSeeder"
 - Jalankan "php artisan serve"
 - Buka aplikasi absensi marketing pada browser
 - Selamat, aplikasi berhasil dijalankan
