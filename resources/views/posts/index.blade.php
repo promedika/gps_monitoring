@@ -77,6 +77,10 @@
             </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUOzfEMYXPD8rEgJpJEbBFxhJ9GuBS0-8"></script>
+
     <script>
         //message with toastr
         @if(session()->has('success'))
