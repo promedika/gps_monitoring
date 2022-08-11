@@ -3,17 +3,6 @@
     Create Attendance
 @endsection
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') | GPS HRMS</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-</head>
-<body>
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-12">
@@ -33,30 +22,30 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <select id="outlet-dd" name="outlet_name" class="form-control">
                                     <option value="">Select Location</option>
                                     @foreach ($outlets as $outlet)
-                                    <option>
+                                    <option value="{{$outlet->id}}">
                                         {{$outlet->name}}
                                     </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <select id="useroutlet-dd" name="useroutlet_name"  class="form-control">
                                     <option value="">Select PIC</option>
-                                    @foreach ($useroutlets as $useroutlet)
+                                    {{-- @foreach ($useroutlets as $useroutlet)
                                     <option>
                                         {{$useroutlet->name}}
                                     </option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                             </div>
-
+                            <br>
                             <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
                         </form> 
@@ -65,8 +54,6 @@
             </div>
         </div>
     </div>
-</body>
-</html>
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -74,11 +61,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+        var site_url = "{{ url('/') }}";
         $('#outlet-dd').on('change', function () {
             var idOutlet = this.value;
             $("#useroutlet-dd").html('');
             $.ajax({
-                url: "{{url('api/fetch-useroutlet')}}",
+                url: site_url + "/api/fetch-useroutlet",
                 type: "POST",
                 data: {
                     outlet_id: idOutlet,
@@ -86,11 +74,12 @@
                 },
                 dataType: 'json',
                 success: function (result) {
+                    console.log(result);
                     $('#useroutlet-dd').html('<option value="">Select PIC</option>');
-                    $.each(result.useroutlet, function (key, value)) {
-                        $("#useroutlet-dd").append('<option value="' + value.id + '">' + value.name + '</option>');
-                    };
-                }; 
+                    $.each(result, function( key, value ) {
+                    $("#useroutlet-dd").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
             });
         });          
     });

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Providers\RouteServiceProvider;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\FullCalenderController;
 
 
 
@@ -53,7 +54,7 @@ Route::get('/useroutlets','App\Http\Controllers\UserOutletController@index')->na
 Route::post('/useroutlets/create','App\Http\Controllers\UserOutletController@store')->name('useroutlet.create');
 Route::post('/useroutlets/edit','App\Http\Controllers\UserOutletController@edit')->name('useroutlet.edit');
 Route::post('/useroutlets/update','App\Http\Controllers\UserOutletController@update')->name('useroutlet.update');
-Route::post('/useroutlets/delete','App\Http\Controllers\sUserOutletController@destroy')->name('useroutlet.delete');
+Route::post('/useroutlets/delete','App\Http\Controllers\UserOutletController@destroy')->name('useroutlet.delete');
 
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
@@ -62,3 +63,4 @@ Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet'
 
 Route::resource('/event', \App\Http\Controllers\FullCalenderController::class);
 Route::post('eventAjax', [FullCalenderController::class, 'ajax']);
+

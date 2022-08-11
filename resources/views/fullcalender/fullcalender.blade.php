@@ -29,9 +29,42 @@
 <script>
   var site_url = "{{ url('/') }}";
 </script>
-
-<script src="{{ URL::asset('script.js') }}"></script>
-  
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+        var calendar = $('#calendar').fullCalendar({
+        header: {
+            left:'title',
+            center:'prev,next today',
+            right:'month,agendaWeek,agendaDay'
+        },
+        editable: true,
+        events: site_url + "/event",
+        displayEventTime:false,
+        editable: true,
+        aspectRatio: 2.3,
+        eventRender: function(event, element, view) {
+            if (event.allDay === 'true') {
+                event.allDay = true;
+            } else {
+                event.allDay = false;
+            }
+        },
+        selectable: true,
+        selectHelper: true,
+        dayClick: function(date, jsEvent, view) {
+        $('#calendar').fullCalendar('changeView', 'agendaDay')
+        $('#calendar').fullCalendar('gotoDate', date);
+        }
+    });
+    $('.fc-center').css('float','left');
+});
+</script>
 </body>
 </html>
+
 @endsection

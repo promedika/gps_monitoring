@@ -137,10 +137,19 @@
 					</a>
 				</div>
 
+				@if (Auth::user()->role !=1)
 				<div class="menu-item active">
 					<a href="{{route('dashboard.users.index')}}" class="menu-link">
 						<span class="menu-icon"><i class="fa fa-users"></i></span>
 						<span class="menu-text">Users</span>
+					</a>
+				</div>
+				@endif
+
+				<div class="menu-item active">
+					<a href="{{route('event.index')}}" class="menu-link">
+						<span class="menu-icon"><i class="fa fa-calendar"></i></span>
+						<span class="menu-text">Calendar</span>
 					</a>
 				</div>
 
@@ -151,17 +160,28 @@
 					</a>
 				</div>
 
+				@if (Auth::user()->role !=1)
 				<div class="menu-item active">
 					<a href="{{route('outlet.index')}}" class="menu-link">
 						<span class="menu-icon"><i class="fa-solid fa-building"></i></span>
 						<span class="menu-text">Outlet</span>
 					</a>
 				</div>
+				@endif
 
+				@if (Auth::user()->role !=1)
 				<div class="menu-item active">
 					<a href="{{route('useroutlet.index')}}" class="menu-link">
 						<span class="menu-icon"><i class="fa-solid fa-person"></i></span>
 						<span class="menu-text">User Outlet</span>
+					</a>
+				</div>
+				@endif
+
+				<div class="menu-item active">
+					<a href="{{route('logout')}}" class="menu-link">
+						<span class="menu-icon"><i class="fa-solid fa-door-open"></i></span>
+						<span class="menu-text">Logout</span>
 					</a>
 				</div>
 
@@ -173,12 +193,6 @@
 		@yield('content')
 	</div>
 </div>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<!-- <script src="{{asset('/assets/js/vendor.min.js')}}"></script> -->
-
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0-rc.1/dist/js.cookie.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" integrity="sha512-cJMgI2OtiquRH4L9u+WQW+mz828vmdp9ljOcm/vKTQ7+ydQUktrPVewlykMgozPP+NUBbHdeifE6iJ6UVjNw5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="{{asset('/assets/js/app.min.js')}}"></script>
 @yield('script')

@@ -3,6 +3,7 @@
     Users
 @endsection
 @section('content')
+
 <div class="title-bar">
     <h4 style="float:left">Users</h4>
     <a href="#" title="" style="float:right" class="btn btn-primary btn-add-user"><i class="fa solid fa-plus"></i></a> 
@@ -144,6 +145,7 @@
               <option value="" style="display:none;">Select Role</option>
               <option value="0">Admin</option>
               <option value="1">Member</option>
+              <option value="2">Supervisor</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -191,6 +193,8 @@
       </div>
     </div>
   </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{asset('/assets/js/	vendor.min.js')}}"></script>
   @section('script')
     <script>
         $(document).ready(function(){

@@ -15,9 +15,10 @@ class DropdownController extends Controller
         $outlets = Outlet::get(["name", "id"]);
         return view('posts.create', $outlets); 
     }
-    public function fetchUsrOutlet(Request $request)
+    public function fetchUserOutlet(Request $request)
     {
         $useroutlet = UserOutlet::where("outlet_id", $request->outlet_id)->get(["name", "id"]);
+        // dd($useroutlet);
         return response()->json($useroutlet);
     }
 }

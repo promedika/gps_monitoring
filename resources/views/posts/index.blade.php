@@ -3,17 +3,6 @@
     Image Attendance
 @endsection
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') | GPS HRMS</title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUOzfEMYXPD8rEgJpJEbBFxhJ9GuBS0-8"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
     <div class="container mb-5">
         <div class="row">
                 <div class="card">
@@ -50,10 +39,10 @@
                                     <td class="td_map_detail">
                                         @php
                                             $explode_loc = explode('|',$post->imgLoc);
-                                            $latitude = isset($explode_loc[0]) ? 0 : $explode_loc[0];
-                                            $longitude = isset($explode_loc[1]) ? 0 : $explode_loc[1];
+                                            $latitude = isset($explode_loc[0]) ? $explode_loc[0] : 0;
+                                            $longitude = isset($explode_loc[1]) ? $explode_loc[1] : 0;
                                         @endphp
-                                        <div class="map" data-latitude="{{$latitude}}" data-longitude="{{$longitude}}"></div>
+                                        <div class="map" data-latitude="{{$latitude}}" data-longitude="{{$longitude}}">{{$post->imgLoc}}</div>
                                     </td>
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
@@ -76,10 +65,6 @@
                 </div>
             </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUOzfEMYXPD8rEgJpJEbBFxhJ9GuBS0-8"></script>
 
     <script>
         //message with toastr
@@ -128,7 +113,4 @@
 
         });
 </script>
-
-</body>
-</html>
 @endsection
