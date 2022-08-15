@@ -20,6 +20,8 @@ Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload
 - Buat folder public di dalam folder storage/app/
 - Jalankan "php artisan storage:link"
 - Setting database
+- Setting .env
+- Jalankan "php artisan key:generate"
 - Jalankan "php artisan migrate"
 - Jalakan "php artisan db:seed --class=AdminUserSeeder"
 - Jalankan "php artisan serve"
