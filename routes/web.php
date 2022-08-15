@@ -56,6 +56,8 @@ Route::post('/useroutlets/edit','App\Http\Controllers\UserOutletController@edit'
 Route::post('/useroutlets/update','App\Http\Controllers\UserOutletController@update')->name('useroutlet.update');
 Route::post('/useroutlets/delete','App\Http\Controllers\UserOutletController@destroy')->name('useroutlet.delete');
 
+Route::resource('/reports', \App\Http\Controllers\AttendanceReportController::class);
+
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
 Route::get('dropdown', [DropdownController::class, 'index']);

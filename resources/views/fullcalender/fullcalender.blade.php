@@ -29,7 +29,7 @@
 <script>
   var site_url = "{{ url('/') }}";
 </script>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({
         headers: {

@@ -127,4 +127,5 @@ class UserController extends Controller
 
         return view('user.index', compact('users'));
     }
+
 }

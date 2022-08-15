@@ -28,7 +28,7 @@
                                 <select id="outlet-dd" name="outlet_name" class="form-control">
                                     <option value="">Select Location</option>
                                     @foreach ($outlets as $outlet)
-                                    <option value="{{$outlet->id}}">
+                                    <option value="{{$outlet->id.'|'.$outlet->name}}">
                                         {{$outlet->name}}
                                     </option>
                                     @endforeach
@@ -77,7 +77,8 @@
                     console.log(result);
                     $('#useroutlet-dd').html('<option value="">Select PIC</option>');
                     $.each(result, function( key, value ) {
-                    $("#useroutlet-dd").append('<option value="' + value.id + '">' + value.name + '</option>');
+                        let val = value.id + '|' + value.name
+                    $("#useroutlet-dd").append('<option value="' + val + '">' + value.name + '</option>');
                     });
                 }
             });

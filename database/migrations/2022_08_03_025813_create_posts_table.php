@@ -18,10 +18,11 @@ class CreatePostsTable extends Migration
             $table->string('image');
             $table->string('outlet_name');
             $table->string('outlet_user');
-            $table->time('imgTaken');
+            $table->timestamps('imgTaken');
             $table->string('imgLoc');
             $table->integer('user_id');
             $table->string('user_fullname');
+            $table->integer('post_header_id');
             $table->timestamps();
         });
     }

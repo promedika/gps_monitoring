@@ -10,6 +10,8 @@ use App\Models\UserOutlet;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 use URL;
+use DataTables;
+use DB;
 
 class PostController extends Controller
 {
@@ -23,9 +25,9 @@ class PostController extends Controller
         
         //get posts
         if (Auth::User()->role == 0){
-        $posts = Post::latest()->paginate(5);
+        $posts = Post::all();
         }else{
-        $posts = Post::where('user_id',Auth::User()->id)->latest()->paginate(5); 
+        $posts = Post::where('user_id',Auth::User()->id)->get(); 
         }
         //render view with posts
         return view('posts.index', compact('posts'));
@@ -84,17 +86,69 @@ class PostController extends Controller
             // $image_resize->save(public_path('posts/' .$filename));
         
         };
+        $outlet = explode('|',$request->outlet_name);
+        $outlet_id = $outlet[0];
+        $outlet_name = $outlet[1];
+
+        $outlet_user = explode('|',$request->useroutlet_name);
+        $outlet_user_id = $outlet_user[0];
+        $outlet_user_name = $outlet_user[1];
         
+        $unique_id = Auth::User()->id.'_'.date('Ymd');
         //create post
         Post::create([
             'image' =>  $filename,
-            'outlet_name' =>  $request->outlet_name,
-            'outlet_user'   =>  $request->useroutlet_name,
+            'outlet_name_id' => $outlet_id,
+            'outlet_name' =>  $outlet_name,
+            'outlet_user_id' => $outlet_user_id,
+            'outlet_user'   =>  $outlet_user_name,
             'user_id'   => Auth::User()->id,
             'user_fullname' => Auth::User()->first_name." ".Auth::User()->last_name,
             'imgLoc' => $imgLoc,
             'imgTaken'=> $imgTaken,
+            'post_header_id' => $unique_id
         ]);
+
+        $header = DB::table('post_header')
+        ->where('user_id', Auth::User()->id)
+        ->where('created_at', date('Y-m-d').' 00:00:00')
+            ->get();
+        
+        if (count($header) == 0) {
+            DB::table('post_header')->insert([
+                'id' => $unique_id,
+                'user_id' => Auth::User()->id,
+                'user_fullname' => Auth::User()->first_name." ".Auth::User()->last_name,
+                'work_hour' => 0,
+                'status' => 'kurang dari jam kerja',
+                'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        } else {
+            //hitung jam kerja dari table post
+            $postdate = DB::table('posts')
+            ->where('user_id', Auth::User()->id)
+            ->orWhere('imgTaken','LIKE','%'.date('Y-m-d').'%')
+            ->where('post_header_id', $unique_id) 
+                ->get();
+            $start = date_create($postdate[0]->imgTaken);
+            $end    = date_create($postdate[count($postdate)-1]->imgTaken);
+            // $work_hour = strtotime($end)-strtotime($start);
+            // $jam = floor($work_hour / (60 * 60));
+            // $menit = $work_hour - $jam * (60 * 60);
+            
+            $work_hour = date_diff($start,$end);
+
+            $status = $work_hour->h < 8 ? 'kurang dari jam kerja' : 'sesuai';
+            DB::table('post_header')
+            ->where('user_id', Auth::User()->id)
+            ->where('created_at', date('Y-m-d').' 00:00:00')
+            ->update([
+                'work_hour' => $work_hour->h.':'.$work_hour->i.':'.$work_hour->s,
+                'status' => $status,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
         
 
 

@@ -10,6 +10,7 @@
 <link href="{{asset('/assets/css/vendor.min.css')}}" rel="stylesheet" />
 <link href="{{asset('/assets/css/app.min.css')}}" rel="stylesheet" />
 <link href="{{asset('/assets/css/style.css')}}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 <meta name="csrf-token" content="{{csrf_token()}}"/>
 
 </head>
@@ -160,6 +161,13 @@
 					</a>
 				</div>
 
+				<div class="menu-item active">
+					<a href="{{route('reports.index')}}" class="menu-link">
+						<span class="menu-icon"><i class="fa-solid fa-book-open"></i></span>
+						<span class="menu-text">Attendance Reports</span>
+					</a>
+				</div>
+
 				@if (Auth::user()->role !=1)
 				<div class="menu-item active">
 					<a href="{{route('outlet.index')}}" class="menu-link">
@@ -194,6 +202,7 @@
 	</div>
 </div>
 
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script src="{{asset('/assets/js/app.min.js')}}"></script>
 @yield('script')
 </body>
