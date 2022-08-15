@@ -1,209 +1,354 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title> @yield('title') | GPS HRMS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Starter</title>
 
-<link href="{{asset('/assets/css/vendor.min.css')}}" rel="stylesheet" />
-<link href="{{asset('/assets/css/app.min.css')}}" rel="stylesheet" />
-<link href="{{asset('/assets/css/style.css')}}" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-<meta name="csrf-token" content="{{csrf_token()}}"/>
-
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/dist/css/adminlte.min.css')}}">
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
 
-<div id="app" class="app">
-	<div id="header" class="app-header">
-		<div class="mobile-toggler">
-			<button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
-				<span class="bar"></span>
-				<span class="bar"></span>
-			</button>
-		</div>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
-		<div class="brand">
-			<div class="desktop-toggler">
-				<button type="button" class="menu-toggler" data-toggle="sidebar-minify">
-					<span class="bar"></span>
-					<span class="bar"></span>
-				</button>
-			</div>
-			<a href="#" class="brand-logo">
-				<img src="assets/img/logo.png" alt=""  />
-			</a>
-		</div>
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
 
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
 
-		<div class="menu">
-			<div class="menu-search" style="display: flex;">
-				
-			</div>
-				{{-- <form class="menu-search" method="POST" name="header_search_form">
-				<div class="menu-search-icon"><i class="fa fa-search"></i></div>
-				<div class="menu-search-input">
-				<input type="text" class="form-control" placeholder="Search menu..." />
-				</div>
-				</form> --}}
-			<div class="menu-item dropdown">
-				<a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
-					<div class="menu-icon"><i class="fa fa-bell nav-icon"></i></div>
-					<div class="menu-label">3</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right dropdown-notification">
-					<h6 class="dropdown-header text-dark mb-1">Notifications</h6>
-					<a href="#" class="dropdown-notification-item">
-						<div class="dropdown-notification-icon">
-							<i class="fa fa-receipt fa-lg fa-fw text-success"></i>
-						</div>
-						<div class="dropdown-notification-info">
-							<div class="title">Your store has a new order for 2 items totaling $1,299.00</div>
-							<div class="time">just now</div>
-						</div>
-						<div class="dropdown-notification-arrow">
-							<i class="fa fa-chevron-right"></i>
-						</div>
-					</a>
-					<a href="#" class="dropdown-notification-item">
-						<div class="dropdown-notification-icon">
-							<i class="far fa-user-circle fa-lg fa-fw text-muted"></i>
-						</div>
-						<div class="dropdown-notification-info">
-							<div class="title">3 new customer account is created</div>
-							<div class="time">2 minutes ago</div>
-						</div>
-						<div class="dropdown-notification-arrow">
-							<i class="fa fa-chevron-right"></i>
-						</div>
-					</a>
-					<a href="#" class="dropdown-notification-item">
-						<div class="dropdown-notification-icon">
-							<img src="assets/img/icon/android.svg" alt="" width="26" />
-						</div>
-						<div class="dropdown-notification-info">
-							<div class="title">Your android application has been approved</div>
-							<div class="time">5 minutes ago</div>
-						</div>
-						<div class="dropdown-notification-arrow">
-							<i class="fa fa-chevron-right"></i>
-						</div>
-					</a>
-					<a href="#" class="dropdown-notification-item">
-						<div class="dropdown-notification-icon">
-							<img src="assets/img/icon/paypal.svg" alt="" width="26" />
-						</div>
-						<div class="dropdown-notification-info">
-							<div class="title">Paypal payment method has been enabled for your store</div>
-							<div class="time">10 minutes ago</div>
-						</div>
-						<div class="dropdown-notification-arrow">
-							<i class="fa fa-chevron-right"></i>
-						</div>
-					</a>
-					<div class="p-2 text-center mb-n1">
-						<a href="#" class="text-dark text-opacity-50 text-decoration-none">See all</a>
-					</div>
-				</div>
-			</div>
-			<div class="menu-item dropdown">
-				<a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
-					<div class="menu-img online">
-						<img src="{{asset('/assets/uploads/profiles/')}}/{{Auth::User()->profile}}" alt="" class="ms-100 mh-100 rounded-circle" />
-					</div>
-					<div class="menu-text"><span class="__cf_email__">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</span></div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right me-lg-3">
-					<a class="dropdown-item d-flex align-items-center" href="#">Edit Profile <i class="fa fa-user-circle fa-fw ms-auto text-dark text-opacity-50"></i></a>
-					<a class="dropdown-item d-flex align-items-center" href="#">Inbox <i class="fa fa-envelope fa-fw ms-auto text-dark text-opacity-50"></i></a>
-					<a class="dropdown-item d-flex align-items-center" href="#">Calendar <i class="fa fa-calendar-alt fa-fw ms-auto text-dark text-opacity-50"></i></a>
-					<a class="dropdown-item d-flex align-items-center" href="#">Setting <i class="fa fa-wrench fa-fw ms-auto text-dark text-opacity-50"></i></a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex align-items-center" href="{{route('logout')}}">Log Out <i class="fa fa-toggle-off fa-fw ms-auto text-dark text-opacity-50"></i></a>
-				</div>
-			</div>
-		</div>
-	</div>	
-	<div id="sidebar" class="app-sidebar">
-		<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
-			<div class="menu">
-				<div class="menu-header">Navigation</div>
-				<div class="menu-item active">
-					<a href="{{route('dashboard.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa fa-laptop"></i></span>
-						<span class="menu-text">Dashboard</span>
-					</a>
-				</div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander Pierce</a>
+        </div>
+      </div>
 
-				@if (Auth::user()->role !=1)
-				<div class="menu-item active">
-					<a href="{{route('dashboard.users.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa fa-users"></i></span>
-						<span class="menu-text">Users</span>
-					</a>
-				</div>
-				@endif
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-				<div class="menu-item active">
-					<a href="{{route('event.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa fa-calendar"></i></span>
-						<span class="menu-text">Calendar</span>
-					</a>
-				</div>
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Starter Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Page</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inactive Page</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Simple Link
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
 
-				<div class="menu-item active">
-					<a href="{{route('posts.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa-solid fa-image"></i></span>
-						<span class="menu-text">Image Attendance</span>
-					</a>
-				</div>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Starter Page</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Starter Page</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-				<div class="menu-item active">
-					<a href="{{route('reports.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa-solid fa-book-open"></i></span>
-						<span class="menu-text">Attendance Reports</span>
-					</a>
-				</div>
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
 
-				@if (Auth::user()->role !=1)
-				<div class="menu-item active">
-					<a href="{{route('outlet.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa-solid fa-building"></i></span>
-						<span class="menu-text">Outlet</span>
-					</a>
-				</div>
-				@endif
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's
+                  content.
+                </p>
 
-				@if (Auth::user()->role !=1)
-				<div class="menu-item active">
-					<a href="{{route('useroutlet.index')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa-solid fa-person"></i></span>
-						<span class="menu-text">User Outlet</span>
-					</a>
-				</div>
-				@endif
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div>
 
-				<div class="menu-item active">
-					<a href="{{route('logout')}}" class="menu-link">
-						<span class="menu-icon"><i class="fa-solid fa-door-open"></i></span>
-						<span class="menu-text">Logout</span>
-					</a>
-				</div>
+            <div class="card card-primary card-outline">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
 
-			</div>
-		</div>
-		<button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
-	</div>
-	<div id="content" class="app-content">
-		@yield('content')
-	</div>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's
+                  content.
+                </p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div><!-- /.card -->
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="m-0">Featured</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">Special title treatment</h6>
+
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <h5 class="m-0">Featured</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">Special title treatment</h6>
+
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
 </div>
+<!-- ./wrapper -->
 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-<script src="{{asset('/assets/js/app.min.js')}}"></script>
-@yield('script')
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/dist/js/adminlte.min.js')}}"></script>
 </body>
 </html>
