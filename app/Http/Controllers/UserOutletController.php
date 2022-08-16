@@ -72,9 +72,18 @@ class UserOutletController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $useroutlet = UserOutlet::find($id);
+        $useroutlets = UserOutlet::find($id);
         $outlets = Outlet::get(["name", "id"]);
-        return view('useroutlet.index', compact('useroutlets','outlets'));
+        
+        $return = [
+            'useroutlets' => $useroutlets,
+            'outlets' => $outlets
+        ];
+
+        return $return;
+
+        // dd($return);
+        // return view('useroutlet.index', compact('useroutlets','outlets'));
     }
     /**
      * Update the specified resource in storage.
