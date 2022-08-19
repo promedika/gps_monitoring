@@ -4,7 +4,7 @@
 @endsection
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background: linen">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -47,9 +47,10 @@
                           <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
                           <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
                           <td>
-                              <a href="#" user-id="{{$user->id}}" title="" class="btn btn-primary btn-edit-user"><i class="fas fa-edit"></i></a>
-                              <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-delete-user"><i class="fas fa-trash"></i></a>
-                          </td>
+                            <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
+                            <a href="#" user-id="{{$user->id}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
+                            
+                            </td>
                       </tr>
                       @endforeach
               </tbody>

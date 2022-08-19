@@ -3,12 +3,35 @@
     Image Attendance
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
-    <div class="container mb-5">
-        <div class="row">
+<div class="content-wrapper" style="background: linen">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Attendance Reports</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
+              <li class="breadcrumb-item active">Attendance Reports</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table cellspacing="5" cellpadding="5" border="0">
+                        <table class="table-bordered">
                             <tbody><tr>
                                 <td>Start date:</td>
                                 <td><input type="text" id="min" name="min"></td>
@@ -18,7 +41,7 @@
                                 <td><input type="text" id="max" name="max"></td>
                             </tr>
                         </tbody></table>
-                        <table class="table-bordered">
+                        <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
@@ -42,10 +65,7 @@
                                     <td>{{$post->status}}</td>
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-block bg-gradient-warning btn-sm">Detail</a>
                                         </form>
                                     </td>
                                 </tr>
@@ -61,49 +81,57 @@
                 </div>
             </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>  
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>  
-    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>  
-    <script type="text/javascript">
-            var minDate, maxDate;
-    
-    // Custom filtering function which will search data in column four between two values
-    $.fn.dataTable.ext.search.push(
-        function( settings, data, dataIndex ) {
-            var min = minDate.val();
-            var max = maxDate.val();
-            var date = new Date( data[4] );
-    
-            if (
-                ( min === null && max === null ) ||
-                ( min === null && date <= max ) ||
-                ( min <= date   && max === null ) ||
-                ( min <= date   && date <= max )
-            ) {
-                return true;
-            }
-            return false;
+</div>
+@section('custom_script_js')
+    <!-- DataTables  & Plugins -->
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.12.1/filtering/row-based/range_dates.js"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>       
+    <script>
+            $.fn.dataTableExt.afnFiltering.push(
+    function( oSettings, aData, iDataIndex ) {
+        var iFini = document.getElementById('fini').value;
+        var iFfin = document.getElementById('ffin').value;
+        var iStartDateCol = 6;
+        var iEndDateCol = 7;
+ 
+        iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+        iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+ 
+        var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+        var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+ 
+        if ( iFini === "" && iFfin === "" )
+        {
+            return true;
         }
-    );
-    
-    $(document).ready(function() {
-        // Create date inputs
-        minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
-        });
-    
-        // DataTables initialisation
-        var table = $('.table-bordered  ').DataTable();
-    
-        // Refilter the table
-        $('#min, #max').on('change', function () {
-            table.draw();
-        });
-    });
+        else if ( iFini <= datofini && iFfin === "")
+        {
+            return true;
+        }
+        else if ( iFfin >= datoffin && iFini === "")
+        {
+            return true;
+        }
+        else if (iFini <= datofini && iFfin >= datoffin)
+        {
+            return true;
+        }
+        return false;
+    }
+);
     </script>
     {{-- <script>
         jQuery(document).ready(function () {
@@ -140,4 +168,5 @@
 
         });
 </script> --}}
+@endsection
 @endsection

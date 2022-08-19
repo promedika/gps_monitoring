@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.css')}}">
 </head>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background: linen">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -104,7 +104,7 @@
 @section('custom_script_js')
 <script>
     var site_url = "{{ url('/') }}";
-  </script>
+</script>
 <script src="{{asset('/assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.js')}}"></script> 

@@ -150,6 +150,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{route('posts.index')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-image"></i>
+                Image Attendance
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('reports.index')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-book-open"></i>
+                Attendance Reports
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
