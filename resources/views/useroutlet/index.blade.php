@@ -37,16 +37,17 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Name</th>
                             <th>Outlet Name</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
+                          @php $no = 1; @endphp
                           @foreach ($useroutlets as $useroutlet)
                           <tr>
-                            <td>{{$useroutlet->id}}</td>
+                            <td>{{$no++}}</td>
                             <td>{{$useroutlet->name}}</td>
                             <td>{{$useroutlet->outlet->name}}</td>
                             <td>
