@@ -2,77 +2,79 @@
 @section('title')
     User Outlet
 @endsection
+@section('custom_link_css')
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+@endsection
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0">Users Outlet</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Users Outlet</li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-<!-- Main content -->
-<section class="content">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-useroutlet"><i class="fa solid fa-plus"></i> Create New</a>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>Outlet Name</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($useroutlets as $useroutlet)
-                        <tr>
-                          <td>{{$useroutlet->id}}</td>
-                          <td>{{$useroutlet->name}}</td>
-                          <td>{{$useroutlet->outlet->name}}</td>
-                          <td>
-                            <div class="row">
-                                <div class="col-2">
-                                    <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Edit" class="btn btn-block bg-gradient-warning btn-sm btn-edit-useroutlet"><i class="fas fa-edit"></i></a>
-                                </div>
-
-                                <div class="col-2">
-                                    <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Delete" class="btn btn-block bg-gradient-danger btn-sm btn-delete-useroutlet"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </div>
-                          </td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Users Outlet</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
+            <li class="breadcrumb-item active">Users Outlet</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-useroutlet"><i class="fa solid fa-plus"></i></a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <table class="table table-bordered table-hover" id="table">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Outlet Name</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @php $no = 1; @endphp
+                          @foreach ($useroutlets as $useroutlet)
+                          <tr>
+                            <td>{{$no++}}</td>
+                            <td>{{$useroutlet->name}}</td>
+                            <td>{{$useroutlet->outlet->name}}</td>
+                            <td>
+                              <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Edit" class="btn btn-warning btn-edit-useroutlet"><i class="fas fa-edit"></i></a>
+                              <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Delete" class="btn btn-danger btn-delete-useroutlet"><i class="fas fa-trash"></i></a>
+                            </td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+              </div>
+              <!-- /.col -->
+          </div>
+          <!-- /.row -->
+      </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
 
 <!-- The Modal Add -->
 <div class="modal fade in" id="modalCreateUserOutlet" data-backdrop="static" data-keyboard="false">
@@ -161,30 +163,44 @@
 
 <!-- The Modal Delete-->
 <div class="modal fade in" id="modalDeleteUserOutlet" data-backdrop="static" data-keyboard="false">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h4 class="modal-title">Delete User Outlet</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <input type="hidden" name="id" id="id_delete" class="form-control">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete User Outlet</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <input type="hidden" name="id" id="id_delete" class="form-control">
 
-    <!-- Modal footer -->
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      </form>
     </div>
-    </form>
   </div>
-</div>
 </div>
 @endsection
 
 @section('custom_script_js')
+<!-- DataTables  & Plugins -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
 <script>
     $(document).ready(function(){
         $.ajaxSetup({
@@ -192,6 +208,17 @@
                 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#table').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+        
         jQuery("body").on("click", ".btn-add-useroutlet", function(e){
             $('#modalCreateUserOutlet').modal('show');
 

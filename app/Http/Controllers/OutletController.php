@@ -39,11 +39,22 @@ class OutletController extends Controller
         $this->validate($request,[
             'name'=>'required',
         ]);
-        $outlet = new outlet();
-        $outlet->name = $request->name;
-        $outlet->save();
 
-        return redirect(route('outlet.index'));
+        $return = [];
+        try {
+            $outlet = new outlet();
+            $outlet->name = $request->name;
+            $outlet->save();
+
+            $error = 'success';
+        } catch (Exception $e) {
+            $error = 'Error Message: ' .$e->getMessage();
+        }
+
+        $return['errors'] = $error;
+
+        // return redirect(route('outlet.index'));
+        return $return;
     }
 
     /**
@@ -68,7 +79,7 @@ class OutletController extends Controller
         $id = $request->id;
         $outlet = Outlet::find($id);
         return response()->json(['data' => $outlet]);
-        return redirect(route('outlet.index'));
+        // return redirect(route('outlet.index'));
     }
 
     /**
@@ -83,11 +94,24 @@ class OutletController extends Controller
         $this->validate($request,[
             'name'=>'required',
         ]);
+
         $id = $request->id;
-        $outlet = Outlet::find($id);
-        $outlet->name = $request->name;
-        $outlet->save();
-        return redirect(route('outlet.index'));
+
+        $return = [];
+        try {
+            $outlet = Outlet::find($id);
+            $outlet->name = $request->name;
+            $outlet->save();
+
+            $error = 'success';
+        } catch (Exception $e) {
+            $error = 'Error Message: ' .$e->getMessage();
+        }
+
+        $return['errors'] = $error;
+
+        // return redirect(route('outlet.index'));
+        return $return;
     }
 
     /**
@@ -99,10 +123,20 @@ class OutletController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $outlet = Outlet::find($id);
-        $outlet->delete();
-        return $outlet;
 
-        return view('outlet.index', compact('outlets'));
+        $return = [];
+        try {
+            $outlet = Outlet::find($id);
+            $outlet->delete();
+
+            $error = 'success';
+        } catch (Exception $e) {
+            $error = 'Error Message: ' .$e->getMessage();
+        }
+
+        $return['errors'] = $error;
+
+        // return view('outlet.index', compact('outlets'));
+        return $return;
     }
 }
