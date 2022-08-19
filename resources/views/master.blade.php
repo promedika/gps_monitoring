@@ -168,6 +168,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          
+          <li class="nav-item">
+            <a href="{{route('outlet.index')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-building"></i>
+                Outlet
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('useroutlet.index')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-users"></i>
+                User Outlet
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('logout')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-door-open"></i>
+                Logout
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

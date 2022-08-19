@@ -2,12 +2,13 @@
 @section('title')
     Image Attendance
 @endsection
-@section('content')
+@section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
-
+@endsection
+@section('content')
 <div class="content-wrapper" style="background: linen">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -82,6 +83,7 @@
             </div>
     </div>
 </div>
+@endsection
 @section('custom_script_js')
     <!-- DataTables  & Plugins -->
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
@@ -168,5 +170,4 @@
 
         });
 </script> --}}
-@endsection
 @endsection

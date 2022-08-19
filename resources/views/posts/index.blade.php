@@ -2,11 +2,12 @@
 @section('title')
     Image Attendance
 @endsection
-@section('content')
+@section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-
+@endsection
+@section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="background: linen">
     <!-- Content Header (Page header) -->
@@ -98,6 +99,7 @@
           </div>
         </div>
     </div>
+@endsection
     @section('custom_script_js')
     <!-- DataTables  & Plugins -->
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
@@ -160,5 +162,4 @@
 
         });
 </script>
-@endsection
 @endsection
