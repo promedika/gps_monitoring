@@ -2,6 +2,11 @@
 @section('title')
     User Outlet
 @endsection
+@section('custom_link_css')
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+@endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -33,8 +38,8 @@
                       <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-useroutlet"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body p-0">
-                      <table class="table">
+                    <div class="card-body">
+                      <table class="table table-bordered table-hover" id="table">
                         <thead>
                           <tr>
                             <th>No</th>
@@ -158,30 +163,44 @@
 
 <!-- The Modal Delete-->
 <div class="modal fade in" id="modalDeleteUserOutlet" data-backdrop="static" data-keyboard="false">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h4 class="modal-title">Delete User Outlet</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <input type="hidden" name="id" id="id_delete" class="form-control">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete User Outlet</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <input type="hidden" name="id" id="id_delete" class="form-control">
 
-    <!-- Modal footer -->
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      </form>
     </div>
-    </form>
   </div>
-</div>
 </div>
 @endsection
 
 @section('custom_script_js')
+<!-- DataTables  & Plugins -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
 <script>
     $(document).ready(function(){
         $.ajaxSetup({
@@ -189,6 +208,17 @@
                 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#table').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+        
         jQuery("body").on("click", ".btn-add-useroutlet", function(e){
             $('#modalCreateUserOutlet').modal('show');
 
