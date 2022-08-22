@@ -9,12 +9,14 @@ use App\Models\Outlet;
 use App\Models\UserOutlet;
 use DataTables;
 use App\Models\PostHeader;
+use DB;
 
 class AttendanceReportController extends Controller
 {
     public function index(){
 
-    $posts = PostHeader::all();
+    // $posts = PostHeader::all();
+    $posts = DB::table('post_header')->get();
 
     return view('reports.index', compact('posts'));
     }
