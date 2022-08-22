@@ -11,6 +11,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <meta name="csrf-token" content="{{csrf_token()}}"/>
 
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="{{asset('/assets/img/favicon.ico')}}">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -129,24 +132,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <p>
                 <i class="nav-icon fas fa-book-open"></i>
                 Attendance Reports
-              </p>
-            </a>
-          </li>
-          
-          <li class="nav-item">
-            <a href="{{route('outlet.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-building"></i>
-                Outlet
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{route('useroutlet.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-users"></i>
-                User Outlet
               </p>
             </a>
           </li>
