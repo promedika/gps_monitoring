@@ -35,7 +35,7 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-outlet"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-add-outlet"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

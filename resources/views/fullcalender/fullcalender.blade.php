@@ -4,8 +4,9 @@
 @endsection
 @section('custom_link_css')
   <!-- fullCalendar -->
-  <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.css')}}">
-@endsection
+  {{-- <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.css')}}"> --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
+  @endsection
 @section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="background: linen">
@@ -31,7 +32,7 @@
           <!-- /.col -->
           <div class="col-md-12">
             <div class="card card-primary">
-              <div class="card-body p-0">
+              <div class="card-body">
                 <!-- THE CALENDAR -->
                 <div id="calendar"></div>
               </div>
@@ -50,10 +51,13 @@
 <script>
     var site_url = "{{ url('/') }}";
 </script>
-<script src="{{asset('/assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.js')}}"></script> 
-<script>
+{{-- <script src="{{asset('/assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script> --}}
+{{-- <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script> --}}
+{{-- <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/fullcalendar/main.js')}}"></script>  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+{{-- <script>
     $(function () {
   
       /* initialize the calendar
@@ -78,33 +82,26 @@
         events: site_url + "/event",
         editable  : true,
         droppable : true, // this allows things to be dropped onto the calendar !!!
-        drop      : function(info) {
-          // is the "remove after drop" checkbox checked?
-          if (checkbox.checked) {
-            // if so, remove the element from the "Draggable Events" list
-            info.draggedEl.parentNode.removeChild(info.draggedEl);
-          }
-        }
       });
   
       calendar.render();
       // $('#calendar').fullCalendar()
   
       /* ADDING EVENTS */
-      var currColor = '#3c8dbc' //Red by default
-      // Color chooser button
-      $('#color-chooser > li > a').click(function (e) {
-        e.preventDefault()
-        // Save color
-        currColor = $(this).css('color')
-        // Add color effect to button
-        $('#add-new-event').css({
-          'background-color': currColor,
-          'border-color'    : currColor
-        })
-      })
+      // var currColor = '#3c8dbc' //Red by default
+      // // Color chooser button
+      // $('#color-chooser > li > a').click(function (e) {
+      //   e.preventDefault()
+      //   // Save color
+      //   currColor = $(this).css('color')
+      //   // Add color effect to button
+      //   $('#add-new-event').css({
+      //     'background-color': currColor,
+      //     'border-color'    : currColor
+      //   })
+      // })
     })
-  </script>
+  </script> --}}
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({
@@ -114,10 +111,11 @@
     });
         var calendar = $('#calendar').fullCalendar({
         header: {
-            left:'title',
-            center:'prev,next today',
-            right:'month,agendaWeek,agendaDay'
+            left:'',
+            center:'title,prev,next,today,month',
+            right:''
         },
+        contentHeight: 600,
         editable: true,
         events: site_url + "/event",
         displayEventTime:false,
@@ -137,7 +135,11 @@
         $('#calendar').fullCalendar('gotoDate', date);
         }
     });
-    $('.fc-center').css('float','left');
+    // $('.fc-center').css('float','left')
+
+    if($(window).width()<=477){
+
+    }
 });
 </script>
 @endsection
