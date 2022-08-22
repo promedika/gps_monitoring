@@ -36,7 +36,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Image</label>
-                                <input type="file" class="form-control image @error('image') is-invalid @enderror" name="image">
+                                <input type="file" class="form-control image @error('image') is-invalid @enderror" name="image" required>
                             
                                 <!-- error message untuk title -->
                                 @error('image')
@@ -47,7 +47,7 @@
                             </div><br>
 
                             <div class="form-group">
-                                <select id="outlet-dd" name="outlet_name" class="form-control">
+                                <select id="outlet-dd" name="outlet_name" class="form-control" required>
                                     <option value="">Select Location</option>
                                     @foreach ($outlets as $outlet)
                                     <option value="{{$outlet->id.'|'.$outlet->name}}">
@@ -58,7 +58,7 @@
                             </div><br>
 
                             <div class="form-group">
-                                <select id="useroutlet-dd" name="useroutlet_name"  class="form-control">
+                                <select id="useroutlet-dd" name="useroutlet_name"  class="form-control" required>
                                     <option value="">Select PIC</option>
                                     {{-- @foreach ($useroutlets as $useroutlet)
                                     <option>

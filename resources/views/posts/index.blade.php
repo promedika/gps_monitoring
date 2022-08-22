@@ -32,10 +32,12 @@
           <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">
+                      <a href="{{ route('posts.create') }}" title="Add" class="btn btn-primary btn-block col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                    </div>
 
                     <div class="card-body">
-                        <a href="{{ route('posts.create') }}" class="btn btn-md btn-primary mb-3">New Attendance</a>
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-hover" id="table">
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
@@ -57,7 +59,6 @@
                                     <td>{{$nomor++}}</td>
                                     <td>{{ $post->user_fullname}}</td>  
                                     <td class="text-center">
-                                        <!-- <img src="{{Storage::url('posts/').$post->image }}" class="rounded" style="width: 150px"> -->
                                         <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 150px">
                                     </td>
                                     <td>{{ $post->outlet_name }}</td>
@@ -74,7 +75,16 @@
                                             $latitude = isset($explode_loc[0]) ? $explode_loc[0] : 0;
                                             $longitude = isset($explode_loc[1]) ? $explode_loc[1] : 0;
                                         @endphp
-                                        <div class="map" data-latitude="{{$latitude}}" data-longitude="{{$longitude}}">{{$post->imgLoc}}</div>
+
+                                        <iframe 
+                                            width="250" 
+                                            height="250" 
+                                            frameborder="0" 
+                                            scrolling="no" 
+                                            marginheight="0" 
+                                            marginwidth="0" 
+                                            src="https://maps.google.com/maps?width=400&amp;height=400&amp;hl=en&amp;q={{$latitude}},{{$longitude}}+({{$post->user_fullname}})&amp;t=k&amp;z=19&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                                        </iframe>
                                     </td>
                                     {{-- <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
@@ -100,8 +110,8 @@
         </div>
     </div>
 @endsection
-    @section('custom_script_js')
-    <!-- DataTables  & Plugins -->
+@section('custom_script_js')
+<!-- DataTables  & Plugins -->
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -114,52 +124,30 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>     
-    <script>
-        //message with toastr
-        @if(session()->has('success'))
+<script>
+    //message with toastr
+    @if(session()->has('success'))
+    
+        toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+
+    @elseif(session()->has('error'))
+
+        toastr.error('{{ session('error') }}', 'GAGAL!'); 
         
-            toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+    @endif
+</script>
 
-        @elseif(session()->has('error'))
-
-            toastr.error('{{ session('error') }}', 'GAGAL!'); 
-            
-        @endif
-    </script>
-
-    <script>
+<script>
         jQuery(document).ready(function () {
-            $('.table').DataTable();
-
-            jQuery('.data_post').each(function(index, value) {
-                let td_map = jQuery(this).find('.map');
-                let latitude = td_map.data('latitude');
-                let longitude = td_map.data('longitude');
-                console.log(latitude+'|'+longitude);
-
-                var myCenter = new google.maps.LatLng(latitude, longitude);
-                function initialize()
-                {
-                    var mapProp = 
-                    {
-                        center:myCenter,
-                        zoom:19,
-                        mapTypeId:google.maps.MapTypeId.ROADMAP
-                    };
-
-                    // var map = new google.maps.Map(document.getElementById("map"),mapProp);
-                    let map = new google.maps.Map(td_map,mapProp);
-
-                    var marker = new google.maps.Marker({
-                        position:myCenter,
-                        animation:google.maps.Animation.BOUNCE
-                    });
-
-                    marker.setMap(map);
-                }
-                google.maps.event.addDomListener(window, 'load', initialize);
+            $('#table').DataTable({
+              "paging": true,
+              "lengthChange": true,
+              "searching": true,
+              "ordering": true,
+              "info": true,
+              "autoWidth": false,
+              "responsive": true,
             });
-
         });
 </script>
 @endsection
