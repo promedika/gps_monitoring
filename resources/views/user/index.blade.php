@@ -2,6 +2,13 @@
 @section('title')
     Users
 @endsection
+
+@section('custom_link_css')
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+@endsection
+
 @section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="background: linen">
@@ -21,48 +28,58 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->    
-    <div class="card-header">
-      <a href="#" title="" style="float:left" class="btn btn-primary btn-add-user"><i class="fa solid fa-plus"></i></a> 
-    </div>
-      <div class="col-12">
-        <div class="card">
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($users as $user)
-                      <tr>
-                          <td>{{$user->first_name}} {{$user->last_name}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
-                          <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
-                          <td>
-                            <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
-                            <a href="#" user-id="{{$user->id}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
-                            
-                            </td>
-                      </tr>
-                      @endforeach
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-  </div>
-</div>
-<!-- The Modal -->
+    <!-- /.content-header --> 
 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-bordered table-hover" id="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($users as $user)
+                            <tr>
+                                <td>{{$user->first_name}} {{$user->last_name}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
+                                <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
+                                <td>
+                                  <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
+                                  <a href="#" user-id="{{$user->id}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
+                                  
+                                  </td>
+                            </tr>
+                            @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<!-- The Modal -->
 <div class="modal fade in" id="modalCreateUser">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -131,64 +148,64 @@
 
 <!-- The Modal -->
 <div class="modal fade in" id="modalEditUser">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <form action="" method="post" accept-charset="utf-8" id="form-edit">
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h4 class="modal-title">Edit User</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <input type="hidden" name="id" id="id" class="form-control">
-    <!-- Modal body -->  
-    <div class="modal-body">
-      <div class="form-group">
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" id="first_name_update" class="form-control">
-        <span id="errorFirstName" class="text-red"></span>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="" method="post" accept-charset="utf-8" id="form-edit">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" id="last_name_update" class="form-control">
-        <span id="errorLastName" class="text-red"></span>
+      <input type="hidden" name="id" id="id" class="form-control">
+      <!-- Modal body -->  
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" id="first_name_update" class="form-control">
+          <span id="errorFirstName" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" id="last_name_update" class="form-control">
+          <span id="errorLastName" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" name="email" id="email_update" class="form-control">
+          <span id="errorEmail" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="Role">Role</label>
+          <select class="form-control" id="role_update" name="role">
+              <option value="" style="display:none;">Select Role</option>
+              <option value="0">Admin</option>
+              <option value="1">Member</option>
+              <option value="2">Supervisor</option>
+          </select>
+          <span id="errorRole" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="start_date">Start Date</label>
+          <input type="date" name="start_date" id="start_date_update" class="form-control">
+          <span id="errorStartDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="end_date">End Date</label>
+          <input type="date" name="end_date" id="end_date_update" class="form-control">
+          <span id="errorEndDate" class="text-red"></span>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email_update" class="form-control">
-        <span id="errorEmail" class="text-red"></span>
-      </div>
-      <div class="form-group">
-        <label for="Role">Role</label>
-        <select class="form-control" id="role_update" name="role">
-            <option value="" style="display:none;">Select Role</option>
-            <option value="0">Admin</option>
-            <option value="1">Member</option>
-            <option value="2">Supervisor</option>
-        </select>
-        <span id="errorRole" class="text-red"></span>
-      </div>
-      <div class="form-group">
-        <label for="start_date">Start Date</label>
-        <input type="date" name="start_date" id="start_date_update" class="form-control">
-        <span id="errorStartDate" class="text-red"></span>
-      </div>
-      <div class="form-group">
-        <label for="end_date">End Date</label>
-        <input type="date" name="end_date" id="end_date_update" class="form-control">
-        <span id="errorEndDate" class="text-red"></span>
-      </div>
-    </div>
 
-    <!-- Modal footer -->
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      </form>
     </div>
-    </form>
   </div>
-</div>
 </div>
 
 
@@ -215,137 +232,161 @@
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{{asset('/assets/js/	vendor.min.js')}}"></script>
-@section('custom_script_js')
-  <script>
-      $(document).ready(function(){
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-              }
-          });
-          $('.btn-add-user').click(function(){
-              $('#modalCreateUser').modal('show');
-
-              $('#form-signup').submit(function(e){
-                  e.preventDefault();
-                  var formData = new FormData(this);
-                  $.ajax({
-                      url:"{{route('dashboard.users.create')}}",
-                      type:'POST',
-                      data:formData,
-                      processData: false,
-                      contentType: false,
-                      cache: false,
-                      enctype: 'multipart/form-data',
-                      success:function(data){
-                          console.log('success create');
-                          location.reload();
-                      },
-                      error:function(response){
-                          $('#errorFirstName').text(response.responseJSON.errors.first_name);
-                          $('#errorLastName').text(response.responseJSON.errors.last_name);
-                          $('#errorEmail').text(response.responseJSON.errors.email);
-                          $('#errorPassword').text(response.responseJSON.errors.password);
-                          $('#errorRole').text(response.responseJSON.errors.role);
-                          $('#errorStartDate').text(response.responseJSON.errors.start_date);
-                          $('#errorEndDate').text(response.responseJSON.errors.end_date);
-                      }
-                  })
-              })
-          })
-
-
-          $('.btn-edit-user').click(function(){
-              $('#modalEditUser').modal('show');
-              var userID = $(this).attr('user-id');
-              var id = $('#id').val(userID);
-                  $.ajax({
-                      url:"{{route('dashboard.users.edit')}}",
-                      type:'POST',
-                      data:{
-                        id:userID,
-                      },
-                      success:function(data){
-                          console.log('success edit');
-                          $('#first_name_update').val(data.data.first_name);
-                          $('#last_name_update').val(data.data.last_name);
-                          $('#email_update').val(data.data.email);
-                          $('#role_update').val(data.data.role);
-                          $('#start_date_update').val(data.data.start_date);
-                          $('#end_date_update').val(data.data.end_date);
-                      },
-                      error:function(response){
-                          $('#errorFirstName').text(response.responseJSON.errors.first_name);
-                          $('#errorLastName').text(response.responseJSON.errors.last_name);
-                          $('#errorEmail').text(response.responseJSON.errors.email);
-                          $('#errorPassword').text(response.responseJSON.errors.password);
-                          $('#errorRole').text(response.responseJSON.errors.role);
-                          $('#errorStartDate').text(response.responseJSON.errors.start_date);
-                          $('#errorEndDate').text(response.responseJSON.errors.end_date);
-                      }
-                      
-                  })
-
-                  $('#form-edit').submit(function(e){
-                  e.preventDefault();
-                  var formData = new FormData(this);
-                  $.ajax({
-                      url:"{{route('dashboard.users.update')}}",
-                      type:'POST',
-                      data:formData,
-                      data:{
-                        id:userID,
-                        first_name:$('#first_name_update').val(),
-                        last_name:$('#last_name_update').val(),
-                        email:$('#email_update').val(),
-                        role:$('#role_update').val(),
-                        start_date:$('#start_date_update').val(),
-                        end_date:$('#end_date_update').val(),
-                      },
-                      success:function(data){
-                          console.log('success update');
-                          location.reload();
-
-                      },
-                      error:function(response){
-                          $('#errorFirstName').text(response.responseJSON.errors.first_name);
-                          $('#errorLastName').text(response.responseJSON.errors.last_name);
-                          $('#errorEmail').text(response.responseJSON.errors.email);
-                          $('#errorPassword').text(response.responseJSON.errors.password);
-                          $('#errorRole').text(response.responseJSON.errors.role);
-                          $('#errorStartDate').text(response.responseJSON.errors.start_date);
-                          $('#errorEndDate').text(response.responseJSON.errors.end_date);
-                      }
-                  })
-              })
-          })
-
-          $('.btn-delete-user').click(function(){
-            $('#modalDeleteUser').modal('show');
-            var usrID = $(this).attr('user-id');
-            var id = $('#id_delete').val(usrID);
-            $('#form-delete').submit(function(e){
-                  e.preventDefault();
-                  // var formData = new FormData(this);
-                  $.ajax({
-                      url:"{{route('dashboard.users.delete')}}",
-                      type:'POST',
-                      data:{
-                        id:usrID,
-                      },
-                      success:function(data){
-                          console.log('success deleted');
-                          location.reload()
-                      },
-                      error:function(response){
-                          console.log('success failed');
-                      }
-                  })
-              })
-          })
-      })
-  </script>
 @endsection
+
+@section('custom_script_js')
+<!-- DataTables  & Plugins -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#table').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+
+        $('.btn-add-user').click(function(){
+            $('#modalCreateUser').modal('show');
+
+            $('#form-signup').submit(function(e){
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url:"{{route('dashboard.users.create')}}",
+                    type:'POST',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    enctype: 'multipart/form-data',
+                    success:function(data){
+                        console.log('success create');
+                        location.reload();
+                    },
+                    error:function(response){
+                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
+                        $('#errorLastName').text(response.responseJSON.errors.last_name);
+                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorStartDate').text(response.responseJSON.errors.start_date);
+                        $('#errorEndDate').text(response.responseJSON.errors.end_date);
+                    }
+                })
+            })
+        })
+
+
+        $('.btn-edit-user').click(function(){
+            $('#modalEditUser').modal('show');
+            var userID = $(this).attr('user-id');
+            var id = $('#id').val(userID);
+                $.ajax({
+                    url:"{{route('dashboard.users.edit')}}",
+                    type:'POST',
+                    data:{
+                      id:userID,
+                    },
+                    success:function(data){
+                        console.log('success edit');
+                        $('#first_name_update').val(data.data.first_name);
+                        $('#last_name_update').val(data.data.last_name);
+                        $('#email_update').val(data.data.email);
+                        $('#role_update').val(data.data.role);
+                        $('#start_date_update').val(data.data.start_date);
+                        $('#end_date_update').val(data.data.end_date);
+                    },
+                    error:function(response){
+                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
+                        $('#errorLastName').text(response.responseJSON.errors.last_name);
+                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorStartDate').text(response.responseJSON.errors.start_date);
+                        $('#errorEndDate').text(response.responseJSON.errors.end_date);
+                    }
+                    
+                })
+
+                $('#form-edit').submit(function(e){
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url:"{{route('dashboard.users.update')}}",
+                    type:'POST',
+                    data:formData,
+                    data:{
+                      id:userID,
+                      first_name:$('#first_name_update').val(),
+                      last_name:$('#last_name_update').val(),
+                      email:$('#email_update').val(),
+                      role:$('#role_update').val(),
+                      start_date:$('#start_date_update').val(),
+                      end_date:$('#end_date_update').val(),
+                    },
+                    success:function(data){
+                        console.log('success update');
+                        location.reload();
+
+                    },
+                    error:function(response){
+                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
+                        $('#errorLastName').text(response.responseJSON.errors.last_name);
+                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorStartDate').text(response.responseJSON.errors.start_date);
+                        $('#errorEndDate').text(response.responseJSON.errors.end_date);
+                    }
+                })
+            })
+        })
+
+        $('.btn-delete-user').click(function(){
+          $('#modalDeleteUser').modal('show');
+          var usrID = $(this).attr('user-id');
+          var id = $('#id_delete').val(usrID);
+          $('#form-delete').submit(function(e){
+                e.preventDefault();
+                // var formData = new FormData(this);
+                $.ajax({
+                    url:"{{route('dashboard.users.delete')}}",
+                    type:'POST',
+                    data:{
+                      id:usrID,
+                    },
+                    success:function(data){
+                        console.log('success deleted');
+                        location.reload()
+                    },
+                    error:function(response){
+                        console.log('success failed');
+                    }
+                })
+            })
+        })
+    })
+</script>
 @endsection
