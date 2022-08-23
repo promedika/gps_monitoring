@@ -35,7 +35,7 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-add-outlet"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-outlet"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -201,6 +201,7 @@
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalCreateOutlet');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('outlet.create')}}",
@@ -210,6 +211,10 @@
                     contentType: false,
                     cache: false,
                     enctype: 'multipart/form-data',
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
+                    },
                     success:function(data){
                         console.log('success create');
                         location.reload();
@@ -226,24 +231,28 @@
             $('#modalEditOutlet').modal('show');
             var outletID = $(this).attr('outlet-id');
             var id = $('#id').val(outletID);
-                $.ajax({
-                    url:"{{route('outlet.edit')}}",
-                    type:'POST',
-                    data:{
-                      id:outletID,
-                    },
-                    success:function(data){
-                        console.log('success edit');
-                        $('#name_update').val(data.data.name);
-                    },
-                    error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
-                    }
-                    
-                })
+            
+            $.ajax({
+                url:"{{route('outlet.edit')}}",
+                type:'POST',
+                data:{
+                  id:outletID,
+                },
+                success:function(data){
+                    console.log('success edit');
+                    $('#name_update').val(data.data.name);
+                    $('#form-edit').data('id',outletID);
+                },
+                error:function(response){
+                    $('#errorName').text(response.responseJSON.errors.name);
+                }
+                
+            })
 
-                $('#form-edit').submit(function(e){
+            $('#form-edit').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalEditOutlet');
+                let outletID = $(this).data('id');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('outlet.update')}}",
@@ -252,6 +261,10 @@
                     data:{
                       id:outletID,
                       name:$('#name_update').val(),
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success update');
@@ -270,12 +283,17 @@
           var id = $('#id_delete').val(outletID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalDeleteOutlet');
                 // var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('outlet.delete')}}",
                     type:'POST',
                     data:{
                       id:outletID,
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success deleted');
