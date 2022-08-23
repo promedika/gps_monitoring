@@ -57,51 +57,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-{{-- <script>
-    $(function () {
-  
-      /* initialize the calendar
-       -----------------------------------------------------------------*/
-      //Date for the calendar events (dummy data)
-      var date = new Date()
-      var d    = date.getDate(),
-          m    = date.getMonth(),
-          y    = date.getFullYear()
-  
-      var Calendar = FullCalendar.Calendar;
-      var calendarEl = document.getElementById('calendar');
-  
-      var calendar = new Calendar(calendarEl, {
-        headerToolbar: {
-          left  : 'prev,next today',
-          center: 'title',
-          right : 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        themeSystem: 'bootstrap',
-        //Random default events
-        events: site_url + "/event",
-        editable  : true,
-        droppable : true, // this allows things to be dropped onto the calendar !!!
-      });
-  
-      calendar.render();
-      // $('#calendar').fullCalendar()
-  
-      /* ADDING EVENTS */
-      // var currColor = '#3c8dbc' //Red by default
-      // // Color chooser button
-      // $('#color-chooser > li > a').click(function (e) {
-      //   e.preventDefault()
-      //   // Save color
-      //   currColor = $(this).css('color')
-      //   // Add color effect to button
-      //   $('#add-new-event').css({
-      //     'background-color': currColor,
-      //     'border-color'    : currColor
-      //   })
-      // })
-    })
-  </script> --}}
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({
