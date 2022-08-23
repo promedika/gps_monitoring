@@ -62,7 +62,7 @@ class PostController extends Controller
         ]);
         
         if ($request->hasFile('image')) {
-
+            
             $image       = $request->file('image');
             $filename    = time().'_'.$image->hashName();
            
@@ -75,10 +75,14 @@ class PostController extends Controller
             $imgLocation = $this->get_image_location($path);
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
             
-            //get image taken date
+            // get image taken date
             $imgDate = exif_read_data($path);
             $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
-        
+
+            if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+                // echo '<script>alert("Tanggal Foto Tidak Sesuai !")</script>';
+                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+            }
             // $image_resize = Image::make($image->getRealPath());              
             // $image_resize->resize(100, 100);
             // $image_resize->save(public_path('images/ServiceImages/' .$filename));
@@ -95,7 +99,7 @@ class PostController extends Controller
         $outlet_user_name = $outlet_user[1];
         
         $unique_id = Auth::User()->id.'_'.date('Ymd');
-        //create post
+        // create post
         Post::create([
             'image' =>  $filename,
             'outlet_name_id' => $outlet_id,
@@ -131,14 +135,20 @@ class PostController extends Controller
             ->orWhere('imgTaken','LIKE','%'.date('Y-m-d').'%')
             ->where('post_header_id', $unique_id) 
                 ->get();
-            $start = date_create($postdate[0]->imgTaken);
-            $end    = date_create($postdate[count($postdate)-1]->imgTaken);
+
+            $tmpDate = [];
+                foreach ($postdate as $key => $value) {
+                    $tmpDate[] = strtotime($value->imgTaken);
+                }
+                sort($tmpDate);
+                
+            $start = date_create(date('Y-m-d H:i:s',$tmpDate[0]));
+            $end    = date_create(date('Y-m-d H:i:s',$tmpDate[count($tmpDate)-1]));
             // $work_hour = strtotime($end)-strtotime($start);
             // $jam = floor($work_hour / (60 * 60));
             // $menit = $work_hour - $jam * (60 * 60);
             
             $work_hour = date_diff($start,$end);
-
             $status = $work_hour->h < 8 ? 'kurang dari jam kerja' : 'sesuai';
             DB::table('post_header')
             ->where('user_id', Auth::User()->id)

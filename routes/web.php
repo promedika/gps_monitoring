@@ -57,6 +57,7 @@ Route::post('/useroutlets/update','App\Http\Controllers\UserOutletController@upd
 Route::post('/useroutlets/delete','App\Http\Controllers\UserOutletController@destroy')->name('useroutlet.delete');
 
 Route::resource('/reports', \App\Http\Controllers\AttendanceReportController::class);
+Route::post('/reports/show', 'App\Http\Controllers\AttendanceReportController@show')->name('reports.show');
 
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 

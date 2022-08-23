@@ -15,5 +15,7 @@ class PostHeader extends Model
         'user_fullname',
         'work_hour',
         'status',
+        'created_at'
+
     ];
 }

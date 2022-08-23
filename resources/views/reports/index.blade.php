@@ -32,17 +32,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table-bordered">
-                            <tbody><tr>
-                                <td>Start date:</td>
-                                <td><input type="text" id="min" name="min"></td>
-                            </tr>
-                            <tr>
-                                <td>End date:</td>
-                                <td><input type="text" id="max" name="max"></td>
-                            </tr>
-                        </tbody></table>
-                        <table class="table">
+                        <table class="table" id="report">
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
@@ -65,9 +55,7 @@
                                     <td>{{$post->work_hour}}</td>
                                     <td>{{$post->status}}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-block bg-gradient-warning btn-sm">Detail</a>
-                                        </form>
+                                            <a href="#" data-post_id="{{$post->id}}" class="btn bg-warning btn-detail" data-work_hour="{{$post->work_hour}}" data-status="{{$post->status}}" data-fullname="{{$post->user_fullname}}" data-date="{{str_replace(' 00:00:00','',$post->created_at)}}">Detail</a>
                                     </td>
                                 </tr>
                               @empty
@@ -81,6 +69,37 @@
                     </div>
                 </div>
             </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="modalShow">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <h2 class="work_hour"></h2>
+                <h2 class="status"></h2>
+            </div>
+            <table class="table table-bordered table-hover" id="post-table">
+                <thead>
+                  <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">P.I.C</th>
+                    <th scope="col">Image Taken</th>
+                    {{-- <th scope="col">Action</th> --}}
+                  </tr>
+                </thead>
+            </table> 
+        </div>
+      </div>
     </div>
 </div>
 @endsection
@@ -102,72 +121,67 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>       
     <script>
-            $.fn.dataTableExt.afnFiltering.push(
-    function( oSettings, aData, iDataIndex ) {
-        var iFini = document.getElementById('fini').value;
-        var iFfin = document.getElementById('ffin').value;
-        var iStartDateCol = 6;
-        var iEndDateCol = 7;
- 
-        iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
-        iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
- 
-        var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
-        var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
- 
-        if ( iFini === "" && iFfin === "" )
-        {
-            return true;
-        }
-        else if ( iFini <= datofini && iFfin === "")
-        {
-            return true;
-        }
-        else if ( iFfin >= datoffin && iFini === "")
-        {
-            return true;
-        }
-        else if (iFini <= datofini && iFfin >= datoffin)
-        {
-            return true;
-        }
-        return false;
-    }
-);
-    </script>
-    {{-- <script>
-        jQuery(document).ready(function () {
-            $('.table-bordered').DataTable();
+        $(document).ready(function(){
+            $('#report').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            });
 
-            jQuery('.data_post').each(function(index, value) {
-                let td_map = jQuery(this).find('.map');
-                let latitude = td_map.data('latitude');
-                let longitude = td_map.data('longitude');
-                console.log(latitude+'|'+longitude);
+            $('.btn-detail').click(function(){
+            $('#modalShow').find('.modal-title').text($(this).data("fullname")+","+$(this).data("date")) 
+            $('#modalShow').find('.work_hour').text($(this).data('work_hour'));
+            $('#modalShow').find('.status').text($(this).data('status'));
+            $('#modalShow').modal('show');
+            var postID = $(this).data('post_id');
+                $.ajax({
+                    url:"{{route('reports.show')}}",
+                    data:{
+                        id:postID,
+                    },
+                    beforeSend: function() {
+                        jQuery('#post-table').DataTable().destroy();
+                        jQuery('#post-table tbody').remove();
+                    },
+                    success:function(data){
+                        console.log('success show');
+                        console.log(data);
+                        var table_log = '<tbody>';
+                            // table_log += '<tbody>'+
+                            jQuery.each(data, function(key,value) {
+                                table_log += '<tr>'+
+                                    '<td>'+value.user_fullname+'</td>'+
+                                    '<td>'+value.outlet_name+'</td>'+
+                                    '<td>'+value.outlet_user+'</td>'+
+                                    '<td>'+value.imgTaken+'</td>'+
+                                '</tr>';
+                            });
+                            table_log += '</tbody>';
+                            console.log(table_log);
+                            $('#post-table').find('thead').after(table_log);
 
-                var myCenter = new google.maps.LatLng(latitude, longitude);
-                function initialize()
-                {
-                    var mapProp = 
-                    {
-                        center:myCenter,
-                        zoom:19,
-                        mapTypeId:google.maps.MapTypeId.ROADMAP
-                    };
+                            $('#post-table').DataTable({
+                            "paging": true,
+                            "lengthChange": true,
+                            "searching": true,
+                            "ordering": true,
+                            "info": true,
+                            "autoWidth": false,
+                            "responsive": true,
+                            });
+                            
 
-                    // var map = new google.maps.Map(document.getElementById("map"),mapProp);
-                    let map = new google.maps.Map(td_map,mapProp);
 
-                    var marker = new google.maps.Marker({
-                        position:myCenter,
-                        animation:google.maps.Animation.BOUNCE
-                    });
 
-                    marker.setMap(map);
-                }
-                google.maps.event.addDomListener(window, 'load', initialize);
+                    }
+                })
+            
             });
 
         });
-</script> --}}
+    </script>
 @endsection

@@ -44,6 +44,12 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
+
+                                @if(session()->has('message'))
+                                    <div class="alert alert-danger mt-2">
+                                        {{ session()->get('message') }}
+                                    </div>
+                                @endif
                             </div><br>
 
                             <div class="form-group">

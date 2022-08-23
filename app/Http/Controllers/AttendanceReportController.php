@@ -47,5 +47,11 @@ class AttendanceReportController extends Controller
 
     //     dd($data);
     // }
+    public function show(Request $request)
+    {
+        $postH = DB::table('posts')->where('post_header_id', $request->id)->get();
+
+        return $postH;
+    }
 
 }

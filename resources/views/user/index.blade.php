@@ -60,7 +60,7 @@
                                 <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
                                 <td>
                                   <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
-                                  <a href="#" user-id="{{$user->id}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
+                                  <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
                                   
                                   </td>
                             </tr>
@@ -120,6 +120,7 @@
               <option value="" style="display:none;">Select Role</option>
               <option value="0">Admin</option>
               <option value="1">Member</option>
+              <option value="2">Supervisor</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -223,6 +224,10 @@
       </div>
       <input type="hidden" name="id" id="id_delete" class="form-control">
 
+      <div class="modal-body">
+        <p>Apakah anda yakin ingin menghapus data <span></span> ini ?</p>
+      </div>
+
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -272,6 +277,7 @@
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalCreateUser');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('dashboard.users.create')}}",
@@ -281,6 +287,10 @@
                     contentType: false,
                     cache: false,
                     enctype: 'multipart/form-data',
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
+                    },
                     success:function(data){
                         console.log('success create');
                         location.reload();
@@ -332,6 +342,7 @@
 
                 $('#form-edit').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalEditUser');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('dashboard.users.update')}}",
@@ -345,6 +356,10 @@
                       role:$('#role_update').val(),
                       start_date:$('#start_date_update').val(),
                       end_date:$('#end_date_update').val(),
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success update');
@@ -365,17 +380,22 @@
         })
 
         $('.btn-delete-user').click(function(){
+          $('#modalDeleteUser').find('.modal-body span').text($(this).data("user"));
           $('#modalDeleteUser').modal('show');
           var usrID = $(this).attr('user-id');
           var id = $('#id_delete').val(usrID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
-                // var formData = new FormData(this);
+                let modal_id = $('#modalCreateUser');
                 $.ajax({
                     url:"{{route('dashboard.users.delete')}}",
                     type:'POST',
                     data:{
                       id:usrID,
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success deleted');

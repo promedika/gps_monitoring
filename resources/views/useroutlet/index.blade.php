@@ -57,7 +57,7 @@
                             <td>{{$useroutlet->outlet->name}}</td>
                             <td>
                               <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Edit" class="btn btn-warning btn-edit-useroutlet"><i class="fas fa-edit"></i></a>
-                              <a href="#" useroutlet-id="{{$useroutlet->id}}" title="Delete" class="btn btn-danger btn-delete-useroutlet"><i class="fas fa-trash"></i></a>
+                              <a href="#" useroutlet-id="{{$useroutlet->id}}" data-useroutlet="{{$useroutlet->name}}" title="Delete" class="btn btn-danger btn-delete-useroutlet"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                           @endforeach
@@ -175,6 +175,10 @@
       </div>
       <input type="hidden" name="id" id="id_delete" class="form-control">
 
+      <div class="modal-body">
+        <p>Apakah anda yakin ingin menghapus data <span></span> ini ?</p>
+      </div>
+
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -224,6 +228,7 @@
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalCreateUserOutlet');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('useroutlet.create')}}",
@@ -233,6 +238,10 @@
                     contentType: false,
                     cache: false,
                     enctype: 'multipart/form-data',
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
+                    },
                     success:function(data){
                         location.reload();
                     },
@@ -268,6 +277,7 @@
 
                 $('#form-edit').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalEditUserOutlet');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('useroutlet.update')}}",
@@ -277,6 +287,10 @@
                       id:useroutletID,
                       name:$('#name_update').val(),
                       outlet_id:$('#outlet_id_update').val(),
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success update');
@@ -291,17 +305,24 @@
         })
 
         $('.btn-delete-useroutlet').click(function(){
+          
+          $('#modalDeleteUserOutlet').find('.modal-body span').text($(this).data("useroutlet"));
           $('#modalDeleteUserOutlet').modal('show');
           var useroutletID = $(this).attr('useroutlet-id');
           var id = $('#id_delete').val(useroutletID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
+                let modal_id = $('#modalDeleteUserOutlet');
                 // var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('useroutlet.delete')}}",
                     type:'POST',
                     data:{
                       id:useroutletID,
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
                         console.log('success deleted');

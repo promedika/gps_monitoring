@@ -127,6 +127,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
+          @if (Auth::user()->role !=1)
           <li class="nav-item">
             <a href="{{route('reports.index')}}" class="nav-link">
               <p>
@@ -135,6 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          @endif
 
           <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">

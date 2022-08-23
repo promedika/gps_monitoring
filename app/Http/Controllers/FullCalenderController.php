@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
   
 
@@ -31,13 +32,16 @@ class FullCalenderController extends Controller
     public function index(Request $request)
 
     {
-
+        
   
 
         if($request->ajax()) {
 
-
-
+            if (Auth::User()->role == 1) {
+                $posts = DB::table('posts')->where('user_id', Auth::User()->id)->get();
+            }else {
+                $posts = Post::all();
+            }
             //  $data = Post::whereDate('start', '>=', $request->imgTaken)
 
             //            ->whereDate('end',   '<=', $request->imgTaken)
@@ -45,7 +49,7 @@ class FullCalenderController extends Controller
             //            ->get(['id', 'user_fullname title', 'imgTaken start', 'imgTaken end']);
 
         $data = array();
-        $posts = Post::all();
+        
         
         foreach($posts as $post) {
             // if (Auth::User()->user_id !=$post->user_id) continue;
