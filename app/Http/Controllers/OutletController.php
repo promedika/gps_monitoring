@@ -93,6 +93,7 @@ class OutletController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
+            'updated_by'=>'required',
         ]);
 
         $id = $request->id;

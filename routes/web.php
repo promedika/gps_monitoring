@@ -39,6 +39,10 @@ Route::get('/clear-cache', function () {
     return "Cache is cleared";
 });
 
+Route::fallback(function() {
+    return view('errors.404');
+});
+
 Route::get('/login','App\Http\Controllers\LoginController@formlogin')->name('login')->middleware('guest');
 Route::post('/login','App\Http\Controllers\LoginController@actionLogin')->name('action.login');
 
