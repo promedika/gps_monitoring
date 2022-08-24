@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -82,30 +78,51 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           @if (Auth::user()->role !=1)
           <li class="nav-item">
-            <a href="{{route('dashboard.users.index')}}" class="nav-link">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
               <p>
-                <i class="nav-icon fa fa-user"></i>
-                Users
+                Master
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
+                  
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                    Users
+                  </p>
+                </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="{{route('outlet.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fa fa-building"></i>
-                Outlet
-              </p>
-            </a>
-          </li>
+              <li class="nav-item">
+                <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-building"></i>
+                    Outlet
+                  </p>
+                </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="{{route('useroutlet.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fa fa-user"></i>
-                User Outlet
-              </p>
-            </a>
+              <li class="nav-item">
+                <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-user"></i></i>
+                    User Outlet
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fas fa-book-open"></i>
+                    Attendance Reports
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
           @endif
 
@@ -127,17 +144,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
-          @if (Auth::user()->role !=1)
-          <li class="nav-item">
-            <a href="{{route('reports.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-book-open"></i>
-                Attendance Reports
-              </p>
-            </a>
-          </li>
-          @endif
-
           <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">
               <p>
@@ -154,22 +160,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="wrapper" style="background: linen">
+  <div class="wrapper" style="background: linen;">
     <!-- Main content -->
     @yield('content')
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
   <footer class="main-footer">
