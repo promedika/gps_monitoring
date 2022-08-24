@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login | GPS Attendance</title>
 
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="{{asset('/assets/img/favicon.ico')}}">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->

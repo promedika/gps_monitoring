@@ -10,6 +10,9 @@
 
 <title>404 | GPS HRMS</title>
 
+<!-- favicon -->
+<link rel="icon" type="image/x-icon" href="{{asset('/assets/img/favicon.ico')}}">
+
 <style id="" media="all">@font-face {
   font-family: 'Montserrat';
   font-style: normal;
