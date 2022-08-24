@@ -80,11 +80,12 @@ class PostController extends Controller
             $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
             if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-                // echo '<script>alert("Tanggal Foto Tidak Sesuai !")</script>';
+                
                 return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
             }
-            // $image_resize = Image::make($image->getRealPath());              
-            // $image_resize->resize(100, 100);
+            $image_resize = Image::make($image->getRealPath());              
+            $image_resize->resize(100, 100);
+            $image_resize->storeAs('public/posts', $filename);
             // $image_resize->save(public_path('images/ServiceImages/' .$filename));
             // $image_resize->storeAs('/public/posts', $filename);
             // $image_resize->save(public_path('posts/' .$filename));
