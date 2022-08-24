@@ -21,7 +21,7 @@ class CreateOutletsUserOutletsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('user_outlet', function (Blueprint $table) {
+        Schema::create('user_outlets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('outlet_id');
@@ -39,6 +39,6 @@ class CreateOutletsUserOutletsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('outlets');
-        Schema::dropIfExists('user_outlet');
+        Schema::dropIfExists('user_outlets');
     }
 }

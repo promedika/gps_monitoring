@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserOutlet;
 use Illuminate\Http\Request;
 use App\Models\Outlet;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserOutletController extends Controller
@@ -47,6 +48,8 @@ class UserOutletController extends Controller
         $useroutlet = new useroutlet();
         $useroutlet->name = $request->name;
         $useroutlet->outlet_id = $request->outlet_id;
+        $useroutlet->created_by = Auth::User()->id;
+        $useroutlet->updated_by = Auth::User()->id;
         $useroutlet->save();
 
         return redirect(route('useroutlet.index'));
@@ -102,6 +105,7 @@ class UserOutletController extends Controller
         $useroutlet = UserOutlet::find($id);
         $useroutlet->name = $request->name;
         $useroutlet->outlet_id = $request->outlet_id;
+        $useroutlet->updated_by = Auth::User()->id;
         $useroutlet->save();
         return redirect(route('useroutlet.index'));
     }

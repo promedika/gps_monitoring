@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -54,6 +55,8 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
+        $user->created_by = Auth::User()->id;
+        $user->updated_by = Auth::User()->id;
         $user->save();
 
         return redirect(route('dashboard.users.index'));
@@ -109,6 +112,7 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
+        $user->updated_by = Auth::User()->id;
         $user->save();
         return redirect(route('dashboard.users.index'));
     }

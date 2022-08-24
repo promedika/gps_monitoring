@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Outlet;
+use Illuminate\Support\Facades\Auth;
 
 class OutletController extends Controller
 {
@@ -44,6 +45,8 @@ class OutletController extends Controller
         try {
             $outlet = new outlet();
             $outlet->name = $request->name;
+            $outlet->created_by = Auth::User()->id;
+            $outlet->updated_by = Auth::User()->id;
             $outlet->save();
 
             $error = 'success';
@@ -93,7 +96,6 @@ class OutletController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            'updated_by'=>'required',
         ]);
 
         $id = $request->id;
@@ -102,6 +104,7 @@ class OutletController extends Controller
         try {
             $outlet = Outlet::find($id);
             $outlet->name = $request->name;
+            $outlet->updated_by = Auth::User()->id;
             $outlet->save();
 
             $error = 'success';
