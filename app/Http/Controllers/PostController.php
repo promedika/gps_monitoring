@@ -83,9 +83,9 @@ class PostController extends Controller
                 
                 return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
             }
-            $image_resize = Image::make($image->getRealPath());              
-            $image_resize->resize(100, 100);
-            $image_resize->storeAs('public/posts', $filename);
+            // $image_resize = Image::make(storage_path($path));              
+            // $image_resize->resize(100, 100);
+            // $image_resize->save();
             // $image_resize->save(public_path('images/ServiceImages/' .$filename));
             // $image_resize->storeAs('/public/posts', $filename);
             // $image_resize->save(public_path('posts/' .$filename));

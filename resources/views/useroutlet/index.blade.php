@@ -144,7 +144,7 @@
           <select id="outlet_id_update" name="outlet_id" class="form-control" required>
               <option value="">Silahkan Pilih</option>
               @foreach ($outlets as $outlet)
-              <option value="{{$outlet->id}}">{{$useroutlet->outlet->name}}</option>
+              <option value="{{$outlet->id}}">{{$outlet->name}}</option>
               @endforeach
           </select>
         </div>
