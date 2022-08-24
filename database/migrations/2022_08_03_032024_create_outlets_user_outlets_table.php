@@ -16,6 +16,8 @@ class CreateOutletsUserOutletsTable extends Migration
         Schema::create('outlets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 
@@ -23,6 +25,8 @@ class CreateOutletsUserOutletsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('outlet_id');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

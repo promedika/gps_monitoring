@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
@@ -18,8 +19,12 @@ class AdminUserSeeder extends Seeder
             'first_name' => 'Billy',
             'last_name' =>  'Rahmadi',
             'email' =>  'billy@globalpromedika.co.id',
-            'password' =>   bcrypt('promedika'),
+            'password' =>   Hash::make('promedika'),
             'role'  =>  '0',
+            'created_by' => '1',
+            'updated_by' => '1',
+            'start_date' => '2022-05-09',
+            'end_date' => '3022-05-09',
         ]);
     }
 }
