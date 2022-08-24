@@ -174,7 +174,7 @@
       &nbsp;
     </div>
     <!-- Default to the left -->
-    <strong>PT Global promedika Service - Copyright &copy; {{date('Y')}} - All rights reserved</strong>
+    <strong>PT Global promedika Service - All rights reserved - Copyright &copy; {{date('Y')}}</strong>
   </footer>
 </div>
 <!-- ./wrapper -->
