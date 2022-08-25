@@ -36,9 +36,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Image</label>
-                                <input type="file" class="form-control image @error('image') is-invalid @enderror" name="image" required>
-                            
-                                <!-- error message untuk title -->
+                                <br>
                                 @error('image')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
@@ -50,6 +48,10 @@
                                         {{ session()->get('message') }}
                                     </div>
                                 @endif
+                                <input type="file" class="form-control image @error('image') is-invalid @enderror" name="image" required>
+                            
+                                <!-- error message untuk title -->
+                                
                             </div><br>
 
                             <div class="form-group">

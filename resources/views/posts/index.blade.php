@@ -54,7 +54,7 @@
                                 <?php
                                 $nomor = 1;
                                      ?>
-                              @forelse ($posts as $post)
+                              @foreach ($posts as $post)
                                 <tr class="data_post">
                                     <td>{{$nomor++}}</td>
                                     <td>{{ $post->user_fullname}}</td>  
@@ -95,11 +95,7 @@
                                         </form>
                                     </td> --}}
                                 </tr>
-                              @empty
-                                  <div class="alert alert-danger">
-                                      Data Post belum Tersedia.
-                                  </div>
-                              @endforelse
+                              @endforeach
                             </tbody>
                           </table>  
                           {{-- {{ $posts->links() }} --}}

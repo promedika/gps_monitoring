@@ -70,7 +70,13 @@ class PostController extends Controller
 
             // declare full path and filename
             $path = URL::to('/storage/posts').'/'.$filename;
-
+            
+            try {
+                exif_read_data($path);
+            } catch (\Throwable $th) {
+                return redirect()->back()->with('message', 'Lokasi Gambar Tidak Ditemukan !');
+            }
+            
             //get geolocation of image
             $imgLocation = $this->get_image_location($path);
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
@@ -258,6 +264,7 @@ class PostController extends Controller
      */
     public function get_image_location($image = ''){
         $exif = exif_read_data($image, 0, true);
+        
         if($exif && isset($exif['GPS'])){
             $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
             $GPSLatitude    = $exif['GPS']['GPSLatitude'];
