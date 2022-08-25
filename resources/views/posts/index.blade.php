@@ -59,7 +59,7 @@
                                     <td>{{$nomor++}}</td>
                                     <td>{{ $post->user_fullname}}</td>  
                                     <td class="text-center">
-                                        <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 150px">
+                                        <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 200px">
                                     </td>
                                     <td>{{ $post->outlet_name }}</td>
                                     <td>{!! $post->outlet_user !!}</td>
@@ -77,8 +77,8 @@
                                         @endphp
 
                                         <iframe 
-                                            width="250" 
-                                            height="250" 
+                                            width="200" 
+                                            height="200" 
                                             frameborder="0" 
                                             scrolling="no" 
                                             marginheight="0" 

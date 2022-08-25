@@ -74,6 +74,7 @@ class PostController extends Controller
             try {
                 exif_read_data($path);
             } catch (\Throwable $th) {
+                Storage::delete('/public/posts/'.$filename);
                 return redirect()->back()->with('message', 'Lokasi Gambar Tidak Ditemukan !');
             }
             
@@ -86,16 +87,19 @@ class PostController extends Controller
             $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
             if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-                
-                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+                Storage::delete('/public/posts/'.$filename);
+                // return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
             }
-            // $image_resize = Image::make(storage_path($path));              
-            // $image_resize->resize(100, 100);
+
+            $image_resize = Image::make($image->getRealPath())->orientate();              
+            $image_resize->resize(250, 250,);
+            $image_resize->stream();
+
             // $image_resize->save();
             // $image_resize->save(public_path('images/ServiceImages/' .$filename));
             // $image_resize->storeAs('/public/posts', $filename);
             // $image_resize->save(public_path('posts/' .$filename));
-        
+            Storage::disk('local')->put('public/posts'.'/'.$filename, $image_resize, 'public');
         };
         $outlet = explode('|',$request->outlet_name);
         $outlet_id = $outlet[0];
