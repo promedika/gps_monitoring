@@ -16,15 +16,16 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'first_name' => 'Billy',
-            'last_name' =>  'Rahmadi',
-            'email' =>  'billy@globalpromedika.co.id',
+            'first_name' => 'Super',
+            'last_name' =>  'User',
+            'email' =>  'superuser@gpsitdev.co.id',
             'password' =>   Hash::make('promedika'),
             'role'  =>  '0',
             'created_by' => '1',
             'updated_by' => '1',
             'start_date' => '2022-05-09',
             'end_date' => '3022-05-09',
+            'status' => 'active'
         ]);
     }
 }

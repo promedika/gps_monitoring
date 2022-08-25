@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('salary')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

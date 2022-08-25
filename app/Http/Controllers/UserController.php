@@ -57,6 +57,7 @@ class UserController extends Controller
         $user->end_date = $request->end_date;
         $user->created_by = Auth::User()->id;
         $user->updated_by = Auth::User()->id;
+        $user->status = 'active';
         $user->save();
 
         return redirect(route('dashboard.users.index'));
@@ -113,6 +114,7 @@ class UserController extends Controller
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
         $user->updated_by = Auth::User()->id;
+        $user->status = $request->status;
         $user->save();
         return redirect(route('dashboard.users.index'));
     }

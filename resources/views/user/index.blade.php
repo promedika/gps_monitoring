@@ -48,6 +48,7 @@
                         <th>Email</th>
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -58,6 +59,7 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
+                                <td>{{$user->status}}</td>
                                 <td>
                                   <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
                                   <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
@@ -197,6 +199,15 @@
           <input type="date" name="end_date" id="end_date_update" class="form-control">
           <span id="errorEndDate" class="text-red"></span>
         </div>
+        <div class="form-group">
+          <label for="end_date">Status</label>
+          <select name="status" id="status_update" class="form-control">
+            <option value="" style="display:none;">Select Status</option>
+              <option value="active">Active</option>
+              <option value="expired">Expired</option>
+          </select>
+          <span id="errorStatus" class="text-red"></span>
+        </div>
       </div>
 
       <!-- Modal footer -->
@@ -327,6 +338,7 @@
                         $('#role_update').val(data.data.role);
                         $('#start_date_update').val(data.data.start_date);
                         $('#end_date_update').val(data.data.end_date);
+                        $('#status_update').val(data.data.status);
                     },
                     error:function(response){
                         $('#errorFirstName').text(response.responseJSON.errors.first_name);
@@ -356,6 +368,7 @@
                       role:$('#role_update').val(),
                       start_date:$('#start_date_update').val(),
                       end_date:$('#end_date_update').val(),
+                      status:$('#status_update').val(),
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
