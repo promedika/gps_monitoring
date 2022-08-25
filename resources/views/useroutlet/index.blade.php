@@ -254,7 +254,7 @@
         })
 
 
-        $('.btn-edit-useroutlet').click(function(){
+          jQuery("body").on("click", ".btn-edit-useroutlet", function(e) {
             $('#modalEditUserOutlet').modal('show');
             var useroutletID = $(this).attr('useroutlet-id');
             var id = $('#id').val(useroutletID);
@@ -304,8 +304,8 @@
             })
         })
 
-        $('.btn-delete-useroutlet').click(function(){
           
+          jQuery("body").on("click", ".btn-delete-useroutlet", function(e) {
           $('#modalDeleteUserOutlet').find('.modal-body span').text($(this).data("useroutlet"));
           $('#modalDeleteUserOutlet').modal('show');
           var useroutletID = $(this).attr('useroutlet-id');

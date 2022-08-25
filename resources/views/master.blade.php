@@ -113,15 +113,6 @@
                   </p>
                 </a>
               </li>
-
-              <li class="nav-item">
-                <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fas fa-book-open"></i>
-                    Attendance Reports
-                  </p>
-                </a>
-              </li>
             </ul>
           </li>
           @endif
@@ -143,6 +134,16 @@
               </p>
             </a>
           </li>
+          @if (Auth::user()->role !=1)
+          <li class="nav-item">
+            <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
+              <p>
+                <i class="nav-icon fas fa-book-open"></i>
+                Attendance Reports
+              </p>
+            </a>
+          </li>
+          @endif
 
           <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">

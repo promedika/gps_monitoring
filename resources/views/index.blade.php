@@ -30,11 +30,8 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%">
+                <a href="{{route('posts.create')}}" style="color:white"><img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%">New Attendance</a>
               </div>
-              <a href="{{route('posts.create')}}" class="small-box-footer">
-                New Attendance <i class="fas fa-arrow-circle-right"></i>
-              </a>
             </div>
           </div>
           <!-- ./col -->
@@ -42,11 +39,8 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <img src="{{asset('assets/img/pngcalendar.png')}}" style="width: 100%">
+                <a href="{{route('event.index')}}" style="color:white"><img src="{{asset('assets/img/pngcalendar.png')}}" style="width: 100%">Calendar</a>
               </div>
-              <a href="{{route('event.index')}}" class="small-box-footer">
-                Calendar <i class="fas fa-arrow-circle-right"></i>
-              </a>
             </div>
           </div>
         </div>

@@ -132,7 +132,7 @@
             "responsive": true,
             });
 
-            $('.btn-detail').click(function(){
+            jQuery("body").on("click", ".btn-detail", function(e) {
             $('#modalShow').find('.modal-title').text($(this).data("fullname")+","+$(this).data("date")) 
             $('#modalShow').find('.work_hour').text($(this).data('work_hour'));
             $('#modalShow').find('.status').text($(this).data('status'));

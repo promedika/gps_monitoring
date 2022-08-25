@@ -153,7 +153,7 @@
 <div class="modal fade in" id="modalEditUser">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="" method="post" accept-charset="utf-8" id="form-edit">
+      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Edit User</h4>
@@ -320,7 +320,7 @@
         })
 
 
-        $('.btn-edit-user').click(function(){
+        jQuery("body").on("click", ".btn-edit-user", function(e) {
             $('#modalEditUser').modal('show');
             var userID = $(this).attr('user-id');
             var id = $('#id').val(userID);
@@ -392,7 +392,7 @@
             })
         })
 
-        $('.btn-delete-user').click(function(){
+          jQuery("body").on("click", ".btn-delete-user", function(e) {
           $('#modalDeleteUser').find('.modal-body span').text($(this).data("user"));
           $('#modalDeleteUser').modal('show');
           var usrID = $(this).attr('user-id');
