@@ -29,6 +29,11 @@
 
       <form action="{{route('action.login')}}" method="post">
         @csrf
+        @if(session()->has('message'))
+          <div class="alert alert-danger mt-2">
+            {{ session()->get('message') }}
+          </div>
+        @endif
         <div class="input-group mb-3">
           <input class="form-control" placeholder="Email" type="email" name="email" required>
           <div class="input-group-append">

@@ -88,7 +88,7 @@ class PostController extends Controller
 
             if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
                 Storage::delete('/public/posts/'.$filename);
-                // return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
             }
 
             $image_resize = Image::make($image->getRealPath())->orientate();              

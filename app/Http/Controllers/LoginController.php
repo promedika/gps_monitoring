@@ -21,7 +21,7 @@ class LoginController extends Controller
             if(Auth::attempt(['email' => $email, 'password' => $password])) {
                 return redirect('/');
             }else{
-                return "Login Fail!";
+                return redirect()->back()->with('message', 'Login Gagal, Pastikan email dan password sudah benar !');
             }
     }
 }
