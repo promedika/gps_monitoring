@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Image Attendance
+    Marketing Attendance
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Image Attendance</h1>
+            <h1>Marketing Attendance</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-              <li class="breadcrumb-item active">Image Attendance</li>
+              <li class="breadcrumb-item active">Marketing Attendance</li>
             </ol>
           </div>
         </div>

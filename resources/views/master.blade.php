@@ -130,7 +130,7 @@
             <a href="{{route('posts.index')}}" class="nav-link">
               <p>
                 <i class="nav-icon fas fa-image"></i>
-                Image Attendance
+                Marketing Attendance
               </p>
             </a>
           </li>
