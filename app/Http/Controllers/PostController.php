@@ -66,39 +66,36 @@ class PostController extends Controller
             $image       = $request->file('image');
             $filename    = time().'_'.$image->hashName();
            
-            $image->storeAs('public/posts', $filename);
-
-            // declare full path and filename
-            $path = URL::to('/storage/posts').'/'.$filename;
+            $tmp_path = $_FILES["image"]["tmp_name"];
             
             try {
-                exif_read_data($path);
+                exif_read_data($tmp_path);
             } catch (\Throwable $th) {
-                Storage::delete('/public/posts/'.$filename);
                 return redirect()->back()->with('message', 'Lokasi Gambar Tidak Ditemukan !');
             }
             
             //get geolocation of image
-            $imgLocation = $this->get_image_location($path);
+            $imgLocation = $this->get_image_location($tmp_path);
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
             
             // get image taken date
-            $imgDate = exif_read_data($path);
+            $imgDate = exif_read_data($tmp_path);
             $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
             if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-                Storage::delete('/public/posts/'.$filename);
                 return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
             }
 
-            $image_resize = Image::make($image->getRealPath())->orientate();              
+            // declare full path and filename
+            $target_file = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$filename);
+
+            // move file upload to storage
+            move_uploaded_file($tmp_path, $target_file);
+
+            $image_resize = Image::make($target_file)->orientate();           
             $image_resize->resize(250, 250,);
             $image_resize->stream();
 
-            // $image_resize->save();
-            // $image_resize->save(public_path('images/ServiceImages/' .$filename));
-            // $image_resize->storeAs('/public/posts', $filename);
-            // $image_resize->save(public_path('posts/' .$filename));
             Storage::disk('local')->put('public/posts'.'/'.$filename, $image_resize, 'public');
         };
         $outlet = explode('|',$request->outlet_name);
@@ -155,9 +152,6 @@ class PostController extends Controller
                 
             $start = date_create(date('Y-m-d H:i:s',$tmpDate[0]));
             $end    = date_create(date('Y-m-d H:i:s',$tmpDate[count($tmpDate)-1]));
-            // $work_hour = strtotime($end)-strtotime($start);
-            // $jam = floor($work_hour / (60 * 60));
-            // $menit = $work_hour - $jam * (60 * 60);
             
             $work_hour = date_diff($start,$end);
             $status = $work_hour->h < 8 ? 'kurang dari jam kerja' : 'sesuai';
