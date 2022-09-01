@@ -82,7 +82,7 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal fade in" id="modalCreateUser">
+<div class="modal fade in" id="modalCreateUser" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="" method="post" accept-charset="utf-8" id="form-signup">
@@ -121,8 +121,8 @@
           <select class="form-control" id="role" name="role"required>
               <option value="" style="display:none;">Select Role</option>
               <option value="0">Admin</option>
-              <option value="1">Member</option>
-              <option value="2">Supervisor</option>
+              <option value="1">Marketing Member</option>
+              <option value="2">Marketing Report</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -150,7 +150,7 @@
 
 
 <!-- The Modal -->
-<div class="modal fade in" id="modalEditUser">
+<div class="modal fade in" id="modalEditUser" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
@@ -166,42 +166,42 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="first_name">First Name</label>
-          <input type="text" name="first_name" id="first_name_update" class="form-control">
+          <input type="text" name="first_name" id="first_name_update" class="form-control" required>
           <span id="errorFirstName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="last_name">Last Name</label>
-          <input type="text" name="last_name" id="last_name_update" class="form-control">
+          <input type="text" name="last_name" id="last_name_update" class="form-control" required>
           <span id="errorLastName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" name="email" id="email_update" class="form-control">
+          <input type="text" name="email" id="email_update" class="form-control" required>
           <span id="errorEmail" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="Role">Role</label>
-          <select class="form-control" id="role_update" name="role">
+          <select class="form-control" id="role_update" name="role" required>
               <option value="" style="display:none;">Select Role</option>
               <option value="0">Admin</option>
-              <option value="1">Member</option>
-              <option value="2">Supervisor</option>
+              <option value="1">Marketing Member</option>
+              <option value="2">Marketing Report</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="start_date">Start Date</label>
-          <input type="date" name="start_date" id="start_date_update" class="form-control">
+          <input type="date" name="start_date" id="start_date_update" class="form-control" required>
           <span id="errorStartDate" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="end_date">End Date</label>
-          <input type="date" name="end_date" id="end_date_update" class="form-control">
+          <input type="date" name="end_date" id="end_date_update" class="form-control" required>
           <span id="errorEndDate" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="end_date">Status</label>
-          <select name="status" id="status_update" class="form-control">
+          <select name="status" id="status_update" class="form-control" required>
             <option value="" style="display:none;">Select Status</option>
               <option value="active">Active</option>
               <option value="expired">Expired</option>
@@ -222,7 +222,7 @@
 
 
 <!-- The Modal -->
-<div class="modal fade in" id="modalDeleteUser">
+<div class="modal fade in" id="modalDeleteUser" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="" method="post" accept-charset="utf-8" id="form-delete">
@@ -314,6 +314,9 @@
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
+
+                        modal_id.find('.modal-footer button').prop('disabled',false);
+                        modal_id.find('.modal-header button').prop('disabled',false);
                     }
                 })
             })
@@ -377,7 +380,6 @@
                     success:function(data){
                         console.log('success update');
                         location.reload();
-
                     },
                     error:function(response){
                         $('#errorFirstName').text(response.responseJSON.errors.first_name);
@@ -387,6 +389,9 @@
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
+
+                        modal_id.find('.modal-footer button').prop('disabled',false);
+                        modal_id.find('.modal-header button').prop('disabled',false);
                     }
                 })
             })
@@ -416,6 +421,7 @@
                     },
                     error:function(response){
                         console.log('success failed');
+                        location.reload()
                     }
                 })
             })
