@@ -65,8 +65,9 @@ class PostController extends Controller
             
             $image       = $request->file('image');
             $filename    = time().'_'.$image->hashName();
-           
+
             $image->storeAs('public/posts', $filename);
+            // $image->uploads('public/posts', $filename);
 
             // declare full path and filename
             $path = URL::to('/storage/posts').'/'.$filename;

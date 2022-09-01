@@ -7,8 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Providers\RouteServiceProvider;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\FullCalenderController;
-
-
+use App\Http\Controllers\MarketingAttController;
+use App\Models\MarketingAtt;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,4 +82,7 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::resource('/event', \App\Http\Controllers\FullCalenderController::class);
     Route::post('eventAjax', [FullCalenderController::class, 'ajax']);
+
+    Route::get('/marketingatt', 'App\Http\Controllers\MarketingAttController@index')->name('marketingatt.index');
+    Route::post('/marketingatt/clockin', 'App\Http\Controllers\MarketingAttController@clock_in')->name('marketingatt.clockin');
 });

@@ -146,6 +146,15 @@
           @endif
 
           <li class="nav-item">
+            <a href="{{route('marketingatt.index')}}" class="nav-link">
+              <p>
+                <i class="nav-icon fas fa-clock"></i>
+                Marketing Personal Attendance
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">
               <p>
                 <i class="nav-icon fas fa-door-open"></i>

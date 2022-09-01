@@ -98,27 +98,27 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="first_name">First Name</label>
-          <input type="text" name="first_name" id="first_name" class="form-control">
+          <input type="text" name="first_name" id="first_name" class="form-control" required>
           <span id="errorFirstName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="last_name">Last Name</label>
-          <input type="text" name="last_name" id="last_name" class="form-control">
+          <input type="text" name="last_name" id="last_name" class="form-control"required>
           <span id="errorLastName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" name="email" id="email" class="form-control">
+          <input type="text" name="email" id="email" class="form-control"required>
           <span id="errorEmail" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" name="password" id="password" class="form-control">
+          <input type="password" name="password" id="password" class="form-control"required>
           <span id="errorPassword" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="Role">Role</label>
-          <select class="form-control" id="role" name="role">
+          <select class="form-control" id="role" name="role"required>
               <option value="" style="display:none;">Select Role</option>
               <option value="0">Admin</option>
               <option value="1">Member</option>
@@ -128,12 +128,12 @@
         </div>
         <div class="form-group">
           <label for="start_date">Start Date</label>
-          <input type="date" name="start_date" id="start_date" class="form-control">
+          <input type="date" name="start_date" id="start_date" class="form-control"required>
           <span id="errorStartDate" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="end_date">End Date</label>
-          <input type="date" name="end_date" id="end_date" class="form-control">
+          <input type="date" name="end_date" id="end_date" class="form-control"required>
           <span id="errorEndDate" class="text-red"></span>
         </div>
       </div>

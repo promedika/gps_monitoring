@@ -30,7 +30,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <a href="{{route('posts.create')}}" style="color:white"><img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%">New Attendance</a>
+                <a href="#" id="newatt" title="newatt" style="color:white"><img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%">New Attendance</a>
               </div>
             </div>
           </div>
@@ -49,4 +49,55 @@
   </section>
   <!-- /.content -->
 </div>
+
+<div class="modal fade in" id="modalCreateNewAtt" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      {{-- <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-newatt"> --}}
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Attendance</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-group">
+          <button for="clockin">Clock In</button>
+          <input type="file" name="clock_in_img" id="clock_in_img" class="form-control" style="display:none">
+          <span id="errorName" class="text-red"></span>
+        </div>
+
+        <div class="form-group">
+          <a href="{{route('posts.create')}}"><button for="visit">Visit</button></a>
+          <span id="errorName" class="text-red"></span>
+        </div>
+
+        <div class="form-group">
+          <button for="clockin">Clock Out</button>
+          <input type="file" name="clock_out_img" id="clock_out_img" class="form-control" style="display:none">
+          <span id="errorName" class="text-red"></span>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection
+@section('custom_script_js')
+<script>
+  $(document).ready(function(){
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
+      $('#newatt').click(function(){
+          $('#modalCreateNewAtt').modal('show');
+      })
+    })
+</script>
 @endsection
