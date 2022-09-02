@@ -85,4 +85,10 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::get('/marketingatt', 'App\Http\Controllers\MarketingAttController@index')->name('marketingatt.index');
     Route::post('/marketingatt/clockin', 'App\Http\Controllers\MarketingAttController@clock_in')->name('marketingatt.clockin');
+
+    Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('jabatan.index');
+    Route::post('/jabatan/create','App\Http\Controllers\JabatanController@store')->name('jabatan.create');
+    Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
+    Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
+    Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
 });

@@ -113,6 +113,15 @@
                   </p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-user-tie"></i></i>
+                    Jabatan
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
           @endif

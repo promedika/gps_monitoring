@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    User Outlet
+    Jabatan
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Users Outlet</h1>
+          <h1 class="m-0">Jabatan</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-            <li class="breadcrumb-item active">Users Outlet</li>
+            <li class="breadcrumb-item active">Jabatan</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -35,7 +35,7 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-useroutlet"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-jabatan"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -43,27 +43,19 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Outlet Name</th>
                             <th>Jabatan</th>
-                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          
                           @php $no = 1; @endphp
-                          
-                          @foreach ($useroutlets as $useroutlet)
+                          @foreach ($jabatans as $jabatan)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$useroutlet->user_outlets_name}}</td>
-                            <td>{{$useroutlet->outlets_name}}</td>
-                            <td>{{$useroutlet->jabatans_name}}</td>
-                            <td>{{$useroutlet->user_outlets_status}}</td>
+                            <td>{{$jabatan->name}}</td>
                             <td>
-                              <a href="#" useroutlet-id="{{$useroutlet->user_outlets_id}}" title="Edit" class="btn btn-warning btn-edit-useroutlet"><i class="fas fa-edit"></i></a>
-                              <a href="#" useroutlet-id="{{$useroutlet->user_outlets_id}}" data-useroutlet="{{$useroutlet->user_outlets_name}}" title="Delete" class="btn btn-danger btn-delete-useroutlet"><i class="fas fa-trash"></i></a>
+                                <a href="#" jabatan-id="{{$jabatan->id}}" title="Edit" class="btn btn-warning btn-edit-jabatan"><i class="fas fa-edit"></i></a>
+                                <a href="#" jabatan-id="{{$jabatan->id}}" title="Delete" class="btn btn-danger btn-delete-jabatan"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                           @endforeach
@@ -83,13 +75,13 @@
 </div>
 
 <!-- The Modal Add -->
-<div class="modal fade in" id="modalCreateUserOutlet" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalCreateJabatan" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Create New User Outlet</h4>
+          <h4 class="modal-title">Create New Jabatan</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -98,42 +90,10 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="first_name">Nama User</label>
+            <label for="name">Jabatan Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
             <span id="errorName" class="text-red"></span>
           </div>
-          <div class="form-group">
-            <label for="outlet_name">Nama Outlet</label>
-            <select id="outlet-dd" name="outlet_id" class="form-control" required>
-              <option value="">Pilih Lokasi</option>
-              @foreach ($outlets as $outlet)
-              <option value="{{$outlet->id}}">
-                  {{$outlet->name}}
-              </option>
-              @endforeach
-          </select>
-          </div>
-
-          <div class="form-group">
-            <label for="Jabatan">Jabatan</label>
-            <select id="jabatan" name="jabatan" class="form-control" required>
-              <option value="" style="display:none;">Pilih Jabatan</option>
-              @foreach ($jabatans as $jabatan)
-              <option value="{{$jabatan->id}}">{{$jabatan->name}}</option>
-              @endforeach
-          </select>
-          </div>
-
-          <div class="form-group">
-            <label for="status">Status</label>
-            <select id="status" name="status"  class="form-control" required>
-              <option value=""style="display:none;">Pilih Status</option>
-              <option value="AKTIF">AKTIF</option>
-              <option value="EXPIRED">EXPIRED</option>
-          </select>
-          </div>
-
-
         </div>
 
         <!-- Modal footer -->
@@ -147,13 +107,13 @@
 </div>
 
 <!-- The Modal Edit -->
-<div class="modal fade in" id="modalEditUserOutlet" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalEditJabatan" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit User Outlet</h4>
+        <h4 class="modal-title">Edit Jabatan
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -162,36 +122,9 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" name="name" id="name_update" value="{{ old('user_outlets_name')}}" class="form-control" required>
+          <label for="name">Nama Jabatan</label>
+          <input type="text" name="name" id="name_update" value="{{old('name')}}" class="form-control" required>
           <span id="errorName" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="last_name">Outlet Name</label>
-          <select id="outlet_id_update" name="outlet_id" value="{{ old('outlets_name')}}" class="form-control" required>
-              <option value="">Silahkan Pilih</option>
-              @foreach ($outlets as $outlet)
-              <option value="{{$outlet->id}}">{{$outlet->name}}</option>
-              @endforeach
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="Jabatan">Jabatan</label>
-          <select id="jabatan_update" name="jabatan" class="form-control" value="{{ old('jabatans_name')}}" required>
-            <option value="">Pilih Jabatan</option>
-            @foreach ($jabatans as $jabatan)
-              <option value="{{$jabatan->id}}">{{$jabatan->name}}</option>
-              @endforeach
-        </select>
-        </div>
-
-        <div class="form-group">
-          <label for="status">Status</label>
-          <select id="status_update" name="status"  class="form-control" value="{{ old('status')}}" required>
-            <option value=""style="display:none;">Pilih Status</option>
-            <option value="AKTIF">AKTIF</option>
-            <option value="EXPIRED">EXPIRED</option>
-        </select>
         </div>
       </div>
 
@@ -205,33 +138,28 @@
   </div>
 </div>
 
-
-<!-- The Modal Delete-->
-<div class="modal fade in" id="modalDeleteUserOutlet" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Delete User Outlet</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!-- The Modal Delete -->
+<div class="modal fade in" id="modalDeleteJabatan" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Jabatan</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <input type="hidden" name="id" id="id_delete" class="form-control">
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </form>
       </div>
-      <input type="hidden" name="id" id="id_delete" class="form-control">
-
-      <div class="modal-body">
-        <p>Apakah anda yakin ingin menghapus data <span></span> ini ?</p>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-      </form>
     </div>
-  </div>
 </div>
 @endsection
 
@@ -267,16 +195,16 @@
           "autoWidth": false,
           "responsive": true,
         });
-        
-        jQuery("body").on("click", ".btn-add-useroutlet", function(e){
-            $('#modalCreateUserOutlet').modal('show');
+
+        $('.btn-add-jabatan').click(function(){
+            $('#modalCreateJabatan').modal('show');
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalCreateUserOutlet');
+                let modal_id = $('#modalCreateJabatan');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('useroutlet.create')}}",
+                    url:"{{route('jabatan.create')}}",
                     type:'POST',
                     data:formData,
                     processData: false,
@@ -288,54 +216,51 @@
                       modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
+                        console.log('success create');
                         location.reload();
                     },
                     error:function(response){
                         $('#errorName').text(response.responseJSON.errors.name);
-                        $('#errorOutlet_id').text(response.responseJSON.errors.outlet_id);
                     }
                 })
             })
         })
 
 
-          jQuery("body").on("click", ".btn-edit-useroutlet", function(e) {
-            $('#modalEditUserOutlet').modal('show');
-            var useroutletID = $(this).attr('useroutlet-id');
-            var id = $('#id').val(useroutletID);
-                $.ajax({
-                    url:"{{route('useroutlet.edit')}}",
-                    type:'POST',
-                    data:{
-                      id:useroutletID,
-                    },
-                    success:function(data){
-                        $('#name_update').val(data.useroutlets.name);
-                        $('#outlet_id_update').val(data.useroutlets.outlet_id);
-                        $('#jabatan_update').val(data.useroutlets.jabatan);
-                        $('#status_update').val(data.useroutlets.status);
-                    },
-                    error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
-                        $('#errorOutlet_id').text(response.responseJSON.errors.outlet_id);
-                    }
-                    
-                })
+        $('.btn-edit-jabatan').click(function(){
+            $('#modalEditJabatan').modal('show');
+            var jabatanID = $(this).attr('jabatan-id');
+            var id = $('#id').val(jabatanID);
+            
+            $.ajax({
+                url:"{{route('jabatan.edit')}}",
+                type:'POST',
+                data:{
+                  id:jabatanID,
+                },
+                success:function(data){
+                    console.log(data);
+                    $('#name_update').val(data.name);
+                    $('#form-edit').data('id',jabatanID);
+                },
+                error:function(response){
+                    $('#errorName').text(response.responseJSON.errors.name);
+                }
+                
+            })
 
-                $('#form-edit').submit(function(e){
+            $('#form-edit').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalEditUserOutlet');
+                let modal_id = $('#modalEditJabatan');
+                let jabatanID = $(this).data('id');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('useroutlet.update')}}",
+                    url:"{{route('jabatan.update')}}",
                     type:'POST',
                     data:formData,
                     data:{
-                      id:useroutletID,
+                      id:jabatanID,
                       name:$('#name_update').val(),
-                      outlet_id:$('#outlet_id_update').val(),
-                      jabatan:$('#jabatan_update').val(),
-                      status:$('#status_update').val(),
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
@@ -347,27 +272,24 @@
                     },
                     error:function(response){
                         $('#errorName').text(response.responseJSON.errors.name);
-                        $('#errorOutlet_id').text(response.responseJSON.errors.outlet_id);
                     }
                 })
             })
         })
 
-          
-          jQuery("body").on("click", ".btn-delete-useroutlet", function(e) {
-          $('#modalDeleteUserOutlet').find('.modal-body span').text($(this).data("useroutlet"));
-          $('#modalDeleteUserOutlet').modal('show');
-          var useroutletID = $(this).attr('useroutlet-id');
-          var id = $('#id_delete').val(useroutletID);
+        $('.btn-delete-jabatan').click(function(){
+          $('#modalDeleteJabatan').modal('show');
+          var jabatanID = $(this).attr('jabatan-id');
+          var id = $('#id_delete').val(jabatanID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalDeleteUserOutlet');
+                let modal_id = $('#modalDeleteJabatan');
                 // var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('useroutlet.delete')}}",
+                    url:"{{route('jabatan.delete')}}",
                     type:'POST',
                     data:{
-                      id:useroutletID,
+                      id:jabatanID,
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
