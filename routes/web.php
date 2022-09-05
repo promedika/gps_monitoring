@@ -60,6 +60,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/attendances','App\Http\Controllers\AttendanceController@index')->name('dashboard.attendances.index');
     Route::post('/attendances/start','App\Http\Controllers\AttendanceController@startWork')->name('dashboard.attendances.start');
     Route::post('/attendances/finish','App\Http\Controllers\AttendanceController@finishWork')->name('dashboard.attendances.finish');
+    Route::post('attendances.upload','App\Http\Controllers\AttendanceController@uploadAtt')->name('attendances.upload');
 
     Route::get('/outlets','App\Http\Controllers\OutletController@index')->name('outlet.index');
     Route::post('/outlets/create','App\Http\Controllers\OutletController@store')->name('outlet.create');

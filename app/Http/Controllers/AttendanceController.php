@@ -100,4 +100,17 @@ class AttendanceController extends Controller
     {
         //
     }
+
+    public function uploadAtt(Request $request)
+    {
+        $type = $request->type;
+        $tmp_path = $_FILES["file"]["tmp_name"];
+
+        try {
+            $exif = exif_read_data($tmp_path);
+            dd($exif);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('message', 'Lokasi Gambar Tidak Ditemukan !');
+        }
+    }
 }
