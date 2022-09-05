@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Response;
 use Redirect;
-use App\Models\{Outlet, UserOutlet};
+use App\Models\{Jabatan, Outlet, UserOutlet};
 
 class DropdownController extends Controller
 {
@@ -17,8 +17,10 @@ class DropdownController extends Controller
     }
     public function fetchUserOutlet(Request $request)
     {
-        $useroutlet = UserOutlet::where("outlet_id", $request->outlet_id)->get(["name", "id"]);
-        // dd($useroutlet);
+        $useroutlet = UserOutlet::where("outlet_id", $request->outlet_id)->get(["name", "id", "jabatan"]);
+        foreach ($useroutlet as $key => $value) {
+            $value->jabatan_name = Jabatan::find($value->jabatan)->name;
+        }
         return response()->json($useroutlet);
     }
 }

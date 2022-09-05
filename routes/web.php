@@ -80,7 +80,7 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);
-
+    
     Route::resource('/event', \App\Http\Controllers\FullCalenderController::class);
     Route::post('eventAjax', [FullCalenderController::class, 'ajax']);
 

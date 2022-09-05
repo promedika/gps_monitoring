@@ -105,10 +105,11 @@
                 dataType: 'json',
                 success: function (result) {
                     console.log(result);
+                    $('#useroutlet-dd').after('<input type="hidden" name="jabatan_name" value="'+result[0].jabatan+'|'+result[0].jabatan_name+'">');
                     $('#useroutlet-dd').html('<option value="">Select PIC</option>');
                     $.each(result, function( key, value ) {
                         let val = value.id + '|' + value.name
-                    $("#useroutlet-dd").append('<option value="' + val + '">' + value.name + '</option>');
+                        $("#useroutlet-dd").append('<option value="' + val + '">' + value.name + '</option>');
                     });
                 }
             });
