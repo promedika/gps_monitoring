@@ -55,6 +55,7 @@
                             </div><br>
 
                             <div class="form-group">
+                                <label class="font-weight-bold">Nama Outlet</label>
                                 <select id="outlet-dd" name="outlet_name" class="form-control" required>
                                     <option value="">Select Location</option>
                                     @foreach ($outlets as $outlet)
@@ -66,6 +67,7 @@
                             </div><br>
 
                             <div class="form-group">
+                                <label class="font-weight-bold">Nama User</label>
                                 <select id="useroutlet-dd" name="useroutlet_name"  class="form-control" required>
                                     <option value="">Select PIC</option>
                                     {{-- @foreach ($useroutlets as $useroutlet)
@@ -76,6 +78,14 @@
                                 </select>
                             </div>
                             <br>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Aktifitas</label>
+                                <br>
+                                <textarea id="activity" class=" appearance-none border rounded" rows="6" cols="110" style="max-width: 100%" name="activity" required></textarea> 
+                            </div>
+                            <br>
+
                             <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
                         </form> 

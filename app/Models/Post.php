@@ -25,5 +25,8 @@ class Post extends Model
         'outlet_user_id',
         'outlet_name_id',
         'post_header_id',
+        'jabatan_id',
+        'jabatan_name',
+        'activity',
     ];
 }

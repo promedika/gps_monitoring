@@ -53,7 +53,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        
         //validate form
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,JPG',
@@ -124,7 +124,8 @@ class PostController extends Controller
             'imgTaken'=> $imgTaken,
             'post_header_id' => $unique_id,
             'jabatan_id' => $jabatan_id,
-            'jabatan_neme' => $jabatan_name,
+            'jabatan_name' => $jabatan_name,
+            'activity' => $request->activity,
 
         ]);
 
