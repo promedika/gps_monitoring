@@ -105,6 +105,10 @@ class PostController extends Controller
         $outlet_user = explode('|',$request->useroutlet_name);
         $outlet_user_id = $outlet_user[0];
         $outlet_user_name = $outlet_user[1];
+
+        $jabatan = explode('|',$request->jabatan_name);
+        $jabatan_id = $jabatan[0];
+        $jabatan_name = $jabatan[1];
         
         $unique_id = Auth::User()->id.'_'.date('Ymd');
         // create post
@@ -118,7 +122,10 @@ class PostController extends Controller
             'user_fullname' => Auth::User()->first_name." ".Auth::User()->last_name,
             'imgLoc' => $imgLoc,
             'imgTaken'=> $imgTaken,
-            'post_header_id' => $unique_id
+            'post_header_id' => $unique_id,
+            'jabatan_id' => $jabatan_id,
+            'jabatan_neme' => $jabatan_name,
+
         ]);
 
         $header = DB::table('post_header')

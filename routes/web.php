@@ -9,6 +9,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\MarketingAttController;
 use App\Models\MarketingAtt;
+use App\Http\Controllers\DateTimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,6 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
     Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
     Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
+
+    Route::get('/carbon',[DateTimeController::class, 'index']);
 });
