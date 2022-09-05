@@ -26,6 +26,8 @@ class CreatePostsTable extends Migration
             $table->string('outlet_user_id');
             $table->string('post_header_id');
             $table->string('activity');
+            $table->string('jabatan_id');
+            $table->string('jabatan_name');
             $table->timestamps();
         });
     }
