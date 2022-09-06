@@ -32,74 +32,37 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table" id="report">
+                        <table class="table tables-responsive" id="reports">
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Work Hours</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                @foreach ($data[0] as $value)
+                                <th scope="col">{{$value}}</th>
+                                @endforeach
                               </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $nomor = 1;
-                                     ?>
-                              @forelse ($posts as $post)
-                                <tr class="data_post">
-                                    <td>{{$nomor++}}</td>
-                                    <td>{{$post->user_fullname}}</td>
-                                    <td>{{str_replace(' 00:00:00','',$post->created_at)}}</td>
-                                    <td>{{$post->work_hour}}</td>
-                                    <td>{{$post->status}}</td>
-                                    <td class="text-center">
-                                            <a href="#" data-post_id="{{$post->id}}" class="btn bg-warning btn-detail" data-work_hour="{{$post->work_hour}}" data-status="{{$post->status}}" data-fullname="{{$post->user_fullname}}" data-date="{{str_replace(' 00:00:00','',$post->created_at)}}">Detail</a>
-                                    </td>
-                                </tr>
-                              @empty
-                                  <div class="alert alert-danger">
-                                      Data Post belum Tersedia.
-                                  </div>
-                              @endforelse
+                                <?php /*
+                                @php $nomor = 1; @endphp
+                                @foreach ($data as $key => $value)
+                                    @php if ($key == 0) continue; @endphp
+                                    <tr class="data_post">
+                                        <td>{{$nomor++}}</td>
+                                        <td>{{$post->user_fullname}}</td>
+                                        <td>{{str_replace(' 00:00:00','',$post->created_at)}}</td>
+                                        <td>{{$post->work_hour}}</td>
+                                        <td>{{$post->status}}</td>
+                                        <td class="text-center">
+                                                <a href="#" data-post_id="{{$post->id}}" class="btn bg-warning btn-detail" data-work_hour="{{$post->work_hour}}" data-status="{{$post->status}}" data-fullname="{{$post->user_fullname}}" data-date="{{str_replace(' 00:00:00','',$post->created_at)}}">Detail</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                */ ?>
                             </tbody>
-                          </table>  
-                          {{-- {{ $posts->links() }} --}}
+                          </table>
                     </div>
                 </div>
             </div>
-    </div>
-</div>
-
-<div class="modal fade in" id="modalShow">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div>
-                <h2 class="work_hour"></h2>
-                <h2 class="status"></h2>
-            </div>
-            <table class="table table-bordered table-hover" id="post-table">
-                <thead>
-                  <tr>
-                    <th scope="col">User</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">P.I.C</th>
-                    <th scope="col">Image Taken</th>
-                    {{-- <th scope="col">Action</th> --}}
-                  </tr>
-                </thead>
-            </table> 
-        </div>
-      </div>
     </div>
 </div>
 @endsection
@@ -120,68 +83,18 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>       
-    <script>
-        $(document).ready(function(){
-            $('#report').DataTable({
+<script>
+    $(document).ready(function(){
+        $('#report').DataTable({
             "paging": true,
             "lengthChange": true,
             "searching": true,
             "ordering": true,
             "info": true,
-            "autoWidth": false,
+            "autoWidth": true,
             "responsive": true,
-            });
-
-            jQuery("body").on("click", ".btn-detail", function(e) {
-            $('#modalShow').find('.modal-title').text($(this).data("fullname")+","+$(this).data("date")) 
-            $('#modalShow').find('.work_hour').text($(this).data('work_hour'));
-            $('#modalShow').find('.status').text($(this).data('status'));
-            $('#modalShow').modal('show');
-            var postID = $(this).data('post_id');
-                $.ajax({
-                    url:"{{route('reports.show')}}",
-                    data:{
-                        id:postID,
-                    },
-                    beforeSend: function() {
-                        jQuery('#post-table').DataTable().destroy();
-                        jQuery('#post-table tbody').remove();
-                    },
-                    success:function(data){
-                        console.log('success show');
-                        console.log(data);
-                        var table_log = '<tbody>';
-                            // table_log += '<tbody>'+
-                            jQuery.each(data, function(key,value) {
-                                table_log += '<tr>'+
-                                    '<td>'+value.user_fullname+'</td>'+
-                                    '<td>'+value.outlet_name+'</td>'+
-                                    '<td>'+value.outlet_user+'</td>'+
-                                    '<td>'+value.imgTaken+'</td>'+
-                                '</tr>';
-                            });
-                            table_log += '</tbody>';
-                            console.log(table_log);
-                            $('#post-table').find('thead').after(table_log);
-
-                            $('#post-table').DataTable({
-                            "paging": true,
-                            "lengthChange": true,
-                            "searching": true,
-                            "ordering": true,
-                            "info": true,
-                            "autoWidth": false,
-                            "responsive": true,
-                            });
-                            
-
-
-
-                    }
-                })
-            
-            });
-
+            "scrollY": true,
         });
-    </script>
+    });
+</script>
 @endsection
