@@ -66,12 +66,12 @@
       <div class="modal-body">
         <div class="form-group">
           <button for="clockin" class="btn btn-md btn-primary" id="clock_in_btn">Clock In</button>
-          <input type="file" name="clock_in_img" id="clock_in_img" class="form-control" style="display:none">
+          <input type="file" name="clock_in_img" id="clock_in_img" class="form-control" style="display:none" accept="image/*" capture="camera"> 
           
           <a href="{{route('posts.create')}}"><button for="visit" class="btn btn-md btn-success" id="visit_btn">Visit</button></a>
 
           <button for="clockin" id="clock_out_btn" class="btn btn-md btn-primary">Clock Out</button>
-          <input type="file" name="clock_out_img" id="clock_out_img" class="form-control" style="display:none">
+          <input type="file" name="clock_out_img" id="clock_out_img" class="form-control" style="display:none" accept="image/*" capture="camera">
         </div>
       </div>
       </form>
@@ -140,14 +140,12 @@
               modal_create.find('#visit_btn').prop('disabled',true);
             },
             success: (data) => {
-              alert('Data '+message_att+' berhasil disimpan');
-              return false;
-              // location.reload();
+              alert(data);
+              location.reload();
             },
             error: function(data) {
-              alert('Data '+message_att+' gagal disimpan!');
-              return false;
-              // location.reload();
+              alert(data);
+              location.reload();
             }
           });
         }
