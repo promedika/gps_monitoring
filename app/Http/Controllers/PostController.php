@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 use URL;
 use DataTables;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {

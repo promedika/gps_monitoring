@@ -85,7 +85,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::resource('/event', \App\Http\Controllers\FullCalenderController::class);
     Route::post('eventAjax', [FullCalenderController::class, 'ajax']);
 
-    Route::get('/marketingatt', 'App\Http\Controllers\MarketingAttController@index')->name('marketingatt.index');
+    Route::get('/marketingatt', 'App\Http\Controllers\AttendanceController@index')->name('marketingatt.index');
     Route::post('/marketingatt/clockin', 'App\Http\Controllers\MarketingAttController@clock_in')->name('marketingatt.clockin');
 
     Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('jabatan.index');
