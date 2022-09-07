@@ -9,7 +9,7 @@ use App\Models\Outlet;
 use App\Models\UserOutlet;
 use DataTables;
 use App\Models\PostHeader;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,7 +116,7 @@ class AttendanceReportController extends Controller
         }
         
         $return = array_merge($table_header,$tmp_return);
-
+        
         return $return;
     }
 }
