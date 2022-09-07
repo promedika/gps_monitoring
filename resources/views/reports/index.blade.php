@@ -31,17 +31,26 @@
           <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
-                        <table class="table tables-responsive" id="reports">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-head-fixed text-nowrap border" id="reports">
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
                                 @foreach ($data[0] as $value)
-                                <th scope="col">{{$value}}</th>
+                                <th scope="col">{{str_replace('day_','',$value)}}</th>
                                 @endforeach
                               </tr>
                             </thead>
                             <tbody>
+                              @if (count($data) == 1)
+                                <tr class="visit">
+                                    <td colspan="{{count($data[0]+1)}}">
+                                      <div class="alert alert-danger">
+                                          <h6 align="center"> Data post Belum Tersedia</h6>
+                                      </div>
+                                    </td>
+                                </tr>
+                                @else
                                 <?php /*
                                 @php $nomor = 1; @endphp
                                 @foreach ($data as $key => $value)
@@ -58,6 +67,7 @@
                                     </tr>
                                 @endforeach
                                 */ ?>
+                                @endif
                             </tbody>
                           </table>
                     </div>

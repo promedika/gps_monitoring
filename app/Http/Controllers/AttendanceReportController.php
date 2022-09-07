@@ -9,7 +9,7 @@ use App\Models\Outlet;
 use App\Models\UserOutlet;
 use DataTables;
 use App\Models\PostHeader;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -106,11 +106,12 @@ class AttendanceReportController extends Controller
             $tmp_arr['col_count'] = $col_count;
             $tmp_return[] = array_merge($values,$tmp_arr);
         }
+        
 
         $table_header[] = array_keys($tmp_return[0]);
         
         $return = array_merge($table_header,$tmp_return);
-
+        // dd($return);
         return $return;
     }
 }
