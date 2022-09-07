@@ -39,17 +39,25 @@ class AttendanceReportController extends Controller
         $return = [];
 
         $param_year = explode('-',$params['date'])[0];
-        $param_month = explode('-',$params['date'])[0];
+        $param_month = strlen(explode('-',$params['date'])[1]) == 1 ? '0'.explode('-',$params['date'])[1] : explode('-',$params['date'])[1];
 
         $month = $params['date'];
         $start = Carbon::parse($month)->startOfMonth();
         $end = Carbon::parse($month)->endOfMonth();
 
+        $tmp_table_header_2 = [];
+        $tmp_table_header_2_no = 1;
         $dates = [];
         while ($start->lte($end)) {
             $dates[] = $start->copy();
+            $tmp_table_header_2[] = 'day_'.$tmp_table_header_2_no++;
             $start->addDay();
         }
+
+        $tmp_table_header_1 = ['outlet_user','jabatan_name','outlet_name'];
+        $tmp_table_header_3 = ['col_count'];
+
+        $table_header[] = array_merge($tmp_table_header_1,$tmp_table_header_2,$tmp_table_header_3);
 
         $query = DB::select("
                     SELECT * 
@@ -76,9 +84,9 @@ class AttendanceReportController extends Controller
             ];
 
             foreach ($dates as $k_date => $v_date) {
-                $k_date_custom = strlen($k_date+1) == 1 ? 'day_0'.$k_date+1 : 'day_'.$k_date+1;
-                $k_date = strlen($k_date+1) == 1 ? '0'.$k_date+1 : $k_date+1;
-                $imgTaken = $param_year.'-'.$k_date;
+                $k_date_custom = 'day_'.$k_date+1;
+                $k_date2 = strlen($k_date+1) == 1 ? '0'.$k_date+1 : $k_date+1;
+                $imgTaken = $param_year.'-'.$param_month.'-'.$k_date2;
 
                 $check = DB::select("
                             SELECT * 
@@ -106,8 +114,6 @@ class AttendanceReportController extends Controller
             $tmp_arr['col_count'] = $col_count;
             $tmp_return[] = array_merge($values,$tmp_arr);
         }
-
-        $table_header[] = array_keys($tmp_return[0]);
         
         $return = array_merge($table_header,$tmp_return);
 
