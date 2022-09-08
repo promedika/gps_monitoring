@@ -101,17 +101,17 @@
                               @endif
                             </tbody>
                             <tfooter>
-                              @if (count($data) > 2)
-                              <tr>
-                                <th scope="col" colspan="4">
-                                    <h6 align="center"><b>Total Harian</b></h6>
-                                </th>
-                                @foreach ($data[0] as $key => $value)
-                                @php if ($key < 3) continue; @endphp
-                                <th scope="col" class="total_{{$value}}">{{str_replace('day_','',$value)}}</th>
-                                @endforeach
-                              </tr>
-                              @endif
+                                @if (count($data) > 2)
+                                <tr>
+                                    <th scope="col" colspan="4">
+                                        <h6 align="center"><b>Total Harian</b></h6>
+                                    </th>
+                                    @foreach ($data[count($data)-1] as $key => $value)
+                                        @php if ($key < 3) continue; @endphp
+                                        <th scope="col">{{$value}}</th>
+                                    @endforeach
+                                </tr>
+                                @endif
                             </tfooter>
                           </table>
                     </div>
