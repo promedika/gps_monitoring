@@ -75,7 +75,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/useroutlets/delete','App\Http\Controllers\UserOutletController@destroy')->name('useroutlet.delete');
 
     Route::resource('/reports', \App\Http\Controllers\AttendanceReportController::class);
-    Route::post('/reports/show', 'App\Http\Controllers\AttendanceReportController@show')->name('reports.show');
+    Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
 
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
 

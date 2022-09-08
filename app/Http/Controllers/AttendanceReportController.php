@@ -16,28 +16,38 @@ use Illuminate\Support\Facades\Auth;
 class AttendanceReportController extends Controller
 {
     public function index() {
+        $users = User::all();
         $posts = DB::table('post_header')->get();
-
+        // dd($users);
         $tmp_data = [
-            'date' => '2022-09',
-            'user_id' => Auth::User()->id
+            'date' => now(),
+            'user_id' => null,
+            'status' => 'no'
         ];
 
         $data = $this->getDateTime($tmp_data);
 
-        return view('reports.index', compact('posts','data'));
+        return view('reports.index', compact('posts','data','users','tmp_data'));
     }
 
-    public function show(Request $request)
+    public function show_report(Request $request)
     {
-        $postH = DB::table('posts')->where('post_header_id', $request->id)->get();
+        $users = User::all();
+        $posts = DB::table('post_header')->get();
+        // dd($users);
+        $tmp_data = [
+            'date' => $request->date,
+            'user_id' => $request->user_fullname,
+            'status' => 'yes'
+        ];
 
-        return $postH;
+        $data = $this->getDateTime($tmp_data);
+
+        return view('reports.index', compact('posts','data','users','tmp_data'));
     }
 
     public function getDateTime($params) {
         $return = [];
-
         $param_year = explode('-',$params['date'])[0];
         $param_month = strlen(explode('-',$params['date'])[1]) == 1 ? '0'.explode('-',$params['date'])[1] : explode('-',$params['date'])[1];
 
@@ -117,6 +127,6 @@ class AttendanceReportController extends Controller
         
         $return = array_merge($table_header,$tmp_return);
         
-        return $return;
+            return $return;
     }
 }
