@@ -34,7 +34,7 @@
 
                   <div class="card-header" style="display: flex">
                     <div class="col-4  form-group">
-                      <select name="user_fullname" id="user" class="form-control">
+                      <select name="user_fullname" id="user" class="form-control" required>
                         <option value="">Pilih User</option>
                         @foreach($users as $user)
                         <option value="{{$user->id}}">
@@ -46,14 +46,18 @@
                     <div class="col-4 form-group">
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
                           @if($tmp_data['status'] = 'no')
-                          <input name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly/>
+                          <input name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
                           @else
-                          <input value="{{$tmp_data['date']}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly/>
+                          <input value="{{$tmp_data['date']}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
                           @endif
                         </div>
                     </div>
                     <div>
                     <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                  </form>
+                    <div>
+                      <a href="#" id="excel" title="excel"><i class="fas fa-download"></i></a>
                     </div>
                   </div>
                     <div class="card-body table-responsive p-0">
@@ -125,11 +129,44 @@
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <script>
-  $(function () {
+   $(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     //Date picker
     $('#reservationdate').datetimepicker({
         viewMode: 'months',
         format: 'YYYY-MM'
+    });
+
+    $('#excel').on('click', function (e) {
+      e.preventDefault();
+
+      var form_data = new FormData();                  
+          form_data.append('file', 'test');
+
+      $.ajax({
+            type: 'POST',
+            url:"{{route('reports.excel')}}",
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+    
+            },
+            success: (data) => {
+              alert(data);
+              location.reload();
+            },
+            error: function(data) {
+              alert(data);
+              location.reload();
+            }
+          });
     });
   });
   

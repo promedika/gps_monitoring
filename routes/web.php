@@ -76,6 +76,7 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::resource('/reports', \App\Http\Controllers\AttendanceReportController::class);
     Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
+    Route::post('/reports/excel', 'App\Http\Controllers\AttendanceReportController@excel_report')->name('reports.excel');
 
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
 

@@ -12,6 +12,8 @@ use App\Models\PostHeader;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Attendance;
+use Excel;
 
 class AttendanceReportController extends Controller
 {
@@ -30,8 +32,16 @@ class AttendanceReportController extends Controller
         return view('reports.index', compact('posts','data','users','tmp_data'));
     }
 
+    
+
     public function show_report(Request $request)
     {
+
+        $this->validate($request, [
+            'date' => 'required',
+            'user_fullname' => 'required',
+        ]);
+
         $users = User::all();
         $posts = DB::table('post_header')->get();
         // dd($users);
@@ -44,7 +54,19 @@ class AttendanceReportController extends Controller
         $data = $this->getDateTime($tmp_data);
 
         return view('reports.index', compact('posts','data','users','tmp_data'));
+    }   
+
+    public function excel_report(Request $request)
+    {
+        Excel::create('New file', function($excel) {
+            $excel->sheet('First sheet', function($sheet) {
+                $sheet->loadView('reports.index');
+            });
+        })->export('xls');;
+
+        return Excel::download($data, 'test.xlsx');
     }
+
 
     public function getDateTime($params) {
         $return = [];
@@ -153,4 +175,6 @@ class AttendanceReportController extends Controller
         
         return $return;
     }
+
+    
 }
