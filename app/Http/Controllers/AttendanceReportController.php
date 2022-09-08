@@ -114,7 +114,8 @@ class AttendanceReportController extends Controller
             $visit[] = array_merge($tmp_visit,$tmp_visit2);
         }
 
-        $tmp_return = [];
+        $table_body = [];
+        $row_count = 0;
         foreach ($visit as $keys => $values) {
             $col_count = 0;
             foreach ($values as $k => $v) {
@@ -122,11 +123,34 @@ class AttendanceReportController extends Controller
                 $col_count += $v;
             }
             $tmp_arr['col_count'] = $col_count;
-            $tmp_return[] = array_merge($values,$tmp_arr);
+            $table_body[] = array_merge($values,$tmp_arr);
+            $row_count += $col_count;
         }
+
+        $tmp_table_footer_2 = [];
+        foreach ($tmp_table_header_2 as $k => $v) {
+            $tmp_day = str_replace('day_', '', $v);
+            $tmp_day = strlen($tmp_day+1) == 1 ? '0'.$tmp_day : $tmp_day;
+
+            $imgTaken = $param_year.'-'.$param_month.'-'.$tmp_day;
+
+            $check = DB::select("
+                        SELECT count(*) total 
+                        FROM posts p  
+                        WHERE 1=1 
+                        AND p.imgTaken LIKE '%".$imgTaken."%'
+                    ");
+            
+            $tmp_table_footer_2[] = $check[0]->total;
+        }
+
+        $tmp_table_footer_1 = $tmp_table_header_1;
+        $tmp_table_footer_3 = [$row_count];
+
+        $table_footer[] = array_merge($tmp_table_footer_1,$tmp_table_footer_2,$tmp_table_footer_3);
         
-        $return = array_merge($table_header,$tmp_return);
+        $return = array_merge($table_header,$table_body,$table_footer);
         
-            return $return;
+        return $return;
     }
 }

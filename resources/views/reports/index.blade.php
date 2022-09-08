@@ -61,13 +61,25 @@
                             <thead>
                               <tr>
                                 <th scope="col">No</th>
-                                @foreach ($data[0] as $value)
-                                <th scope="col">{{str_replace('day_','',$value)}}</th>
+                               @foreach ($data[0] as $key => $value)
+                                    @php
+                                    $th = str_replace('day_','',$value);
+                                    if($key == count($data[0])-1) {
+                                        $th = 'Total Bulanan';
+                                    } elseif ($key == 0) {
+                                        $th = 'PIC RS';
+                                    } elseif ($key == 1) {
+                                        $th = 'Jabatan';
+                                    } elseif ($key == 2) {
+                                        $th = 'RS';
+                                    }
+                                    @endphp
+                                    <th scope="col">{{$th}}</th>
                                 @endforeach
                               </tr>
                             </thead>
                             <tbody>
-                              @if (count($data) == 1)
+                              @if (count($data) == 2)
                                 <tr class="visit">
                                     <td colspan="{{count($data[0])+1}}">
                                       <div class="alert alert-danger">
@@ -78,7 +90,7 @@
                                 @else
                                 @php $nomor = 1; @endphp
                                 @foreach ($data as $key => $value)
-                                    @php if ($key == 0) continue; @endphp
+                                    @php if ($key == 0 || $key == count($data)-1) continue; @endphp
                                     <tr class="data_post">
                                         <td>{{$nomor++}}</td>
                                         @foreach ($value as $v)
@@ -88,6 +100,19 @@
                                 @endforeach
                               @endif
                             </tbody>
+                            <tfooter>
+                              @if (count($data) > 2)
+                              <tr>
+                                <th scope="col" colspan="4">
+                                    <h6 align="center"><b>Total Harian</b></h6>
+                                </th>
+                                @foreach ($data[0] as $key => $value)
+                                @php if ($key < 3) continue; @endphp
+                                <th scope="col" class="total_{{$value}}">{{str_replace('day_','',$value)}}</th>
+                                @endforeach
+                              </tr>
+                              @endif
+                            </tfooter>
                           </table>
                     </div>
                 </div>
