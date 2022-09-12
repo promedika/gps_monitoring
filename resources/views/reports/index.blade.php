@@ -34,7 +34,7 @@
 
                   <div class="card-header" style="display: flex">
                     <div class="col-4  form-group">
-                      <select name="user_fullname" id="user" class="form-control" required>
+                      <select name="user_fullname" id="user" class="form-control txtuser" required>
                         <option value="">Pilih User</option>
                         @foreach($users as $user)
                         <option value="{{$user->id}}">
@@ -46,19 +46,17 @@
                     <div class="col-4 form-group">
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
                           @if($tmp_data['status'] = 'no')
-                          <input name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
+                          <input name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
                           @else
-                          <input value="{{$tmp_data['date']}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
+                          <input value="{{$tmp_data['date']}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
                           @endif
                         </div>
                     </div>
                     <div>
                     <input type="submit" value="Submit" class="btn btn-primary">
+                    <button class="btn btn-primary" id="excel" title="excel"><i class="fas fa-download"></i></button>
                     </div>
                   </form>
-                    <div>
-                      <a href="#" id="excel" title="excel"><i class="fas fa-download"></i></a>
-                    </div>
                   </div>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-head-fixed table-hover" id="reports">
@@ -104,11 +102,11 @@
                                 @endforeach
                               @endif
                             </tbody>
-                            <tfooter>
+                            <tfoot>
                                 @if (count($data) > 2)
                                 <tr>
                                     <th scope="col" colspan="4">
-                                        <h6 align="center"><b>Total Harian</b></h6>
+                                      <p style="text-align: center" >Total Harian</p>
                                     </th>
                                     @foreach ($data[count($data)-1] as $key => $value)
                                         @php if ($key < 3) continue; @endphp
@@ -116,8 +114,8 @@
                                     @endforeach
                                 </tr>
                                 @endif
-                            </tfooter>
-                          </table>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -128,6 +126,7 @@
 <!-- Datepicker --> 
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<script src="{{asset('assets/AdminLTE-3.2.0/plugins/jquery-table/tableToExcel.js')}}"></script>
 <script>
    $(document).ready(function(){
     $.ajaxSetup({
@@ -138,35 +137,26 @@
 
     //Date picker
     $('#reservationdate').datetimepicker({
-        viewMode: 'months',
+        viewMode: 'months', 
         format: 'YYYY-MM'
     });
 
     $('#excel').on('click', function (e) {
       e.preventDefault();
 
-      var form_data = new FormData();                  
-          form_data.append('file', 'test');
+      let user_fullname = $('.txtuser').val();
+      let date = $('.txtdate').val()
+      let table = $("#reports")[0];
+      let filename = "reports.xlsx";
 
-      $.ajax({
-            type: 'POST',
-            url:"{{route('reports.excel')}}",
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-    
-            },
-            success: (data) => {
-              alert(data);
-              location.reload();
-            },
-            error: function(data) {
-              alert(data);
-              location.reload();
-            }
-          });
+      TableToExcel.convert(table, {
+        name: filename,
+        sheet: {
+          name: "Report"
+        }
+      });
+
+
     });
   });
   

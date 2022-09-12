@@ -10,6 +10,7 @@ use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\MarketingAttController;
 use App\Models\MarketingAtt;
 use App\Http\Controllers\DateTimeController;
+use APp\Http\Controllers\AttendanceReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,17 +75,13 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/useroutlets/update','App\Http\Controllers\UserOutletController@update')->name('useroutlet.update');
     Route::post('/useroutlets/delete','App\Http\Controllers\UserOutletController@destroy')->name('useroutlet.delete');
 
-    Route::resource('/reports', \App\Http\Controllers\AttendanceReportController::class);
+    Route::get('/reports', 'App\Http\Controllers\AttendanceReportController@index')->name('reports.index');
     Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
-    Route::post('/reports/excel', 'App\Http\Controllers\AttendanceReportController@excel_report')->name('reports.excel');
 
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
     Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);
-    
-    Route::resource('/event', \App\Http\Controllers\FullCalenderController::class);
-    Route::post('eventAjax', [FullCalenderController::class, 'ajax']);
 
     Route::get('/marketingatt', 'App\Http\Controllers\AttendanceController@index')->name('marketingatt.index');
     Route::post('/marketingatt/clockin', 'App\Http\Controllers\MarketingAttController@clock_in')->name('marketingatt.clockin');
@@ -94,6 +91,4 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
     Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
     Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
-
-    Route::get('/carbon',[DateTimeController::class, 'index']);
 });

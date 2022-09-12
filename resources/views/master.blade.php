@@ -125,16 +125,7 @@
             </ul>
           </li>
           @endif
-
-          <li class="nav-item">
-            <a href="{{route('event.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-calendar"></i>
-                Calendar
-              </p>
-            </a>
-          </li>
-
+          
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">
               <p>

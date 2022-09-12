@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
-use Excel;
+use App\Exports\ReportExport;
 
 class AttendanceReportController extends Controller
 {
@@ -44,7 +44,7 @@ class AttendanceReportController extends Controller
 
         $users = User::all();
         $posts = DB::table('post_header')->get();
-        // dd($users);
+
         $tmp_data = [
             'date' => $request->date,
             'user_id' => $request->user_fullname,
@@ -58,13 +58,23 @@ class AttendanceReportController extends Controller
 
     public function excel_report(Request $request)
     {
-        Excel::create('New file', function($excel) {
-            $excel->sheet('First sheet', function($sheet) {
-                $sheet->loadView('reports.index');
-            });
-        })->export('xls');;
+            $this->validate($request, [
+                'date' => 'required',
+                'user_fullname' => 'required',
+            ]);
 
-        return Excel::download($data, 'test.xlsx');
+            $users = User::all();
+            $posts = DB::table('post_header')->get();
+
+            $tmp_data = [
+                'date' => $request->date,
+                'user_id' => $request->user_fullname,
+                'status' => 'yes'
+            ];
+            
+            $data = $this->getDateTime($tmp_data);
+            
+            return view('reports.xml', compact('posts','data','users','tmp_data'));
     }
 
 
@@ -172,7 +182,7 @@ class AttendanceReportController extends Controller
         $table_footer[] = array_merge($tmp_table_footer_1,$tmp_table_footer_2,$tmp_table_footer_3);
         
         $return = array_merge($table_header,$table_body,$table_footer);
-        
+    
         return $return;
     }
 

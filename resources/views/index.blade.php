@@ -34,15 +34,6 @@
               </div>
             </div>
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <a href="{{route('event.index')}}" style="color:white"><img src="{{asset('assets/img/pngcalendar.png')}}" style="width: 100%">Calendar</a>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.row -->
   	</div><!-- /.container-fluid -->

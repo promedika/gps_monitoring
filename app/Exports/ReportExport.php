@@ -2,18 +2,31 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Attendance;
 use App\Models\Post;
-class ReportExport implements FromCollection
+use App\Models\User;
+use App\Http\Controllers\AttendanceReportController;
+use Illuminate\Support\Facades\URL;
+
+class ReportExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+
+    private $data;
+
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
+
+        
+    }
+
+    public function view(): View
+    {
+        // dd($this->data);
+        return view('reports.xml', [
+            'data' => $this->data
+        ]);
     }
 }
