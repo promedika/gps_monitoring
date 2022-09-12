@@ -115,11 +115,12 @@ class AttendanceController extends Controller
         $tmp_path = $_FILES["file"]["tmp_name"];
 
         $unique_id = Auth::User()->id.'_'.date('Ymd');
-        $header = DB::table('attendances')
-        ->where('id', $unique_id)
-            ->get();
-        if ($type == 'clock_in_img' && count($header) > 0) {
+        $header = DB::table('attendances')->where('id', $unique_id)->get();
+
+        if (count($header) > 0 && $type == 'clock_in_img') {
             return "Anda Sudah Melakukan Clock In Hari ini";
+        } elseif (count($header) == 0 && $type == 'clock_out_img') {
+            return "Anda Belum Melakukan Clock In Hari ini";
         }
 
         try {
