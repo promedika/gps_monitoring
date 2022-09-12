@@ -18,6 +18,7 @@ Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload
 - Buka command line dan pindah ke directory root absensi marketing.
 - Jalankan "composer install"
 - Buat folder public di dalam folder storage/app/
+- Buat folder posts, clock_in_img, dan clock_out_img di dalam folder storage/app/public/
 - Jalankan "php artisan storage:link"
 - Setting database
 - Setting .env

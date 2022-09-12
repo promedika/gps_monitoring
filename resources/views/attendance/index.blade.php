@@ -28,83 +28,43 @@
     </div>
     <section class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table" id="report">
-                            <thead>
-                              <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Work Hours</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $nomor = 1;
-                                     ?>
-                              @forelse ($attendances as $attendance)
-                                <tr class="data_post">
-                                    <td>{{$nomor++}}</td>
-                                    <td>{{$attendance->user_fullname}}</td>
-                                    <td>{{date('Y-m-d',strtotime($attendance->created_at))}}</td>
-                                    <td>{{$attendance->work_hour}}</td>
-                                    <td>{{$attendance->status}}</td>
-                                    <td class="text-center">
-                                            <a href="#" data-post_id="{{$attendance->id}}" class="btn bg-warning btn-detail" data-work_hour="{{$attendance->work_hour}}" data-status="{{$attendance->status}}" data-fullname="{{$attendance->user_fullname}}" data-date="{{str_replace(' 00:00:00','',$attendance->created_at)}}">Detail</a>
-                                    </td>
-                                </tr>
-                              @empty
-                                  <div class="alert alert-danger">
-                                      Data Post belum Tersedia.
-                                  </div>
-                              @endforelse
-                            </tbody>
-                          </table>  
-                          {{-- {{ $posts->links() }} --}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table" id="report">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Work Hours</th>
+                                    <th scope="col">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    @php $nomor = 1; @endphp
+                                    @foreach ($attendances as $attendance)
+                                    <tr class="data_post">
+                                        <td>{{$nomor++}}</td>
+                                        <td>{{$attendance->user_fullname}}</td>
+                                        <td>{{date('Y-m-d',strtotime($attendance->created_at))}}</td>
+                                        <td>{{$attendance->work_hour}}</td>
+                                        <td>{{$attendance->status}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-    </div>
-</div>
-
-<div class="modal fade in" id="modalShow">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
-        <div class="modal-body">
-            <div>
-                <h2 class="work_hour"></h2>
-                <h2 class="status"></h2>
-            </div>
-            <table class="table table-bordered table-hover" id="post-table">
-                <thead>
-                  <tr>
-                    <th scope="col">User</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">P.I.C</th>
-                    <th scope="col">Image Taken</th>
-                    {{-- <th scope="col">Action</th> --}}
-                  </tr>
-                </thead>
-            </table> 
-        </div>
-      </div>
-    </div>
+    </section>
 </div>
 @endsection
 @section('custom_script_js')
-    <!-- DataTables  & Plugins -->
+<!-- DataTables  & Plugins -->
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.12.1/filtering/row-based/range_dates.js"></script>
@@ -120,9 +80,9 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>       
-    <script>
-        $(document).ready(function(){
-            $('#report').DataTable({
+<script>
+    $(document).ready(function(){
+        $('#report').DataTable({
             "paging": true,
             "lengthChange": true,
             "searching": true,
@@ -130,58 +90,7 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
-            });
-
-            jQuery("body").on("click", ".btn-detail", function(e) {
-            $('#modalShow').find('.modal-title').text($(this).data("fullname")+","+$(this).data("date")) 
-            $('#modalShow').find('.work_hour').text($(this).data('work_hour'));
-            $('#modalShow').find('.status').text($(this).data('status'));
-            $('#modalShow').modal('show');
-            var postID = $(this).data('post_id');
-                $.ajax({
-                    url:"{{route('reports.show')}}",
-                    data:{
-                        id:postID,
-                    },
-                    beforeSend: function() {
-                        jQuery('#post-table').DataTable().destroy();
-                        jQuery('#post-table tbody').remove();
-                    },
-                    success:function(data){
-                        console.log('success show');
-                        console.log(data);
-                        var table_log = '<tbody>';
-                            // table_log += '<tbody>'+
-                            jQuery.each(data, function(key,value) {
-                                table_log += '<tr>'+
-                                    '<td>'+value.user_fullname+'</td>'+
-                                    '<td>'+value.outlet_name+'</td>'+
-                                    '<td>'+value.outlet_user+'</td>'+
-                                    '<td>'+value.imgTaken+'</td>'+
-                                '</tr>';
-                            });
-                            table_log += '</tbody>';
-                            console.log(table_log);
-                            $('#post-table').find('thead').after(table_log);
-
-                            $('#post-table').DataTable({
-                            "paging": true,
-                            "lengthChange": true,
-                            "searching": true,
-                            "ordering": true,
-                            "info": true,
-                            "autoWidth": false,
-                            "responsive": true,
-                            });
-                            
-
-
-
-                    }
-                })
-            
-            });
-
         });
-    </script>
+    });
+</script>
 @endsection

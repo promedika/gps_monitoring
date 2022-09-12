@@ -81,98 +81,98 @@
 @endsection
 @section('custom_script_js')
 <script>
-  
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    let modal_create = $('#modalCreateNewAtt');
-
-    $('#newatt').click(function(){
-        modal_create.modal('show');
-    })
-
-    // clock in
-    modal_create.find('#clock_in_btn').on('click', function (e) {
-      e.preventDefault();
-      modal_create.find('#clock_in_img').trigger('click');
-      submit_att('clock_in_img');
-    });
-
-    // clock out
-    modal_create.find('#clock_out_btn').on('click', function (e) {
-      e.preventDefault();
-      modal_create.find('#clock_out_img').trigger('click');
-      submit_att('clock_out_img');
-    });
-
-    function submit_att(type_att) {
-      let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';
-
-      modal_create.find('#'+type_att).on('change', function (e) {
-        e.preventDefault();
-
-        console.log(type_att);
-
-        // validate image
-        let validate = validate_img(''+type_att);
-
-        if (validate) {
-          var file_data = jQuery(this).prop('files')[0];   
-          var form_data = new FormData();                  
-          form_data.append('file', file_data);
-          form_data.append('type', type_att);
-
-          console.log(form_data);
-
-          $.ajax({
-            type: 'POST',
-            url:"{{route('attendances.upload')}}",
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-              modal_create.find('#clock_in_img').prop('disabled',true);
-              modal_create.find('#clock_out_img').prop('disabled',true);
-              modal_create.find('#visit_btn').prop('disabled',true);
-            },
-            success: (data) => {
-              alert(data);
-              location.reload();
-            },
-            error: function(data) {
-              alert(data);
-              location.reload();
-            }
-          });
-        }
-      });
-    }
-
-    // validate file image
-    function validate_img(attr_name) {
-      let message = attr_name == 'clock_in_img' ? 'clock in' : 'clock out';
-
-      // check file empty
-      if (jQuery('input[name='+attr_name+']')[0].files[0] === undefined) {
-        alert('File '+message+' tidak boleh kosong!');
-        return false;
+$(document).ready(function(){
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
       }
-        
-      // check file extension
-      let name = modal_create.find('#'+attr_name).prop("files")[0].name;
-      let ext = name.split('.').pop().toLowerCase();
+  });
 
-      if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-        alert('Format file '+message+' tidak sesuai!');
-        return false;
-      }
+  let modal_create = $('#modalCreateNewAtt');
 
-      return true;
-    }
+  $('#newatt').click(function(){
+      modal_create.modal('show');
   })
+
+  // clock in
+  modal_create.find('#clock_in_btn').on('click', function (e) {
+    e.preventDefault();
+    modal_create.find('#clock_in_img').trigger('click');
+    submit_att('clock_in_img');
+  });
+
+  // clock out
+  modal_create.find('#clock_out_btn').on('click', function (e) {
+    e.preventDefault();
+    modal_create.find('#clock_out_img').trigger('click');
+    submit_att('clock_out_img');
+  });
+
+  function submit_att(type_att) {
+    let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';
+
+    modal_create.find('#'+type_att).on('change', function (e) {
+      e.preventDefault();
+
+      console.log(type_att);
+
+      // validate image
+      let validate = validate_img(''+type_att);
+
+      if (validate) {
+        var file_data = jQuery(this).prop('files')[0];   
+        var form_data = new FormData();                  
+        form_data.append('file', file_data);
+        form_data.append('type', type_att);
+
+        console.log(form_data);
+
+        $.ajax({
+          type: 'POST',
+          url:"{{route('attendances.upload')}}",
+          data: form_data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          beforeSend: function() {
+            modal_create.find('#clock_in_img').prop('disabled',true);
+            modal_create.find('#clock_out_img').prop('disabled',true);
+            modal_create.find('#visit_btn').prop('disabled',true);
+          },
+          success: (data) => {
+            alert(data);
+            location.reload();
+          },
+          error: function(data) {
+            alert(data);
+            location.reload();
+          }
+        });
+      }
+    });
+  }
+
+  // validate file image
+  function validate_img(attr_name) {
+    let message = attr_name == 'clock_in_img' ? 'clock in' : 'clock out';
+
+    // check file empty
+    if (jQuery('input[name='+attr_name+']')[0].files[0] === undefined) {
+      alert('File '+message+' tidak boleh kosong!');
+      return false;
+    }
+      
+    // check file extension
+    let name = modal_create.find('#'+attr_name).prop("files")[0].name;
+    let ext = name.split('.').pop().toLowerCase();
+
+    if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+      alert('Format file '+message+' tidak sesuai!');
+      return false;
+    }
+
+    return true;
+  }
+})
 </script>
 @endsection
