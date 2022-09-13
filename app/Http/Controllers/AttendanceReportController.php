@@ -26,7 +26,7 @@ class AttendanceReportController extends Controller
 
         $users = User::all();
         $posts = DB::table('post_header')->get();
-        // dd($users);
+
         $tmp_data = [
             'date' => now(),
             'user_id' => null,
@@ -35,10 +35,10 @@ class AttendanceReportController extends Controller
 
         $data = $this->getDateTime($tmp_data);
 
-        return view('reports.index', compact('posts','data','users','tmp_data'));
-    }
+        $dataAtt = $this->getDateTimeAtt($tmp_data);
 
-    
+        return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
+    }
 
     public function show_report(Request $request)
     {
@@ -66,7 +66,9 @@ class AttendanceReportController extends Controller
 
         $data = $this->getDateTime($tmp_data);
 
-        return view('reports.index', compact('posts','data','users','tmp_data'));
+        $dataAtt = $this->getDateTimeAtt($tmp_data);
+
+        return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
     }   
 
     public function excel_report(Request $request)
@@ -89,7 +91,6 @@ class AttendanceReportController extends Controller
             
             return view('reports.xml', compact('posts','data','users','tmp_data'));
     }
-
 
     public function getDateTime($params) {
         $return = [];
@@ -183,6 +184,7 @@ class AttendanceReportController extends Controller
                         SELECT count(*) total 
                         FROM posts p  
                         WHERE 1=1 
+                        AND p.user_id = '".$params['user_id']."'
                         AND p.imgTaken LIKE '%".$imgTaken."%'
                     ");
             
@@ -199,5 +201,78 @@ class AttendanceReportController extends Controller
         return $return;
     }
 
+    public function getDateTimeAtt($params) {
+        $return = [];
+        $param_year = explode('-',$params['date'])[0];
+        $param_month = strlen(explode('-',$params['date'])[1]) == 1 ? '0'.explode('-',$params['date'])[1] : explode('-',$params['date'])[1];
+
+        $month = $params['date'];
+        $start = Carbon::parse($month)->startOfMonth();
+        $end = Carbon::parse($month)->endOfMonth();
+
+        $attDate = ['Tanggal'];
+        $attIn = ['Masuk'];
+        $attOut = ['Pulang'];
+        $attWorkHour = ['Jam_Kerja'];
+
+        $attDate_2 = [];
+        $attDate_2_no = 1;
+
+        $dates = [];
+        while ($start->lte($end)) {
+            $dates[] = $start->copy();
+            $attDate_2[] = 'day_'.$attDate_2_no++;
+            $start->addDay();
+        }
+
+        // get header clock in/out
+        $attDate = array_merge($attDate,$attDate_2);
+
+        // get clock_in_time and clock_out_time
+        $not_found = [];
+        foreach ($attDate as $k => $v) {
+            if ($k == 0) continue;
+
+            $k_date = strlen($k) == 1 ? '0'.$k : $k;
+            $imgTaken = $param_year.'-'.$param_month.'-'.$k_date;
+
+            $query = DB::select("
+                        SELECT a.clock_in_time, a.clock_out_time 
+                        FROM attendances a  
+                        WHERE 1=1 
+                        AND a.user_id = '".$params['user_id']."'
+                        AND a.clock_in_time LIKE '%".$imgTaken."%'
+                    ");
+
+            if (count($query) == 0) {
+                $not_found[] = $v;
+            }
+
+            $tmp_attIn_2 = count($query) > 0 ? $query[0]->clock_in_time : '0000-00-00 00:00:00';
+            $tmp_attOut_2 = count($query) > 0 ? $query[0]->clock_out_time : '0000-00-00 00:00:00';
+
+            $attIn_2[] = explode(' ', trim($tmp_attIn_2))[1];
+            $attOut_2[] = explode(' ', trim($tmp_attOut_2))[1];
+
+            // get work hour
+            $clockIn = strtotime($tmp_attIn_2);
+            $clockOut = strtotime($tmp_attOut_2);
+
+            $start = date_create(date('Y-m-d H:i:s',$clockIn));
+            $end    = date_create(date('Y-m-d H:i:s',$clockOut));
+
+            $work_hour = date_diff($start,$end);
+
+            $attWorkHour_2[] = $work_hour->h.':'.$work_hour->i.':'.$work_hour->s;
+        }
+
+        $attIn = array_merge($attIn,$attIn_2);
+        $attOut = array_merge($attOut,$attOut_2);
+        $attWorkHour = array_merge($attWorkHour,$attWorkHour_2);
+
+        $return = count($not_found) == count($dates) ? [$attDate] : [$attDate,$attIn,$attOut,$attWorkHour];
+    
+        return $return;
+    }
     
 }
