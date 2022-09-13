@@ -14,10 +14,16 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use App\Exports\ReportExport;
+use Illuminate\Support\Facades\Session;
 
 class AttendanceReportController extends Controller
 {
     public function index() {
+        
+        Session::forget('user_id');
+        Session::forget('date');
+        Session::forget('user_fullname');
+
         $users = User::all();
         $posts = DB::table('post_header')->get();
         // dd($users);
@@ -36,6 +42,9 @@ class AttendanceReportController extends Controller
 
     public function show_report(Request $request)
     {
+        $user_detail = explode("|",$request->user_fullname);
+        $user_id = $user_detail[0];
+        $user_fullname = $user_detail[1];
 
         $this->validate($request, [
             'date' => 'required',
@@ -47,9 +56,13 @@ class AttendanceReportController extends Controller
 
         $tmp_data = [
             'date' => $request->date,
-            'user_id' => $request->user_fullname,
+            'user_id' => $user_id,
             'status' => 'yes'
         ];
+        
+        Session::put('user_id', $user_id);
+        Session::put('date', $request->date);
+        Session::put('user_name', $user_fullname);
 
         $data = $this->getDateTime($tmp_data);
 

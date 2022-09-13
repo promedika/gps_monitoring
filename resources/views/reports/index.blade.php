@@ -37,7 +37,7 @@
                       <select name="user_fullname" id="user" class="form-control txtuser" required>
                         <option value="">Pilih User</option>
                         @foreach($users as $user)
-                        <option value="{{$user->id}}">
+                        <option value="{{$user->id}}|{{$user->first_name." ".$user->last_name}}"{{($user->id == Session::get('user_id')) ? 'selected' : ''}}>
                           {{$user->first_name."".$user->last_name}}
                         </option>
                         @endforeach
@@ -45,11 +45,7 @@
                     </div>
                     <div class="col-4 form-group">
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                          @if($tmp_data['status'] = 'no')
-                          <input name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
-                          @else
-                          <input value="{{$tmp_data['date']}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
-                          @endif
+                          <input value="{{(is_null(Session::get('date'))) ? "Pilih Bulan & Tahun" : Session::get('date')}}" name="date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#reservationdate" readonly required/>
                         </div>
                     </div>
                     <div>
@@ -61,6 +57,12 @@
                     <div class="card-body table-responsive p-0">
                         <table class="table table-head-fixed table-hover" id="reports">
                             <thead>
+                              <tr>
+                                <th colspan="35" style="font-size:30px">{{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</th>
+                              </tr>
+                              <tr>
+                                <th colspan="35" style="font-size:20px">{{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</th>
+                              </tr>
                               <tr>
                                 <th scope="col">No</th>
                                @foreach ($data[0] as $key => $value)
