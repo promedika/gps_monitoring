@@ -58,13 +58,13 @@
                         <table class="table table-head-fixed table-hover" id="reports">
                             <thead>
                               <tr>
-                                <th colspan="35" style="font-size:30px">{{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</th>
+                                <td colspan="4" style="font-size:30px" data-f-sz="14" data-f-bold="true">{{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</td>
                               </tr>
                               <tr>
-                                <th colspan="35" style="font-size:20px">{{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</th>
+                                <td colspan="4" style="font-size:20px" data-f-sz="12" data-f-bold="true">{{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</td>
                               </tr>
                               <tr>
-                                <th scope="col">No</th>
+                                <th scope="col" data-b-a-s="thick" data-a-h="center" data-f-bold="true">No</th>
                                @foreach ($data[0] as $key => $value)
                                     @php
                                     $th = str_replace('day_','',$value);
@@ -78,14 +78,14 @@
                                         $th = 'RS';
                                     }
                                     @endphp
-                                    <th scope="col">{{$th}}</th>
+                                    <th data-b-a-s="thick" data-f-bold="true" data-a-h="center" scope="col">{{$th}}</th>
                                 @endforeach
                               </tr>
                             </thead>
                             <tbody>
                               @if (count($data) == 2)
                                 <tr class="visit">
-                                    <td colspan="{{count($data[0])+1}}">
+                                    <td data-b-a-s="thin" data-a-h="center" colspan="{{count($data[0])+1}}">
                                       <div class="alert alert-danger">
                                           <h6 align="center"> Data post Belum Tersedia</h6>
                                       </div>
@@ -96,9 +96,9 @@
                                 @foreach ($data as $key => $value)
                                     @php if ($key == 0 || $key == count($data)-1) continue; @endphp
                                     <tr class="data_post">
-                                        <td>{{$nomor++}}</td>
+                                        <td data-b-a-s="thin" data-a-h="center">{{$nomor++}}</td>
                                         @foreach ($value as $v)
-                                        <td>{{$v}}</td>
+                                        <td data-b-a-s="thin" data-a-h="center">{{$v}}</td>
                                         @endforeach
                                     </tr>
                                 @endforeach
@@ -107,12 +107,12 @@
                             <tfoot>
                                 @if (count($data) > 2)
                                 <tr>
-                                    <th scope="col" colspan="4">
+                                    <th data-b-a-s="thick" data-a-h="center" data-f-bold="true" scope="col" colspan="4">
                                       <p style="text-align: center" >Total Harian</p>
                                     </th>
                                     @foreach ($data[count($data)-1] as $key => $value)
                                         @php if ($key < 3) continue; @endphp
-                                        <th scope="col">{{$value}}</th>
+                                        <th data-b-a-s="thick" data-a-h="center" scope="col">{{$value}}</th>
                                     @endforeach
                                 </tr>
                                 @endif
