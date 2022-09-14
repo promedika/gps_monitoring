@@ -22,8 +22,11 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::all();
+        $attendances = DB::table('attendances')->where('user_id', Auth::User()->id)->get();
+        
+        
         return view('attendance.index',compact('attendances'));
+        
     }
 
     /**
