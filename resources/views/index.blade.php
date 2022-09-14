@@ -57,6 +57,7 @@
       <div class="modal-body">
         <div class="form-group">
           <button for="clockin" class="btn btn-md btn-primary" id="clock_in_btn">Clock In</button>
+          
           <input type="file" name="clock_in_img" id="clock_in_img" class="form-control" style="display:none" accept="image/*" capture="camera"> 
           
           <a href="{{route('posts.create')}}"><button for="visit" class="btn btn-md btn-success" id="visit_btn">Visit</button></a>
@@ -126,9 +127,11 @@ $(document).ready(function(){
           contentType: false,
           processData: false,
           beforeSend: function() {
+            $('#loader').modal('show');
             modal_create.find('#clock_in_img').prop('disabled',true);
             modal_create.find('#clock_out_img').prop('disabled',true);
             modal_create.find('#visit_btn').prop('disabled',true);
+            modal_create.modal('hide');
           },
           success: (data) => {
             alert(data);

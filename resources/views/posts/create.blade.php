@@ -48,7 +48,7 @@
                                         {{ session()->get('message') }}
                                     </div>
                                 @endif
-                                <input type="file" class="form-control image @error('image') is-invalid @enderror" name="image" required>
+                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" required>
                             
                                 <!-- error message untuk title -->
                                 
@@ -86,7 +86,7 @@
                             </div>
                             <br>
 
-                            <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
+                            <button type="submit" id="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
                         </form> 
                     </div>
@@ -123,6 +123,18 @@
                     });
                 }
             });
-        });          
+        });  
+        $('#submit').click(function(){
+            if(
+                $('#upload').val() != '' &&
+                $('#outlet-dd') != '' &&
+                $('#useroutlet-dd') != '' &&
+                $('#activity')
+            ){
+                $('#loader').modal('show');
+            }
+            
+        });
+
     });
 </script>

@@ -21,7 +21,16 @@
 
   @yield('custom_link_css')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-tr(ansition sidebar-mini layout-fixed">
+  <div class="modal fade in" id="loader" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
+        <div class="modal-body" style="left: 25%">
+          <img src="{{asset('/assets/img/ZNeT.gif')}}" style="width:50%; height:100%;">
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="wrapper" style>
 
   <!-- Navbar -->

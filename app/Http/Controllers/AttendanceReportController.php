@@ -22,7 +22,7 @@ class AttendanceReportController extends Controller
         
         Session::forget('user_id');
         Session::forget('date');
-        Session::forget('user_fullname');
+        Session::forget('user_name');
 
         $users = User::all();
         $posts = DB::table('post_header')->get();
