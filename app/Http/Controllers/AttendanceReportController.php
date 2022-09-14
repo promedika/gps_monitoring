@@ -59,7 +59,7 @@ class AttendanceReportController extends Controller
             'user_id' => $user_id,
             'status' => 'yes'
         ];
-        
+
         Session::put('user_id', $user_id);
         Session::put('date', $request->date);
         Session::put('user_name', $user_fullname);
@@ -68,29 +68,9 @@ class AttendanceReportController extends Controller
 
         $dataAtt = $this->getDateTimeAtt($tmp_data);
 
+        // dd($dataAtt);
         return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
     }   
-
-    public function excel_report(Request $request)
-    {
-            $this->validate($request, [
-                'date' => 'required',
-                'user_fullname' => 'required',
-            ]);
-
-            $users = User::all();
-            $posts = DB::table('post_header')->get();
-
-            $tmp_data = [
-                'date' => $request->date,
-                'user_id' => $request->user_fullname,
-                'status' => 'yes'
-            ];
-            
-            $data = $this->getDateTime($tmp_data);
-            
-            return view('reports.xml', compact('posts','data','users','tmp_data'));
-    }
 
     public function getDateTime($params) {
         $return = [];
@@ -202,6 +182,7 @@ class AttendanceReportController extends Controller
     }
 
     public function getDateTimeAtt($params) {
+        // dd($params['user_id']);
         $return = [];
         $param_year = explode('-',$params['date'])[0];
         $param_month = strlen(explode('-',$params['date'])[1]) == 1 ? '0'.explode('-',$params['date'])[1] : explode('-',$params['date'])[1];
@@ -237,7 +218,7 @@ class AttendanceReportController extends Controller
             $imgTaken = $param_year.'-'.$param_month.'-'.$k_date;
 
             $query = DB::select("
-                        SELECT a.clock_in_time, a.clock_out_time 
+                        SELECT a.clock_in_time, a.clock_out_time,a.work_hour
                         FROM attendances a  
                         WHERE 1=1 
                         AND a.user_id = '".$params['user_id']."'
@@ -249,21 +230,12 @@ class AttendanceReportController extends Controller
             }
 
             $tmp_attIn_2 = count($query) > 0 ? $query[0]->clock_in_time : '0000-00-00 00:00:00';
-            $tmp_attOut_2 = count($query) > 0 ? $query[0]->clock_out_time : '0000-00-00 00:00:00';
-
+            $tmp_attOut_2 = count($query) > 0  && !is_null($query[0]->clock_out_time) ? $query[0]->clock_out_time : '0000-00-00 00:00:00';
             $attIn_2[] = explode(' ', trim($tmp_attIn_2))[1];
             $attOut_2[] = explode(' ', trim($tmp_attOut_2))[1];
+            $tmp_workhour = count($query) > 0 ? $query[0]->work_hour : '0';
 
-            // get work hour
-            $clockIn = strtotime($tmp_attIn_2);
-            $clockOut = strtotime($tmp_attOut_2);
-
-            $start = date_create(date('Y-m-d H:i:s',$clockIn));
-            $end    = date_create(date('Y-m-d H:i:s',$clockOut));
-
-            $work_hour = date_diff($start,$end);
-
-            $attWorkHour_2[] = $work_hour->h.':'.$work_hour->i.':'.$work_hour->s;
+            $attWorkHour_2[] = $tmp_workhour;
         }
 
         $attIn = array_merge($attIn,$attIn_2);

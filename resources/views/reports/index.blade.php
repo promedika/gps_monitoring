@@ -27,7 +27,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div>
                   <form action="{{route('reports.show_report')}}" method="post" accept-charset="utf-8" id="show-monthly-report">
 
                     @csrf
@@ -54,15 +54,60 @@
                     </div>
                   </form>
                   </div>
-                    <div class="card-body table-responsive p-0">
+                    <div class="card-body table-responsive p-0" style="display: none">
                         <table class="table table-head-fixed table-hover" id="reports">
-                            <thead>
                               <tr>
-                                <td colspan="4" style="font-size:30px" data-f-sz="14" data-f-bold="true">{{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</td>
+                                <td style= "font-size:30px" data-f-sz="14" data-f-bold="true">Nama:</td>
+                                <td colspan="2" style= "font-size:30px" data-f-sz="14" data-f-bold="true">{{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</td>
                               </tr>
                               <tr>
-                                <td colspan="4" style="font-size:20px" data-f-sz="12" data-f-bold="true">{{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</td>
+                                <td style= "font-size:30px" data-f-sz="12" data-f-bold="true">Tahun & Bulan:</td>
+                                <td style="font-size:25px" data-f-sz="12" data-f-bold="true">{{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</td>
                               </tr>
+                              <tr>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" style="font-size:20px" data-f-sz="14" data-f-bold="true">Clock In/Out</td>
+                              </tr>
+                              <tr>
+                               @foreach ($dataAtt[0] as $key => $value)
+                                    @php $th = str_replace('day_','',$value); @endphp
+                                    <th data-b-a-s="thick" data-f-bold="true" data-a-h="center" scope="col">{{$th}}</th>
+                                @endforeach
+                              </tr>
+                              @if (count($dataAtt) == 1)
+                                <tr class="att">
+                                    <td data-b-a-s="thin" data-a-h="center" colspan="{{count($dataAtt[0])}}">
+                                      <div class="alert alert-danger">
+                                          <h6 align="center"> Data Kehadiran Belum Tersedia</h6>
+                                      </div>
+                                    </td>
+                                </tr>
+                                @else
+                                @foreach ($dataAtt as $key => $value)
+                                    @php if ($key == 0) continue; @endphp
+                                    <tr class="data_att">
+                                        @foreach ($value as $k => $v)
+                                          @php $td = str_replace('_',' ',$v);@endphp
+                                          @if ($key != count($dataAtt)-1)
+                                          <td data-b-a-s="thin" data-a-h="center"><p>{{$td}}</p></td>
+                                          @else
+                                          <td data-b-a-s="thick" data-a-h="center"><b>{{$td}}</b></td>
+                                          @endif
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                              @endif
+                                <tr>
+                                  <td></td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                </tr>
+                              <tr>    
+                                <td colspan="2" style="font-size:20px" data-f-sz="14" data-f-bold="true">Visit</td>
+                              </tr>  
                               <tr>
                                 <th scope="col" data-b-a-s="thick" data-a-h="center" data-f-bold="true">No</th>
                                @foreach ($data[0] as $key => $value)
@@ -81,8 +126,8 @@
                                     <th data-b-a-s="thick" data-f-bold="true" data-a-h="center" scope="col">{{$th}}</th>
                                 @endforeach
                               </tr>
-                            </thead>
-                            <tbody>
+                    
+                            
                               @if (count($data) == 2)
                                 <tr class="visit">
                                     <td data-b-a-s="thin" data-a-h="center" colspan="{{count($data[0])+1}}">
@@ -103,8 +148,7 @@
                                     </tr>
                                 @endforeach
                               @endif
-                            </tbody>
-                            <tfoot>
+                            
                                 @if (count($data) > 2)
                                 <tr>
                                     <th data-b-a-s="thick" data-a-h="center" data-f-bold="true" scope="col" colspan="4">
@@ -116,9 +160,111 @@
                                     @endforeach
                                 </tr>
                                 @endif
-                            </tfoot>
                         </table>
                     </div>
+
+                    {{-- table yang di view --}}
+                    <div class="card">
+                      <h5 style="margin-left: 10px; margin-top:10px;">Nama : {{(is_null(Session::get('user_name'))) ? "" : Session::get('user_name')}}</h5>
+                      <h5 style="margin-left: 10px">Tahun & Bulan : {{(is_null(Session::get('date'))) ? "" : Session::get('date')}}</h5>
+                    </div>
+                    <div class="card table-responsive p-0">
+                      <table class="table table-head-fixed table-hover" id="reports">
+                            <tr>
+                              <td colspan="35" style="font-size:20px" data-f-sz="14" data-f-bold="true">Clock In/Out</td>
+                            </tr>
+                            <tr>
+                             @foreach ($dataAtt[0] as $key => $value)
+                                  @php $th = str_replace('day_','',$value); @endphp
+                                  <th data-b-a-s="thick" data-f-bold="true" data-a-h="center" scope="col">{{$th}}</th>
+                              @endforeach
+                            </tr>
+                            @if (count($dataAtt) == 1)
+                              <tr class="att">
+                                  <td data-b-a-s="thin" data-a-h="center" colspan="{{count($dataAtt[0])}}">
+                                    <div class="alert alert-danger">
+                                        <h6 align="center"> Data Kehadiran Belum Tersedia</h6>
+                                    </div>
+                                  </td>
+                              </tr>
+                              @else
+                              @foreach ($dataAtt as $key => $value)
+                                  @php if ($key == 0) continue; @endphp
+                                  <tr class="data_att">
+                                      @foreach ($value as $k => $v)
+                                        @php $td = str_replace('_',' ',$v);@endphp
+                                        @if ($key != count($dataAtt)-1)
+                                        <td><p>{{$td}}</p></td>
+                                        @else
+                                        <td><b>{{$td}}</b></td>
+                                        @endif
+                                      @endforeach
+                                  </tr>
+                              @endforeach
+                            @endif
+                      </table>
+                    </div>
+                    
+                    <div class="card table-responsive p-0">
+                      <table class="table table-head-fixed table-hover">
+                            <tr>    
+                              <td colspan="35" style="font-size:20px" data-f-sz="14" data-f-bold="true">Visit</td>
+                            </tr>  
+                            <tr>
+                              <th scope="col" data-b-a-s="thick" data-a-h="center" data-f-bold="true">No</th>
+                             @foreach ($data[0] as $key => $value)
+                                  @php
+                                  $th = str_replace('day_','',$value);
+                                  if($key == count($data[0])-1) {
+                                      $th = 'Total Bulanan';
+                                  } elseif ($key == 0) {
+                                      $th = 'PIC RS';
+                                  } elseif ($key == 1) {
+                                      $th = 'Jabatan';
+                                  } elseif ($key == 2) {
+                                      $th = 'RS';
+                                  }
+                                  @endphp
+                                  <th data-b-a-s="thick" data-f-bold="true" data-a-h="center" scope="col">{{$th}}</th>
+                              @endforeach
+                            </tr>
+                  
+                          
+                            @if (count($data) == 2)
+                              <tr class="visit">
+                                  <td data-b-a-s="thin" data-a-h="center" colspan="{{count($data[0])+1}}">
+                                    <div class="alert alert-danger">
+                                        <h6 align="center"> Data post Belum Tersedia</h6>
+                                    </div>
+                                  </td>
+                              </tr>
+                              @else
+                              @php $nomor = 1; @endphp
+                              @foreach ($data as $key => $value)
+                                  @php if ($key == 0 || $key == count($data)-1) continue; @endphp
+                                  <tr class="data_post">
+                                      <td data-b-a-s="thin" data-a-h="center">{{$nomor++}}</td>
+                                      @foreach ($value as $v)
+                                      <td data-b-a-s="thin" data-a-h="center">{{$v}}</td>
+                                      @endforeach
+                                  </tr>
+                              @endforeach
+                            @endif
+                          
+                              @if (count($data) > 2)
+                              <tr>
+                                  <th data-b-a-s="thick" data-a-h="center" data-f-bold="true" scope="col" colspan="4">
+                                    <p style="text-align: center" >Total Harian</p>
+                                  </th>
+                                  @foreach ($data[count($data)-1] as $key => $value)
+                                      @php if ($key < 3) continue; @endphp
+                                      <th data-b-a-s="thick" data-a-h="center" scope="col">{{$value}}</th>
+                                  @endforeach
+                              </tr>
+                              @endif
+                      </table>
+                    </div>
+                  </div>
                 </div>
             </div>
     </div>
@@ -138,11 +284,13 @@
     });
 
     //Date picker
+    
     $('#reservationdate').datetimepicker({
         viewMode: 'months', 
         format: 'YYYY-MM'
     });
 
+    
     $('#excel').on('click', function (e) {
       e.preventDefault();
 
