@@ -14,7 +14,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item active">Home</li>
+            <li class="breadcrumb-item active">Beranda</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -30,7 +30,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <a href="#" id="newatt" title="newatt" style="color:white"><img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%">New Attendance</a>
+                <a href="#" id="newatt" title="newatt" style="color:white"><img src="{{asset('assets/img/camera-icon.png')}}" style="width: 100%;">Absensi</a>
               </div>
             </div>
           </div>

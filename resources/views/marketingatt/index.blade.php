@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Marketing Attendance
+    Riwayat Absensi
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Personal Attendance Reports</h1>
+            <h1 class="m-0">Riwayat Absensi</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-              <li class="breadcrumb-item active">Personal Attendance Reports</li>
+              <li class="breadcrumb-item active">Riwayat Absensi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -39,7 +39,7 @@
                                 <th scope="col">User</th>
                                 <th scope="col" colspan="2">Clock In</th>
                                 <th scope="col" colspan="2">Clock Out</th>
-                                <th scope="col">Work Hours</th>
+                                <th scope="col">Jam Kerja</th>
                               </tr>
                             </thead>
                             <tbody>

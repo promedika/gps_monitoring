@@ -18,7 +18,7 @@ class AdminUserSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Super',
             'last_name' =>  'User',
-            'email' =>  'superuser@gpsitdev.co.id',
+            'email' =>  'superuser@gps.co.id',
             'password' =>   Hash::make('promedika'),
             'role'  =>  '0',
             'created_by' => '1',

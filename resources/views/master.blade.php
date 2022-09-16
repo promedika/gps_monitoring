@@ -44,6 +44,18 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <img src="{{asset('assets/img/pngwing.com.png')}}" class="img-circle elevation-2" style="width:30px; height:30px" alt="User Image">
+          <span><b>{{Auth::User()->first_name." ".Auth::User()->last_name}}</b></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-md">
+          <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
+            <!-- Message End -->
+        </div>
+      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -58,21 +70,11 @@
     <!-- Brand Logo -->
     <a href="{{route('dashboard.index')}}" class="brand-link" style="text-align: center">
       <img src="{{asset('assets/img/logogpstext.png')}}" alt="GPS Logo" class="brand-image" style="margin-left: -5px; margin-right: 0; max-height: 50px; margin-top: -0.5rem;">
-      <span class="brand-text font-weight-light"><strong>HRMS</strong></span>
+      <span class="brand-text font-weight-light"><strong>Monitoring</strong></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('assets/img/pngwing.com.png')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</a>
-        </div>
-      </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="height: ">
@@ -100,8 +102,8 @@
                   
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                    Users
-                  </p>
+                    P.I.C
+                    </p>
                 </a>
               </li>
 
@@ -109,7 +111,7 @@
                 <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-building"></i>
-                    Outlet
+                    Tenant
                   </p>
                 </a>
               </li>
@@ -118,7 +120,7 @@
                 <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user"></i></i>
-                    User Outlet
+                    User Tenant
                   </p>
                 </a>
               </li>
@@ -139,7 +141,7 @@
             <a href="{{route('posts.index')}}" class="nav-link">
               <p>
                 <i class="nav-icon fas fa-image"></i>
-                Marketing Attendance
+                Riwayat Kunjungan
               </p>
             </a>
           </li>
@@ -148,17 +150,16 @@
             <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
               <p>
                 <i class="nav-icon fas fa-book-open"></i>
-                Attendance Reports
+                Laporan Absensi
               </p>
             </a>
           </li>
           @endif
-
-          <li class="nav-item">
-            <a href="{{route('marketingatt.index')}}" class="nav-link">
+          <li class="nav-item"">
+            <a href="{{route('dashboard.attendances.index')}}" class="nav-link">
               <p>
                 <i class="nav-icon fas fa-clock"></i>
-                Marketing Personal Attendance
+                Riwayat Absensi
               </p>
             </a>
           </li>
@@ -167,7 +168,7 @@
             <a href="{{route('logout')}}" class="nav-link">
               <p>
                 <i class="nav-icon fas fa-door-open"></i>
-                Logout
+                Keluar
               </p>
             </a>
           </li>
@@ -196,6 +197,43 @@
     <strong>PT Global promedika Service - All rights reserved - Copyright &copy; {{date('Y')}}</strong>
   </footer>
 </div>
+
+<!-- Modal Edit User -->
+<div class="modal fade in" id="modalEditUser" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Ubah Password</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <input type="hidden" name="id" id="id" class="form-control">
+      <!-- Modal body -->  
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="first_name" type="text" name="first_name" id="first_name_update">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</label>
+        </div>
+        <div class="form-group">
+          <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>
+          <input placeholder="Kosongkan jika tidak ingin merubah password" type="password" name="password" id="password_update" class="form-control">
+          <span id="errorPassword" class="text-red"></span>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -206,6 +244,67 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/assets/AdminLTE-3.2.0/dist/js/adminlte.min.js')}}"></script>
+
+<script>
+  $(document).ready(function(){
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
+      jQuery("body").on("click", ".btn-edit-user", function(e) {
+            $('#modalEditUser').modal('show');
+            var userID = $(this).attr('user-id');
+            var id = $('#id').val(userID);
+                $.ajax({
+                    url:"{{route('dashboard.users.editpassword')}}",
+                    type:'POST',
+                    data:{
+                      id:userID,
+                    },
+                    success:function(data){
+                        console.log('success edit');
+                        $('#password_update').val(data.data.password);;
+                    },
+                    error:function(response){
+                        $('#errorPassword').text(response.responseJSON.errors.password);
+                    }
+                    
+                })
+
+                $('#form-edit').submit(function(e){
+                e.preventDefault();
+                let modal_id = $('#modalEditUser');
+                var formData = new FormData(this);
+                $.ajax({
+                    url:"{{route('dashboard.users.updatepassword')}}",
+                    type:'POST',
+                    data:formData,
+                    data:{
+                      id:userID,
+                      password:$('#password_update').val(),
+                    },
+                    beforeSend: function() {
+                      modal_id.find('.modal-footer button').prop('disabled',true);
+                      modal_id.find('.modal-header button').prop('disabled',true);
+                    },
+                    success:function(data){
+                        console.log('success update');
+                        location.reload();
+                    },
+                    error:function(response){
+                        $('#errorPassword').text(response.responseJSON.errors.password);
+
+                        modal_id.find('.modal-footer button').prop('disabled',false);
+                        modal_id.find('.modal-header button').prop('disabled',false);
+                    }
+                })
+            })
+        })
+
+      })
+</script>
 
 @yield('custom_script_js')
 </body>

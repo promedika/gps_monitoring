@@ -21,7 +21,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
               <li class="breadcrumb-item active">Users</li>
             </ol>
           </div><!-- /.col -->
@@ -49,7 +49,7 @@
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -88,7 +88,7 @@
       <form action="" method="post" accept-charset="utf-8" id="form-signup">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Create New User</h4>
+        <h4 class="modal-title">Buat P.I.C Baru</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -97,12 +97,12 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name">First Name</label>
+          <label for="first_name">Nama Depan</label>
           <input type="text" name="first_name" id="first_name" class="form-control" required>
           <span id="errorFirstName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="last_name">Last Name</label>
+          <label for="last_name">Nama Belakang</label>
           <input type="text" name="last_name" id="last_name" class="form-control"required>
           <span id="errorLastName" class="text-red"></span>
         </div>
@@ -117,9 +117,19 @@
           <span id="errorPassword" class="text-red"></span>
         </div>
         <div class="form-group">
+          <label for="department">Departemen</label>
+          <select class="form-control" id="departement" name="department"required>
+              <option value="" style="display:none;">Pilih departemen</option>
+              <option value="0">IT</option>
+              <option value="1">Marketing</option>
+              <option value="2">H.R Department</option>
+          </select>
+          <span id="errorRole" class="text-red"></span>
+        </div>
+        <div class="form-group">
           <label for="Role">Role</label>
           <select class="form-control" id="role" name="role"required>
-              <option value="" style="display:none;">Select Role</option>
+              <option value="" style="display:none;">Pilih Role</option>
               <option value="0">Admin</option>
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
@@ -127,12 +137,12 @@
           <span id="errorRole" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="start_date">Start Date</label>
+          <label for="start_date">Tanggal Bergabung</label>
           <input type="date" name="start_date" id="start_date" class="form-control"required>
           <span id="errorStartDate" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="end_date">End Date</label>
+          <label for="end_date">Tanggal Keluar</label>
           <input type="date" name="end_date" id="end_date" class="form-control"required>
           <span id="errorEndDate" class="text-red"></span>
         </div>
@@ -140,8 +150,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>
@@ -156,7 +166,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit User</h4>
+        <h4 class="modal-title">Ubah P.I.C</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -165,12 +175,12 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name">First Name</label>
+          <label for="first_name">Nama Depan</label>
           <input type="text" name="first_name" id="first_name_update" class="form-control" required>
           <span id="errorFirstName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="last_name">Last Name</label>
+          <label for="last_name">Nama Belakang</label>
           <input type="text" name="last_name" id="last_name_update" class="form-control" required>
           <span id="errorLastName" class="text-red"></span>
         </div>
@@ -178,6 +188,21 @@
           <label for="email">Email</label>
           <input type="text" name="email" id="email_update" class="form-control" required>
           <span id="errorEmail" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>
+          <input type="password" name="password" id="password_update" class="form-control">
+          <span id="errorPassword" class="text-red"></span>
+        </div>
+        <div class="form-group">
+        <label for="department">Departemen</label>
+          <select class="form-control" id="department_update" name="department"required>
+              <option value="" style="display:none;">Pilih departemen</option>
+              <option value="0">IT</option>
+              <option value="1">Marketing</option>
+              <option value="2">H.R Department</option>
+          </select>
+          <span id="errorDepartment" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="Role">Role</label>
@@ -190,12 +215,12 @@
           <span id="errorRole" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="start_date">Start Date</label>
+          <label for="start_date">Tanggal Bergabung</label>
           <input type="date" name="start_date" id="start_date_update" class="form-control" required>
           <span id="errorStartDate" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="end_date">End Date</label>
+          <label for="end_date">Tanggal Keluar</label>
           <input type="date" name="end_date" id="end_date_update" class="form-control" required>
           <span id="errorEndDate" class="text-red"></span>
         </div>
@@ -212,8 +237,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>
@@ -228,7 +253,7 @@
       <form action="" method="post" accept-charset="utf-8" id="form-delete">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete User</h4>
+        <h4 class="modal-title">Hapus P.I.C</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -241,8 +266,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>
@@ -311,6 +336,7 @@
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
@@ -338,6 +364,8 @@
                         $('#first_name_update').val(data.data.first_name);
                         $('#last_name_update').val(data.data.last_name);
                         $('#email_update').val(data.data.email);
+                        $('#password_update').val(data.data.password);
+                        $('#department_update').val(data.data.department);
                         $('#role_update').val(data.data.role);
                         $('#start_date_update').val(data.data.start_date);
                         $('#end_date_update').val(data.data.end_date);
@@ -348,6 +376,7 @@
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
@@ -368,6 +397,8 @@
                       first_name:$('#first_name_update').val(),
                       last_name:$('#last_name_update').val(),
                       email:$('#email_update').val(),
+                      password:$('#password_update').val(),
+                      department:$('#department_update').val(),
                       role:$('#role_update').val(),
                       start_date:$('#start_date_update').val(),
                       end_date:$('#end_date_update').val(),
@@ -386,6 +417,7 @@
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
+                        $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);

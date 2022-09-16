@@ -12,12 +12,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Attendance Reports</h1>
+            <h1 class="m-0">Laporan Absensi</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-              <li class="breadcrumb-item active">Attendance Reports</li>
+              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+              <li class="breadcrumb-item active">Laporan Absensi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -106,7 +106,7 @@
                                   <td></td>
                                 </tr>
                               <tr>    
-                                <td colspan="2" style="font-size:20px" data-f-sz="14" data-f-bold="true">Visit</td>
+                                <td colspan="2" style="font-size:20px" data-f-sz="14" data-f-bold="true">Kunjungan</td>
                               </tr>  
                               <tr>
                                 <th scope="col" data-b-a-s="thick" data-a-h="center" data-f-bold="true">No</th>
@@ -208,7 +208,7 @@
                     <div class="card table-responsive p-0">
                       <table class="table table-head-fixed table-hover">
                             <tr>    
-                              <td colspan="35" style="font-size:20px" data-f-sz="14" data-f-bold="true">Visit</td>
+                              <td colspan="35" style="font-size:20px" data-f-sz="14" data-f-bold="true">Kunjungan</td>
                             </tr>  
                             <tr>
                               <th scope="col" data-b-a-s="thick" data-a-h="center" data-f-bold="true">No</th>

@@ -44,7 +44,7 @@
                           <tr>
                             <th>No</th>
                             <th>Jabatan</th>
-                            <th>Action</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>

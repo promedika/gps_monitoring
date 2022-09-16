@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Marketing Attendance</h1>
+            <h1>Riwayat Kunjungan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-              <li class="breadcrumb-item active">Marketing Attendance</li>
+              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+              <li class="breadcrumb-item active">Riwayat Kunjungan</li>
             </ol>
           </div>
         </div>
@@ -40,13 +40,14 @@
                         <table class="table table-bordered table-hover" id="table">
                             <thead>
                               <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Location</th>
+                                <th scope="col">Tanggal</th>
                                 <th scope="col">P.I.C</th>
-                                <th scope="col">Image Taken</th>
-                                <th scope="col">Location Based on Image</th>
+                                <th scope="col">Foto</th>
+                                <th scope="col">Lokasi</th>
+                                <th scope="col">User</th>
+                                <th scope="col">jabatan</th>
+                                <th scope="col">Aktifitas</th>
+                                <th scope="col">Peta</th>
                                 {{-- <th scope="col">Action</th> --}}
                               </tr>
                             </thead>
@@ -56,19 +57,20 @@
                                      ?>
                               @foreach ($posts as $post)
                                 <tr class="data_post">
-                                    <td>{{$nomor++}}</td>
+                                  <td>
+                                    @php
+                                        $imgTaken = is_null($post->imgTaken) ? '-' : $post->imgTaken;
+                                    @endphp
+                                    {{$imgTaken}}
+                                </td>
                                     <td>{{ $post->user_fullname}}</td>  
                                     <td class="text-center">
                                         <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 200px">
                                     </td>
                                     <td>{{ $post->outlet_name }}</td>
                                     <td>{!! $post->outlet_user !!}</td>
-                                    <td>
-                                        @php
-                                            $imgTaken = is_null($post->imgTaken) ? '-' : $post->imgTaken;
-                                        @endphp
-                                        {{$imgTaken}}
-                                    </td>
+                                    <td>{{$post->jabatan_name}}</td>
+                                    <td>{{$post->activity}}</td>
                                     <td class="td_map_detail">
                                         @php
                                             $explode_loc = explode('|',$post->imgLoc);

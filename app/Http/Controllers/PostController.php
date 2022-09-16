@@ -24,11 +24,12 @@ class PostController extends Controller
     {
         
         //get posts
-        if (Auth::User()->role == 0){
+        if (Auth::User()->role != 1){
         $posts = Post::all();
         }else{
         $posts = Post::where('user_id',Auth::User()->id)->get(); 
         }
+        
         //render view with posts
         return view('posts.index', compact('posts'));
     }
@@ -41,8 +42,7 @@ class PostController extends Controller
     public function create()
     {
         $outlets = Outlet::get(["name", "id"]);
-        $useroutlets = UserOutlet::get(["name", "outlet_id"]);
-        return view('posts.create', ['outlets'=>$outlets,'useroutlets'=>$useroutlets]);
+        return view('posts.create', ['outlets'=>$outlets,]);
     }
 
     /**
@@ -71,19 +71,32 @@ class PostController extends Controller
             try {
                 exif_read_data($tmp_path);
             } catch (\Throwable $th) {
-                return redirect()->back()->with('message', 'Lokasi Gambar Tidak Ditemukan !');
+                return redirect()->back()->with('message', 'Lokasi Atau Tanggal Tidak Ditemukan !');
             }
             
             //get geolocation of image
             $imgLocation = $this->get_image_location($tmp_path);
+            if (!$imgLocation || empty($imgLocation)) {
+                return redirect()->back()->with('message', "Lokasi Foto Tidak Ditemukan !");   
+            }
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
             
             // get image taken date
             $imgDate = exif_read_data($tmp_path);
             $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+            
 
             if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
                 return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+            }else{
+                
+                $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
+                $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+                
+                $difDate = date_diff($tfDate,$ogDate);
+                if($difDate->s > 30){
+                    return redirect()->back()->with('message', 'Jam Foto Tidak Sesuai !');
+                }
             }
 
             // declare full path and filename
@@ -271,7 +284,12 @@ class PostController extends Controller
     public function get_image_location($image = ''){
         $exif = exif_read_data($image, 0, true);
         
-        if($exif && isset($exif['GPS'])){
+        if($exif 
+         && isset($exif['GPS']['GPSLatitudeRef']) 
+         && isset($exif['GPS']['GPSLatitude'])
+         && isset($exif['GPS']['GPSLongitudeRef'])
+         && isset($exif['GPS']['GPSLongitude'])
+        ){
             $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
             $GPSLatitude    = $exif['GPS']['GPSLatitude'];
             $GPSLongitudeRef= $exif['GPS']['GPSLongitudeRef'];

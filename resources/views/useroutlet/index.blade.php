@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    User Outlet
+    User Tenant
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Users Outlet</h1>
+          <h1 class="m-0">User Tenant</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-            <li class="breadcrumb-item active">Users Outlet</li>
+            <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+            <li class="breadcrumb-item active">User Tenant</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -43,11 +43,11 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Outlet Name</th>
+                            <th>Nama</th>
+                            <th>Nama Tenant</th>
                             <th>Jabatan</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Create New User Outlet</h4>
+          <h4 class="modal-title">Buat User Tenant Baru</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -103,7 +103,7 @@
             <span id="errorName" class="text-red"></span>
           </div>
           <div class="form-group">
-            <label for="outlet_name">Nama Outlet</label>
+            <label for="outlet_name">Nama Tenant</label>
             <select id="outlet-dd" name="outlet_id" class="form-control" required>
               <option value="">Pilih Lokasi</option>
               @foreach ($outlets as $outlet)
@@ -138,8 +138,8 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         </div>
         </form>
       </div>
@@ -153,7 +153,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit User Outlet</h4>
+        <h4 class="modal-title">Ubah User Tenant</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -162,12 +162,12 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Nama User</label>
           <input type="text" name="name" id="name_update" value="{{ old('user_outlets_name')}}" class="form-control" required>
           <span id="errorName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="last_name">Outlet Name</label>
+          <label for="last_name">Nama Tenant</label>
           <select id="outlet_id_update" name="outlet_id" value="{{ old('outlets_name')}}" class="form-control" required>
               <option value="">Silahkan Pilih</option>
               @foreach ($outlets as $outlet)
@@ -197,8 +197,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>
@@ -213,7 +213,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete User Outlet</h4>
+        <h4 class="modal-title">Hapus User Tenant</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -226,8 +226,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>

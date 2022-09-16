@@ -11,13 +11,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Image Attendance</h1>
+            <h1>Upload Kunjungan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{route('posts.index')}}">Image Attendance</a></li>
-              <li class="breadcrumb-item active">Create</li>
+              <li class="breadcrumb-item"><a href="{{route('posts.index')}}"></a></li>Upload Kunjungan
+              <li class="breadcrumb-item active">Buat Upload Kunjungan</li>
 
             </ol>
           </div>
@@ -35,7 +35,7 @@
                             @csrf
 
                             <div class="form-group">
-                                <label class="font-weight-bold">Image</label>
+                                <label class="font-weight-bold">Foto</label>
                                 <br>
                                 @error('image')
                                     <div class="alert alert-danger mt-2">
@@ -55,7 +55,7 @@
                             </div><br>
 
                             <div class="form-group">
-                                <label class="font-weight-bold">Nama Outlet</label>
+                                <label class="font-weight-bold">Nama Tenant</label>
                                 <select id="outlet-dd" name="outlet_name" class="form-control" required>
                                     <option value="">Select Location</option>
                                     @foreach ($outlets as $outlet)

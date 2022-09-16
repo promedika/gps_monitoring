@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Image Attendance
+    Riwayat Absensi
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Clock In/Out Reports</h1>
+            <h1 class="m-0">Riwayat Absensi</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-              <li class="breadcrumb-item active">Clock In/Out</li>
+              <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+              <li class="breadcrumb-item active">Riwayat Absensi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -37,9 +37,9 @@
                                   <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">User</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Work Hours</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Clock In</th>
+                                    <th scope="col">Clock Out</th>
+                                    <th scope="col">Jam Kerja</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -48,9 +48,9 @@
                                     <tr class="data_post">
                                         <td>{{$nomor++}}</td>
                                         <td>{{$attendance->user_fullname}}</td>
-                                        <td>{{date('Y-m-d',strtotime($attendance->created_at))}}</td>
+                                        <td>{{$attendance->clock_in_time}}</td>
+                                        <td>{{$attendance->clock_out_time}}</td>
                                         <td>{{$attendance->work_hour}}</td>
-                                        <td>{{$attendance->status}}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

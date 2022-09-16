@@ -43,6 +43,7 @@ class UserController extends Controller
             'last_name'=>'required',
             'email'=>'required|unique:users',
             'password'=>'required',
+            'departement' =>'required',
             'role'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
@@ -52,6 +53,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->department = $request->department;
         $user->role = $request->role;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
@@ -102,6 +104,7 @@ class UserController extends Controller
             'last_name'=>'required',
             'email'=>'required',
             'role'=>'required',
+            'department'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
         ]);
@@ -110,7 +113,11 @@ class UserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
+        if($request->password !='' && strlen(trim($request->password)) > 0){
+            $user->password = Hash::make($request->password);
+        }
         $user->role = $request->role;
+        $user->department = $request->department;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
         $user->updated_by = Auth::User()->id;
@@ -135,4 +142,30 @@ class UserController extends Controller
         return view('user.index', compact('users'));
     }
 
+    public function editPassword(Request $request)
+    {
+        $id = $request->id;
+        $user = User::find($id);
+        return response()->json(['data' => $user]);
+        return redirect(route('dashboard.users.index'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request)
+    {
+        $id = $request->id;
+        $user = User::find($id);
+        if($request->password !='' && strlen(trim($request->password)) > 0){
+            $user->password = Hash::make($request->password);
+        }
+        $user->updated_by = Auth::User()->id;
+        $user->save();
+        return redirect(route('dashboard.users.index'));
+    }
 }

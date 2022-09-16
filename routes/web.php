@@ -57,6 +57,8 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/users/edit','App\Http\Controllers\UserController@edit')->name('dashboard.users.edit');
     Route::post('/users/update','App\Http\Controllers\UserController@update')->name('dashboard.users.update');
     Route::post('/users/delete','App\Http\Controllers\UserController@destroy')->name('dashboard.users.delete');
+    Route::post('users/editpassword','App\Http\Controllers\UserController@editPassword')->name('dashboard.users.editpassword');
+    Route::post('/users/updatepassword','App\Http\Controllers\UserController@updatePassword')->name('dashboard.users.updatepassword');
 
     Route::get('/attendances','App\Http\Controllers\AttendanceController@index')->name('dashboard.attendances.index');
     Route::post('/attendances/start','App\Http\Controllers\AttendanceController@startWork')->name('dashboard.attendances.start');
@@ -82,9 +84,6 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);
-
-    Route::get('/marketingatt', 'App\Http\Controllers\AttendanceController@index')->name('marketingatt.index');
-    Route::post('/marketingatt/clockin', 'App\Http\Controllers\MarketingAttController@clock_in')->name('marketingatt.clockin');
 
     Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('jabatan.index');
     Route::post('/jabatan/create','App\Http\Controllers\JabatanController@store')->name('jabatan.create');

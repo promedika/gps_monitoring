@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Outlet
+    Tenant
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Outlet</h1>
+          <h1 class="m-0">Tenant</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-            <li class="breadcrumb-item active">Outlet</li>
+            <li class="breadcrumb-item active">Tenant</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -43,8 +43,8 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Outlet Name</th>
-                            <th>Action</th>
+                            <th>Nama Tenant</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -81,7 +81,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Create New Outlet</h4>
+          <h4 class="modal-title">Buat Tenant Baru</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -90,7 +90,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="name">Outlet Name</label>
+            <label for="name">Nama Tenant</label>
             <input type="text" name="name" id="name" class="form-control" required>
             <span id="errorName" class="text-red"></span>
           </div>
@@ -98,8 +98,8 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         </div>
         </form>
       </div>
@@ -113,7 +113,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit Outlet
+        <h4 class="modal-title">Ubah Tenant
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -122,7 +122,7 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Outlet Name</label>
+          <label for="name">Nama Tenant</label>
           <input type="text" name="name" id="name_update" class="form-control" required>
           <span id="errorName" class="text-red"></span>
         </div>
@@ -130,8 +130,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
     </div>
@@ -145,7 +145,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Delete Outlet</h4>
+          <h4 class="modal-title">Hapus Tenant</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -154,8 +154,8 @@
   
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         </div>
         </form>
       </div>

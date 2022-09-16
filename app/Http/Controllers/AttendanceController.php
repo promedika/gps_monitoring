@@ -22,8 +22,12 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = DB::table('attendances')->where('user_id', Auth::User()->id)->get();
-        
+        if (Auth::User()->role != 1){
+            $attendances = Attendance::all();
+            }else{
+            $attendances = Attendance::where('user_id',Auth::User()->id)->get(); 
+            }
+        // $attendances = DB::table('attendances')->where('user_id', Auth::User()->id)->get();
         
         return view('attendance.index',compact('attendances'));
         
@@ -129,11 +133,14 @@ class AttendanceController extends Controller
         try {
             exif_read_data($tmp_path);
         } catch (\Throwable $th) {
-            return "Lokasi Gambar Tidak Ditemukan !";
+            return "Lokasi Atau Tanggal Tidak Ditemukan  !";
         }
 
         //get geolocation of image
         $imgLocation = $this->get_image_location($tmp_path);
+        if (!$imgLocation || empty($imgLocation)) {
+            return "Lokasi Foto Tidak Ditemukan !";   
+        }
         $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
         
         // get image taken date
@@ -225,7 +232,12 @@ class AttendanceController extends Controller
     public function get_image_location($image = ''){
         $exif = exif_read_data($image, 0, true);
         
-        if($exif && isset($exif['GPS'])){
+        if($exif
+         && isset($exif['GPS']['GPSLatitudeRef']) 
+         && isset($exif['GPS']['GPSLatitude'])
+         && isset($exif['GPS']['GPSLongitudeRef'])
+         && isset($exif['GPS']['GPSLongitude'])
+        ){
             $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
             $GPSLatitude    = $exif['GPS']['GPSLatitude'];
             $GPSLongitudeRef= $exif['GPS']['GPSLongitudeRef'];
