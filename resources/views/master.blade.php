@@ -26,7 +26,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
         <div class="modal-body" style="left: 25%">
-          <img src="{{asset('/assets/img/ZNeT.gif')}}" style="width:50%; height:100%;">
+          <img src="{{asset('/assets/img/gps-loader.gif')}}" style="width:50%; height:100%;">
         </div>
       </div>
     </div>
