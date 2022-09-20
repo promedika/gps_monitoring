@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Exception;
+use Illuminate\Support\Facades\File;
+use PhpParser\Node\Stmt\Switch_;
 
 class UserController extends Controller
 {
@@ -167,5 +172,36 @@ class UserController extends Controller
         $user->updated_by = Auth::User()->id;
         $user->save();
         return redirect(route('dashboard.users.index'));
+    }
+
+    public function uploadUsers(Request $request)
+    {
+        $extension = $request->file('file')->getClientOriginalExtension();
+
+        $ext = ['xlsx','xls'];
+
+        if (!in_array($extension,$ext)){
+
+            return redirect()->route('.dashboard.users.index')->with('message', 'Format file tidak sesuai !');
+        }
+
+        $tmp_path = $_FILES["file"]["tmp_name"];
+        $filename = $_FILES['file']['name'];
+        $target_file = storage_path('app'.DIRECTORY_SEPARATOR.$filename);
+
+        // move file upload to storage
+        move_uploaded_file($tmp_path, $target_file);
+        Excel::import(new UsersImport,$target_file);
+        // try {
+        //     Excel::import(new UsersImport,$target_file);
+        //     $return = 'User Berhasil di Import !';
+        // } catch (\Throwable $th) {
+        //     $return = 'Proses import gagal !';
+        // }
+        $return = '';
+
+        File::delete($target_file);
+
+        return redirect()->route('dashboard.users.index')->with('message', $return);
     }
 }

@@ -35,8 +35,14 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-outlet"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary col-2 btn-add-outlet"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-success col-2 btn-import-outlet"><i class="fa solid fa-file-import"></i></a>
                     </div>
+                    @if(session()->has('message'))
+                    <div class="alert alert-danger mt-2">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
                     <!-- /.card-header -->
                     <div class="card-body">
                       <table class="table table-bordered table-hover" id="table">
@@ -72,6 +78,39 @@
       </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+</div>
+
+<!-- The Modal Import -->
+<div class="modal fade in" id="modal-import-outlet" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="{{route('outlet.upload')}}" method="post" accept-charset="utf-8" id="form-import" enctype="multipart/form-data">
+        @csrf
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Import Data Tenant</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/gpshrms_oultet_template.xlsx')}}">Download Template</a><br><br>
+          <label for="name">Pilih File</label>
+          <input type="file" name="file" class="name" id="name" accept=".xlsx" required >
+          <span id="errorName" class="text-red"></span>
+        </div>
+      </div>
+
+        <div class="modal-footer">
+          <button type="submit" id="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+        </div>
+        </form>
+      </div>
+    </div>
 </div>
 
 <!-- The Modal Add -->
@@ -196,6 +235,15 @@
           "responsive": true,
         });
 
+        $('.btn-import-outlet').click(function(){
+            $('#modal-import-outlet').modal('show');
+          });
+
+          $('#submit').click(function(){
+            $('#modal-import-outlet').modal('hide');
+                      $('#loader').modal ('show');
+                    });
+
         $('.btn-add-outlet').click(function(){
             $('#modalCreateOutlet').modal('show');
 
@@ -222,6 +270,8 @@
                     error:function(response){
                         $('#errorName').text(response.responseJSON.errors.name);
                     }
+
+                    
                 })
             })
         })

@@ -59,6 +59,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/users/delete','App\Http\Controllers\UserController@destroy')->name('dashboard.users.delete');
     Route::post('users/editpassword','App\Http\Controllers\UserController@editPassword')->name('dashboard.users.editpassword');
     Route::post('/users/updatepassword','App\Http\Controllers\UserController@updatePassword')->name('dashboard.users.updatepassword');
+    Route::post('/users/upload', 'App\Http\Controllers\UserController@uploadUsers')->name('dashboard.users.upload');
 
     Route::get('/attendances','App\Http\Controllers\AttendanceController@index')->name('dashboard.attendances.index');
     Route::post('/attendances/start','App\Http\Controllers\AttendanceController@startWork')->name('dashboard.attendances.start');
@@ -70,6 +71,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/outlets/edit','App\Http\Controllers\OutletController@edit')->name('outlet.edit');
     Route::post('/outlets/update','App\Http\Controllers\OutletController@update')->name('outlet.update');
     Route::post('/outlet/delete','App\Http\Controllers\OutletController@destroy')->name('outlet.delete');
+    Route::post('/outlet/upload', 'App\Http\Controllers\OutletController@uploadOutlets')->name('outlet.upload');
 
     Route::get('/useroutlets','App\Http\Controllers\UserOutletController@index')->name('useroutlet.index');
     Route::post('/useroutlets/create','App\Http\Controllers\UserOutletController@store')->name('useroutlet.create');
@@ -90,4 +92,6 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
     Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
     Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
+
 });
+

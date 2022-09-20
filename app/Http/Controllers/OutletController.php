@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\OutletsImport;
 use Illuminate\Http\Request;
 use App\Models\Outlet;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Exception;
+use Illuminate\Support\Facades\File;
+use PhpParser\Node\Stmt\Switch_;
 
 class OutletController extends Controller
 {
@@ -82,7 +87,7 @@ class OutletController extends Controller
         $id = $request->id;
         $outlet = Outlet::find($id);
         return response()->json(['data' => $outlet]);
-        // return redirect(route('outlet.index'));
+        
     }
 
     /**
@@ -114,7 +119,6 @@ class OutletController extends Controller
 
         $return['errors'] = $error;
 
-        // return redirect(route('outlet.index'));
         return $return;
     }
 
@@ -140,7 +144,36 @@ class OutletController extends Controller
 
         $return['errors'] = $error;
 
-        // return view('outlet.index', compact('outlets'));
         return $return;
+    }
+
+    public function uploadOutlets(Request $request)
+    {
+        $extension = $request->file('file')->getClientOriginalExtension();
+
+        $ext = ['xlsx','xls'];
+
+        if (!in_array($extension,$ext)){
+
+            return redirect()->route('outlet.index')->with('message', 'Format file tidak sesuai !');
+        }
+
+        $tmp_path = $_FILES["file"]["tmp_name"];
+        $filename = $_FILES['file']['name'];
+        $target_file = storage_path('app'.DIRECTORY_SEPARATOR.$filename);
+
+        // move file upload to storage
+        move_uploaded_file($tmp_path, $target_file);
+        
+        try {
+            Excel::import(new OutletsImport,$target_file);
+            $return = 'Outlet Berhasil di Import !';
+        } catch (\Throwable $th) {
+            $return = 'Proses import gagal !';
+        }
+
+        File::delete($target_file);
+
+        return redirect()->route('outlet.index')->with('message', $return);
     }
 }

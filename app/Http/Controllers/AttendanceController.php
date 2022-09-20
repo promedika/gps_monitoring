@@ -149,6 +149,15 @@ class AttendanceController extends Controller
 
         if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
             return "Tanggal Foto Tidak Sesuai !";
+        }else{
+                
+            $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
+            $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+            
+            $difDate = date_diff($tfDate,$ogDate);
+            if($difDate->s > 60){
+                return redirect()->back()->with('message', 'Jam Foto Tidak Sesuai !');
+            }
         }
 
         // declare full path and filename

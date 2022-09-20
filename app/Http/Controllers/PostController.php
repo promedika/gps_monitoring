@@ -76,7 +76,9 @@ class PostController extends Controller
             
             //get geolocation of image
             $imgLocation = $this->get_image_location($tmp_path);
+            
             if (!$imgLocation || empty($imgLocation)) {
+                
                 return redirect()->back()->with('message', "Lokasi Foto Tidak Ditemukan !");   
             }
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
@@ -94,7 +96,7 @@ class PostController extends Controller
                 $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
                 
                 $difDate = date_diff($tfDate,$ogDate);
-                if($difDate->s > 30){
+                if($difDate->s > 60){
                     return redirect()->back()->with('message', 'Jam Foto Tidak Sesuai !');
                 }
             }
@@ -283,7 +285,7 @@ class PostController extends Controller
      */
     public function get_image_location($image = ''){
         $exif = exif_read_data($image, 0, true);
-        
+        dd($exif);
         if($exif 
          && isset($exif['GPS']['GPSLatitudeRef']) 
          && isset($exif['GPS']['GPSLatitude'])
