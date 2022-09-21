@@ -229,7 +229,7 @@
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" name="email" id="email_update" class="form-control" required>
+          <input type="text" name="email" id="email_update" class="form-control" readonly>
           <span id="errorEmail" class="text-red"></span>
         </div>
         <div class="form-group">

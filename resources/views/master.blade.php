@@ -52,7 +52,7 @@
           <span><b>{{Auth::User()->first_name." ".Auth::User()->last_name}}</b></span>
         </a>
         <div class="dropdown-menu dropdown-menu-md">
-          <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
+          <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user-master-password" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
             <!-- Message End -->
         </div>
       </li>
@@ -199,10 +199,10 @@
 </div>
 
 <!-- Modal Edit User -->
-<div class="modal fade in" id="modalEditUser" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalEditUserPassword" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
+      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit-master-password">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Ubah Password</h4>
@@ -214,11 +214,11 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name" type="text" name="first_name" id="first_name_update">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</label>
+          <label for="first_name" type="text" name="first_name">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</label>
         </div>
         <div class="form-group">
           <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>
-          <input placeholder="Kosongkan jika tidak ingin merubah password" type="password" name="password" id="password_update" class="form-control">
+          <input placeholder="Kosongkan jika tidak ingin merubah password" type="master_password" name="master_password" id="master_password_update" class="form-control">
           <span id="errorPassword" class="text-red"></span>
         </div>
       </div>
@@ -253,8 +253,8 @@
           }
       });
 
-      jQuery("body").on("click", ".btn-edit-user", function(e) {
-            $('#modalEditUser').modal('show');
+      jQuery("body").on("click", ".btn-edit-user-master-password", function(e) {
+            $('#modalEditUserPassword').modal('show');
             var userID = $(this).attr('user-id');
             var id = $('#id').val(userID);
                 $.ajax({
@@ -265,7 +265,7 @@
                     },
                     success:function(data){
                         console.log('success edit');
-                        $('#password_update').val(data.data.password);;
+                        $('#master_password_update').val(data.data.password);;
                     },
                     error:function(response){
                         $('#errorPassword').text(response.responseJSON.errors.password);
@@ -273,9 +273,9 @@
                     
                 })
 
-                $('#form-edit').submit(function(e){
+                $('#form-edit-master-password').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalEditUser');
+                let modal_id = $('#modalEditUserPassword');
                 var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('dashboard.users.updatepassword')}}",
@@ -283,7 +283,7 @@
                     data:formData,
                     data:{
                       id:userID,
-                      password:$('#password_update').val(),
+                      password:$('#master_password_update').val(),
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);

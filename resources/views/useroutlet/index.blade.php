@@ -318,8 +318,6 @@
                 })
             })
         })
-
-
           jQuery("body").on("click", ".btn-edit-useroutlet", function(e) {
             $('#modalEditUserOutlet').modal('show');
             var useroutletID = $(this).attr('useroutlet-id');
