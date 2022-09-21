@@ -109,7 +109,7 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'first_name'=>'required',
-            'email'=>'required|unique:users|email',
+            'email'=>'required|email',
             'role'=>'required',
             'department'=>'required',
             'start_date'=>'required',
@@ -132,7 +132,7 @@ class UserController extends Controller
         $user->updated_by = Auth::User()->id;
         $user->status = $request->status;
         $user->save();
-        // return redirect(route('dashboard.users.index'));
+        return redirect(route('dashboard.users.index'));
     }
 
     /**
