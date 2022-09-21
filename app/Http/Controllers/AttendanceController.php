@@ -49,24 +49,24 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function startWork(Request $request)
-    {
-        $attendance = new Attendance();
-        $attendance->date = Date('Y-m-d');
-        $attendance->start_time = Date('H:i:s');
-        $attendance->user_id = Auth::User()->id;
-        $attendance->save();
-        return redirect(route('dashboard.attendances.index'));
-    }
+    // public function startWork(Request $request)
+    // {
+    //     $attendance = new Attendance();
+    //     $attendance->date = Date('Y-m-d');
+    //     $attendance->start_time = Date('H:i:s');
+    //     $attendance->user_id = Auth::User()->id;
+    //     $attendance->save();
+    //     return redirect(route('dashboard.attendances.index'));
+    // }
 
-    public function finishWork(Request $request)
-    {
-        $currentDate = Date('Y-m-d');
-        $attendance = Attendance::whereDate('date',$currentDate)->where('user_id',Auth::User()->id)->first();
-        $attendance->end_time = Date('H:i:s');
-        $attendance->save();
-        return redirect(route('dashboard.attendances.index')); 
-    }
+    // public function finishWork(Request $request)
+    // {
+    //     $currentDate = Date('Y-m-d');
+    //     $attendance = Attendance::whereDate('date',$currentDate)->where('user_id',Auth::User()->id)->first();
+    //     $attendance->end_time = Date('H:i:s');
+    //     $attendance->save();
+    //     return redirect(route('dashboard.attendances.index')); 
+    // }
 
     /**
      * Display the specified resource.

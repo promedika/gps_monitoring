@@ -69,12 +69,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama User</label>
                                 <select id="useroutlet-dd" name="useroutlet_name"  class="form-control" required>
-                                    <option value="">Select PIC</option>
-                                    {{-- @foreach ($useroutlets as $useroutlet)
-                                    <option>
-                                        {{$useroutlet->name}}
-                                    </option>
-                                    @endforeach --}}
+                                    <option value="">Pilih User</option>
                                 </select>
                             </div>
                             <br>

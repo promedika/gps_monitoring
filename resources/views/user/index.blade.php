@@ -40,6 +40,16 @@
                   <a href="#" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
                   <a href="#" title="Add" class="btn btn-success col-2 btn-import-user"><i class="fa solid fa-file-import"></i></a>
                 </div>
+                @if(session()->has('message'))
+                    <div class="alert alert-danger mt-2">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                @if(session()->has('failure'))
+                    <div class="alert alert-danger mt-2">
+                        {{ session()->get('failure') }}
+                    </div>
+                @endif
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table class="table table-bordered table-hover" id="table">
@@ -151,7 +161,7 @@
         </div>
         <div class="form-group">
           <label for="department">Departemen</label>
-          <select class="form-control" id="departement" name="department"required>
+          <select class="form-control" id="department" name="department"required>
               <option value="" style="display:none;">Pilih departemen</option>
               <option value="0">IT</option>
               <option value="1">Marketing</option>

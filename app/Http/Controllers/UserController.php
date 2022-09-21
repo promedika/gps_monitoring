@@ -23,6 +23,8 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('user.index', compact('users'));
+
+
     }
 
     /**
@@ -43,19 +45,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request);
         $this->validate($request,[
             'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required|unique:users',
+            'email'=>'required|unique:users|email',
             'password'=>'required',
-            'departement' =>'required',
+            'department' =>'required',
             'role'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
         ]);
         $user = new user();
         $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
+        $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->department = $request->department;
@@ -106,17 +109,18 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required',
+            'email'=>'required|unique:users|email',
             'role'=>'required',
             'department'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
         ]);
+
+        
         $id = $request->id;
         $user = User::find($id);
         $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
+        $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
         $user->email = $request->email;
         if($request->password !='' && strlen(trim($request->password)) > 0){
             $user->password = Hash::make($request->password);
@@ -128,7 +132,7 @@ class UserController extends Controller
         $user->updated_by = Auth::User()->id;
         $user->status = $request->status;
         $user->save();
-        return redirect(route('dashboard.users.index'));
+        // return redirect(route('dashboard.users.index'));
     }
 
     /**
@@ -191,17 +195,20 @@ class UserController extends Controller
 
         // move file upload to storage
         move_uploaded_file($tmp_path, $target_file);
-        Excel::import(new UsersImport,$target_file);
-        // try {
-        //     Excel::import(new UsersImport,$target_file);
-        //     $return = 'User Berhasil di Import !';
-        // } catch (\Throwable $th) {
-        //     $return = 'Proses import gagal !';
-        // }
-        $return = '';
-
+        try {
+            Excel::import(new UsersImport,$target_file);
+            $return = 'User Berhasil di Import !';
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            
+            foreach ($failures as $failure) {
+                $return = $failure->errors();
+            }
+            File::delete($target_file);
+            
+            return redirect()->route('dashboard.users.index')->with('failure', $return[0]);
+        }
         File::delete($target_file);
-
-        return redirect()->route('dashboard.users.index')->with('message', $return);
+        return redirect()->route('dashboard.users.index')->with('success', $return);
     }
 }

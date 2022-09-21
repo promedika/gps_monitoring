@@ -97,7 +97,7 @@
       <div class="modal-body">
         <div class="form-group">
           <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
-          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/gpshrms_oultet_template.xlsx')}}">Download Template</a><br><br>
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/tenant_template.xlsx')}}">Download Template</a><br><br>
           <label for="name">Pilih File</label>
           <input type="file" name="file" class="name" id="name" accept=".xlsx" required >
           <span id="errorName" class="text-red"></span>

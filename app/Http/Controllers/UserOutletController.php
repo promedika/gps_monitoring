@@ -11,7 +11,6 @@ use App\Models\Outlet;
 use App\Models\UserOutlet;
 use DB;
 
-
 class UserOutletController extends Controller
 {
     /**
