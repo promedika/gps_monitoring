@@ -21,10 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        if(Auth::User()->role != 1){
         $users = User::all();
         return view('user.index', compact('users'));
-
-
+        }else
+        return redirect('error.404');
     }
 
     /**

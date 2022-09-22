@@ -173,7 +173,9 @@
           <label for="Role">Role</label>
           <select class="form-control" id="role" name="role"required>
               <option value="" style="display:none;">Pilih Role</option>
+              @if (Auth::user()->role ==0)
               <option value="0">Admin</option>
+              @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
           </select>
@@ -251,7 +253,9 @@
           <label for="Role">Role</label>
           <select class="form-control" id="role_update" name="role" required>
               <option value="" style="display:none;">Select Role</option>
+              @if (Auth::user()->role == 0)
               <option value="0">Admin</option>
+              @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
           </select>

@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Session;
 
 class AttendanceReportController extends Controller
 {
-    public function index() {
+    public function index()
+    {    
+        if(Auth::User()->role != 1){
         
         Session::forget('user_id');
         Session::forget('date');
@@ -38,6 +40,8 @@ class AttendanceReportController extends Controller
         $dataAtt = $this->getDateTimeAtt($tmp_data);
 
         return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
+        }else
+        return redirect('error.404');
     }
 
     public function show_report(Request $request)

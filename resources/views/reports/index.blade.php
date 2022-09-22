@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Image Attendance
+    Laporan Absensi
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -51,7 +52,7 @@ Route::post('/login','App\Http\Controllers\LoginController@actionLogin')->name('
 Route::group(['middleware'=>'auth'], function() {
     Route::get('/','App\Http\Controllers\DashboardController@index')->name('dashboard.index');
     Route::get('/logout','App\Http\Controllers\DashboardController@logout')->name('logout');
-
+    
     Route::get('/users','App\Http\Controllers\UserController@index')->name('dashboard.users.index');
     Route::post('/users/create','App\Http\Controllers\UserController@store')->name('dashboard.users.create');
     Route::post('/users/edit','App\Http\Controllers\UserController@edit')->name('dashboard.users.edit');

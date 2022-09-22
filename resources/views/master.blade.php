@@ -54,6 +54,7 @@
         <div class="dropdown-menu dropdown-menu-md">
           <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user-master-password" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
             <!-- Message End -->
+          <a href="{{route('logout')}}" user-id="{{Auth::User()->id}}" class="dropdown-item btn-logout" style="text-align: left"><i class="fas fa-door-open"> Logout</i></a>
         </div>
       </li>
       <li class="nav-item">
@@ -87,7 +88,7 @@
             </a>
           </li>
 
-          @if (Auth::user()->role !=1)
+          
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
@@ -97,16 +98,16 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if (Auth::user()->role !=1)
               <li class="nav-item">
                 <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
-                  
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                     P.I.C
                     </p>
                 </a>
               </li>
-
+              @endif
               <li class="nav-item">
                 <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
@@ -129,13 +130,12 @@
                 <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user-tie"></i></i>
-                    Jabatan
+                    Jabatan User
                   </p>
                 </a>
               </li>
             </ul>
           </li>
-          @endif
           
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">
@@ -160,15 +160,6 @@
               <p>
                 <i class="nav-icon fas fa-clock"></i>
                 Riwayat Absensi
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{route('logout')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-door-open"></i>
-                Keluar
               </p>
             </a>
           </li>
