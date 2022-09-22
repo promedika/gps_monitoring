@@ -123,7 +123,7 @@
             width: 150px;
             background-color:rgb(233, 162, 38);
             border-radius: 50%;
-            color:white;" for="post_btn" class="btn  btn-md" id="post_btn"><img src="{{asset('assets/img/location.png')}}" style="width:100%">
+            color:white;" for="post_btn" class="btn  btn-md" id="post_btn"><img src="{{asset('assets/img/riwayat_kunjungan.png')}}" style="width:80%">
             Kunjungan
           </button></a>
           <a style="margin:23px" href="{{route('dashboard.attendances.index')}}">
@@ -132,7 +132,7 @@
             width: 150px;
             border-radius: 50%;
             background-color:teal;
-            color:white;" for="att_btn" class="btn btn-md btn-success" id="att_btn"><img src="{{asset('assets/img/location.png')}}" style="width:100%">
+            color:white;" for="att_btn" class="btn btn-md btn-success" id="att_btn"><img src="{{asset('assets/img/riwayat_absensi.png')}}" style="width:80%">
             Absensi
           </button></a>
         </div>
