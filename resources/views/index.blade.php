@@ -34,6 +34,14 @@
               </div>
             </div>
           </div>
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box" style="background-color:lightsalmon">
+              <div class="inner">
+                <a href="#" id="riwayat" title="riwayat" style="color:white"><img src="{{asset('assets/img/pngcalendar.png')}}" style="width: 100%;">Riwayat</a>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.row -->
   	</div><!-- /.container-fluid -->
@@ -41,31 +49,93 @@
   <!-- /.content -->
 </div>
 
-<div class="modal fade in" id="modalCreateNewAtt" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      {{-- <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-newatt"> --}}
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Create New Attendance</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
+<div class="modal fade in" id="modalCreateNewAtt"> 
+  <div class="modal-header" style="background-color:#17a2b8">
+    <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Absensi</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content"
+    style="background-color: transparent !important;
+          border: 0px !important;">
       <!-- Modal body -->
-      <div class="modal-body">
-        <div class="form-group">
-          <button for="clockin" class="btn btn-md btn-primary" id="clock_in_btn">Clock In</button>
-          
+        <div class="form-group" style="align-content: center;justify-content:center;">
+          <div>
+          <button style="display:inline-block;
+          margin-left: 25%;
+          margin-top:10%;
+          height: 200px;
+          width: 200px;
+          border-radius: 50%;"
+          for="clockin" class="btn btn-md btn-primary" id="clock_in_btn">
+          <img src="{{asset('/assets/img/clock_in.png')}}" style="width: 80%">
+            Clock In
+         </button>
           <input type="file" name="clock_in_img" id="clock_in_img" class="form-control" style="display:none" accept="image/*" capture="camera"> 
-          
-          <a href="{{route('posts.create')}}"><button for="visit" class="btn btn-md btn-success" id="visit_btn">Visit</button></a>
-
-          <button for="clockin" id="clock_out_btn" class="btn btn-md btn-primary">Clock Out</button>
+          </div>
+          <div>
+          <a href="{{route('posts.create')}}">
+          <button style="display:inline-block;
+            margin-left: 25%;
+            margin-top:15%;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;" for="visit" class="btn btn-md btn-success" id="visit_btn"><img src="{{asset('assets/img/location.png')}}" style="width:100%">
+            Visit
+          </button></a>
+          </div>
+          <div>
+          <button style="display:inline-block;
+            margin-left: 25%;
+            margin-top:15%;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;"
+            for="clockin" id="clock_out_btn" class="btn btn-md btn-primary"><img src="{{asset('assets/img/clock_out.png')}}" style="width:80%">
+            Clock Out
+          </button>
           <input type="file" name="clock_out_img" id="clock_out_img" class="form-control" style="display:none" accept="image/*" capture="camera">
+          </div>
         </div>
-      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Modal Riwayat -->
+<div class="modal fade in" id="modalRiwayat"> 
+  <div class="modal-header" style="background-color:lightsalmon">
+    <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Riwayat</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content"
+    style="background-color: transparent !important;
+          border: 0px !important;">
+      <!-- Modal body -->
+        <div>
+          <a style="margin:23px" href="{{route('posts.index')}}">
+          <button style="
+            height: 150px;
+            width: 150px;
+            background-color:rgb(233, 162, 38);
+            border-radius: 50%;
+            color:white;" for="post_btn" class="btn  btn-md" id="post_btn"><img src="{{asset('assets/img/location.png')}}" style="width:100%">
+            Kunjungan
+          </button></a>
+          <a style="margin:23px" href="{{route('dashboard.attendances.index')}}">
+          <button style="
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background-color:teal;
+            color:white;" for="att_btn" class="btn btn-md btn-success" id="att_btn"><img src="{{asset('assets/img/location.png')}}" style="width:100%">
+            Absensi
+          </button></a>
+        </div>
       </form>
     </div>
   </div>
@@ -79,13 +149,18 @@ $(document).ready(function(){
           'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
       }
   });
-
   let modal_create = $('#modalCreateNewAtt');
 
   $('#newatt').click(function(){
       modal_create.modal('show');
   })
 
+  let modal_riwayat = $('#modalRiwayat');
+
+  $('#riwayat').click(function(){
+      modal_riwayat.modal('show');
+  })
+  
   // clock in
   modal_create.find('#clock_in_btn').on('click', function (e) {
     e.preventDefault();
@@ -99,6 +174,7 @@ $(document).ready(function(){
     modal_create.find('#clock_out_img').trigger('click');
     submit_att('clock_out_img');
   });
+  
 
   function submit_att(type_att) {
     let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';

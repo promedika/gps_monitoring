@@ -24,8 +24,9 @@ class UserController extends Controller
         if(Auth::User()->role != 1){
         $users = User::all();
         return view('user.index', compact('users'));
-        }else
+        }else{
         return redirect('error.404');
+        }
     }
 
     /**

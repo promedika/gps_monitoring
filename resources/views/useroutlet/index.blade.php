@@ -36,8 +36,7 @@
                   <div class="card">
                     <div class="card-header">
                       <a href="#" title="Add" class="btn btn-primary   col-2 btn-add-useroutlet"><i class="fa solid fa-plus"></i></a>
-                      <a href="#" title="Add" class="btn btn-primary col-2 btn-import-useroutlet"><i class="fa solid fa-file-import"></i></a>
-                    </div>
+                      </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                       <table class="table table-bordered table-hover" id="table">
@@ -82,26 +81,6 @@
   </section>
   <!-- /.content -->
 </div>
-
-<!-- The Modal Import -->
-<div class="modal fade in" id="modalCreateUserOutlet" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Import Data User Tenant</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="first_name">  </label>
-          <input type="text" name="name" id="name" class="form-control" required>
-          <span id="errorName" class="text-red"></span>
-        </div>
 
 <!-- The Modal Add -->
 <div class="modal fade in" id="modalCreateUserOutlet" data-backdrop="static" data-keyboard="false">

@@ -40,8 +40,9 @@ class AttendanceReportController extends Controller
         $dataAtt = $this->getDateTimeAtt($tmp_data);
 
         return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
-        }else
+        }else{
         return redirect('error.404');
+        }
     }
 
     public function show_report(Request $request)

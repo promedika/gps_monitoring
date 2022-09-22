@@ -285,7 +285,7 @@ class PostController extends Controller
      */
     public function get_image_location($image = ''){
         $exif = exif_read_data($image, 0, true);
-        dd($exif);
+
         if($exif 
          && isset($exif['GPS']['GPSLatitudeRef']) 
          && isset($exif['GPS']['GPSLatitude'])
