@@ -73,7 +73,6 @@ class AttendanceReportController extends Controller
 
         $dataAtt = $this->getDateTimeAtt($tmp_data);
 
-        // dd($dataAtt);
         return view('reports.index', compact('posts','data','users','tmp_data','dataAtt'));
     }   
 
@@ -187,7 +186,6 @@ class AttendanceReportController extends Controller
     }
 
     public function getDateTimeAtt($params) {
-        // dd($params['user_id']);
         $return = [];
         $param_year = explode('-',$params['date'])[0];
         $param_month = strlen(explode('-',$params['date'])[1]) == 1 ? '0'.explode('-',$params['date'])[1] : explode('-',$params['date'])[1];

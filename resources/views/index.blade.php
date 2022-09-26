@@ -50,16 +50,16 @@
 </div>
 
 <div class="modal fade in" id="modalCreateNewAtt"> 
-  <div class="modal-header" style="background-color:#17a2b8">
+  <div class="modal-header" style="background-color:#17a2b8;border-bottom:none;width:100%">
     <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Absensi</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
+    <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span style="font-size:2.3rem" aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-dialog modal-fullscreen">
+  <div class="modal-dialog   modal-fullscreen">
     <div class="modal-content"
     style="background-color: transparent !important;
-          border: 0px !important;">
+          border: 0px !important;box-shadow:none;">
       <!-- Modal body -->
         <div class="form-group" style="align-content: center;justify-content:center;">
           <div>
@@ -105,31 +105,36 @@
 </div>
 <!--Modal Riwayat -->
 <div class="modal fade in" id="modalRiwayat"> 
-  <div class="modal-header" style="background-color:lightsalmon">
+  <div class="modal-header" style="position:fixed;background-color:lightsalmon;border-bottom:none">
     <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Riwayat</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
+      <span style="font-size:2.3rem" aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-dialog modal-fullscreen">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
     <div class="modal-content"
     style="background-color: transparent !important;
-          border: 0px !important;">
+          border: 0px !important;box-shadow:none;margin-top:10%">
       <!-- Modal body -->
+      <div class="form-group" style="align-content: center;justify-content:center;">
         <div>
-          <a style="margin:23px" href="{{route('posts.index')}}">
-          <button style="
-            height: 150px;
-            width: 150px;
+          <a href="{{route('posts.index')}}">
+          <button style="display:inline-block;
+            margin-left: 25%;
+            height: 200px;
+            width: 200px;
             background-color:rgb(233, 162, 38);
             border-radius: 50%;
-            color:white;" for="post_btn" class="btn  btn-md" id="post_btn"><img src="{{asset('assets/img/riwayat_kunjungan.png')}}" style="width:80%">
+            color:white;" for="post_btn" class="btn  btn-md" id="post_btn"><img src="{{asset('assets/img/riwayat_kunjungan.png')}}" style="width:100%">
             Kunjungan
           </button></a>
-          <a style="margin:23px" href="{{route('dashboard.attendances.index')}}">
-          <button style="
-            height: 150px;
-            width: 150px;
+          <a href="{{route('dashboard.attendances.index')}}">
+          <button style="display:inline-block;
+          margin-left: 25%;
+          margin-top:15%;
+          height: 200px;
+          width: 200px;
+          border:none;
             border-radius: 50%;
             background-color:teal;
             color:white;" for="att_btn" class="btn btn-md btn-success" id="att_btn"><img src="{{asset('assets/img/riwayat_absensi.png')}}" style="width:80%">
@@ -137,7 +142,7 @@
           </button></a>
         </div>
       </form>
-    </div>
+      </div>
   </div>
 </div>
 @endsection

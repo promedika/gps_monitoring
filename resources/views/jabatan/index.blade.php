@@ -19,7 +19,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
             <li class="breadcrumb-item active">Jabatan</li>
           </ol>
         </div><!-- /.col -->
@@ -284,7 +284,6 @@
           $('#form-delete').submit(function(e){
                 e.preventDefault();
                 let modal_id = $('#modalDeleteJabatan');
-                // var formData = new FormData(this);
                 $.ajax({
                     url:"{{route('jabatan.delete')}}",
                     type:'POST',

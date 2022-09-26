@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
-use URL;
-use DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\DB;
 
 
 class MarketingAttController extends Controller
@@ -67,15 +67,11 @@ class MarketingAttController extends Controller
             $image_resize->resize(250, 250,);
             $image_resize->stream();
 
-            // $image_resize->save();
-            // $image_resize->save(public_path('images/ServiceImages/' .$filename));
-            // $image_resize->storeAs('/public/posts', $filename);
-            // $image_resize->save(public_path('posts/' .$filename));
             Storage::disk('local')->put('public/clock_in'.'/'.$filename, $image_resize, 'public');
         };
 
         $unique_id = Auth::User()->id.'_'.date('Ymd');
-        // create post
+        
         MarketingAtt::create([
             'id' => $unique_id,
             'clock_in' =>  $filename,

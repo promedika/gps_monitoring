@@ -50,7 +50,7 @@
                     </div>
                     <div>
                     <input type="submit" value="Submit" class="btn btn-primary">
-                    <button class="btn btn-primary" id="excel" title="excel"><i class="fas fa-download"></i></button>
+                    <button class="btn btn-success" id="excel" title="excel"><i class="fas fa-download"></i></button>
                     </div>
                   </form>
                   </div>
@@ -284,7 +284,6 @@
     });
 
     //Date picker
-    
     $('#reservationdate').datetimepicker({
         viewMode: 'months', 
         format: 'YYYY-MM'

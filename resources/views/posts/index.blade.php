@@ -48,7 +48,6 @@
                                 <th scope="col">jabatan</th>
                                 <th scope="col">Aktifitas</th>
                                 <th scope="col">Peta</th>
-                                {{-- <th scope="col">Action</th> --}}
                               </tr>
                             </thead>
                             <tbody>
@@ -88,14 +87,6 @@
                                             src="https://maps.google.com/maps?width=400&amp;height=400&amp;hl=en&amp;q={{$latitude}},{{$longitude}}+({{$post->user_fullname}})&amp;t=k&amp;z=19&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                                         </iframe>
                                     </td>
-                                    {{-- <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                        </form>
-                                    </td> --}}
                                 </tr>
                               @endforeach
                             </tbody>

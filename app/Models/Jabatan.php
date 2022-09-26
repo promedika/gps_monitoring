@@ -13,9 +13,4 @@ class Jabatan extends Model
     protected $fillable = [
         'name',
     ];
-
-    // public function useroutlet()
-    // {
-    //     return $this->hasMany(UserOutlet::class, 'foreign_key','local_key');
-    // }
 }

@@ -22,14 +22,4 @@ class UserOutlet extends Model
         'jabatan',
         'status'
     ];
-
-    // public function outlet()
-    // {
-    // return $this->belongsTo('App\Models\Outlet', 'outlet_id');
-    // }
-
-    // public function jabatan()
-    // {
-    // return $this->belongsTo('App\Models\Jabatan', 'jabatan');
-    // }
 }

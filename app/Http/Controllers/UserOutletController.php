@@ -101,9 +101,6 @@ class UserOutletController extends Controller
         ];
 
         return $return;
-
-        // dd($return);
-        // return view('useroutlet.index', compact('useroutlets','outlets'));
     }
     /**
      * Update the specified resource in storage.
