@@ -16,7 +16,7 @@ class DropdownController extends Controller
         return view('posts.create', $outlets); 
     }
     public function fetchUserOutlet(Request $request)
-    {
+    {   
         $useroutlet = UserOutlet::where("outlet_id", $request->outlet_id)
         ->where("status", 'AKTIF')
         ->get(["name", "id", "jabatan"]);

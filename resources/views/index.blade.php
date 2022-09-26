@@ -105,7 +105,7 @@
 </div>
 <!--Modal Riwayat -->
 <div class="modal fade in" id="modalRiwayat"> 
-  <div class="modal-header" style="position:fixed;background-color:lightsalmon;border-bottom:none">
+  <div class="modal-header" style="background-color:lightsalmon;border-bottom:none">
     <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Riwayat</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span style="font-size:2.3rem" aria-hidden="true">&times;</span>
