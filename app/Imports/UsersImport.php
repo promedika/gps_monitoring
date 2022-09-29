@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
+use Illuminate\Support\Carbon;
 
 class UsersImport implements ToModel, WithHeadingRow, WithValidation
 {
@@ -19,7 +20,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
-        return new User([
+        DB::table('users')->insert([
             "first_name" => $row['first_name'],
             "last_name" => isset($row['last_name']) ? $row['last_name'] : ' ',
             "email" => $row['email'],
@@ -30,6 +31,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
             "end_date" => date('Y-m-d', strtotime($row['end_date'])),
             "created_by" => Auth::User()->id,
             "updated_by" =>Auth::User()->id,
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "status" => 'active'
         ]);
     }
