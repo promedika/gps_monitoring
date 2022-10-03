@@ -7,15 +7,15 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Tentang Aplikasi Absensi Marketing
+## Tentang Aplikasi GPS Monitoring
 
-Aplikasi Absensi Marketing digunakan untuk Mencatat Kehadiran dengan cara upload gambar yang sudah terdapat lokasi gps pada gambar tersebut.
+Aplikasi GPS Monitoring, sementara digunakan untuk Mencatat Kehadiran ataupun Kunjungan tim marketing dengan cara upload gambar yang sudah terdapat lokasi gps pada gambar tersebut.
 
-## Cara Install Aplikasi Absensi Marketing
+## Cara Install Aplikasi GPS Monitoring
 
 - Download atau clone dari repository git.
 - Setting dan sesuaikan file .env yg digunakan.
-- Buka command line dan pindah ke directory root absensi marketing.
+- Buka command line dan pindah ke directory root GPS Monitoring.
 - Jalankan "composer install"
 - Buat folder public di dalam folder storage/app/
 - Buat folder posts, clock_in_img, dan clock_out_img di dalam folder storage/app/public/
