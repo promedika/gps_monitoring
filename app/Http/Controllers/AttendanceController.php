@@ -11,6 +11,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 
 class AttendanceController extends Controller
@@ -153,10 +154,18 @@ class AttendanceController extends Controller
                 
             $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
             $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+            $now = date_create(date('Y-m-d H:i:s'));
             
+            $difDate = date_diff($ogDate,$now);
+            
+            if($difDate->h > 0 || $difDate->i > 0 ){
+                return 'Jam Foto Tidak Sesuai !';
+            }
+
             $difDate = date_diff($tfDate,$ogDate);
-            if($difDate->s > 60){
-                return redirect()->back()->with('message', 'Jam Foto Tidak Sesuai !');
+            
+            if($difDate->i > 1){
+                return 'Request Time Out !';
             }
         }
 

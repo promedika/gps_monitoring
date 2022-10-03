@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Tenant</label>
                                 <select id="outlet-dd" name="outlet_name" class="form-control" required>
-                                    <option value="">Select Location</option>
+                                    <option value="">Pilih Lokasi</option>
                                     @foreach ($outlets as $outlet)
                                     <option value="{{$outlet->id.'|'.$outlet->name}}">
                                         {{$outlet->name}}

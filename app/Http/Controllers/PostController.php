@@ -96,8 +96,8 @@ class PostController extends Controller
                 $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
                 
                 $difDate = date_diff($tfDate,$ogDate);
-                if($difDate->s > 60){
-                    return redirect()->back()->with('message', 'Jam Foto Tidak Sesuai !');
+                if($difDate->i > 1){
+                    return redirect()->back()->with('message', 'Request Time Out !');
                 }
             }
 
