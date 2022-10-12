@@ -111,7 +111,7 @@ class PostController extends Controller
             $image_resize->resize(250, 250,);
             $image_resize->stream();
 
-            Storage::disk('local')->put('public/posts'.'/'.$filename, $image_resize, 'public');
+            Storage::disk('local')->put('public'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$filename, $image_resize, 'public');
         };
         $outlet = explode('|',$request->outlet_name);
         $outlet_id = $outlet[0];

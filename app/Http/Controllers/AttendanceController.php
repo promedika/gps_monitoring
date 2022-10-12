@@ -179,7 +179,7 @@ class AttendanceController extends Controller
         $image_resize->resize(250, 250,);
         $image_resize->stream();
 
-        Storage::disk('local')->put('public'.'/'.$type.'/'.$filename, $image_resize, 'public');
+        Storage::disk('local')->put('public'.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$filename, $image_resize, 'public');
 
         $unique_id = Auth::User()->id.'_'.date('Ymd');
         $header = DB::table('attendances')
