@@ -64,7 +64,7 @@
                                 </td>
                                     <td>{{ $post->user_fullname}}</td>  
                                     <td class="text-center">
-                                        <img src="{{ asset('/storage/posts/'.$post->image) }}" class="rounded" style="width: 200px">
+                                        <img src="{{ asset('/assets/img/posts/'.$post->image) }}" class="rounded" style="width: 200px">
                                     </td>
                                     <td>{{ $post->outlet_name }}</td>
                                     <td>{!! $post->outlet_user !!}</td>

@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/img/posts
+/public/img/clock_in_img
+/public/img/clock_out_img
 /storage/*.key
 /vendor
 .env

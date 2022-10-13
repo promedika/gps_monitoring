@@ -170,16 +170,16 @@ class AttendanceController extends Controller
         }
 
         // declare full path and filename
-        $target_file = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$filename);
+        $target_file = public_path('/assets/img/'.$type.'/'.$filename);
         
         // move file upload to storage
-        move_uploaded_file($tmp_path, $target_file);
+        $image->move(public_path('/assets/img/'.$type.'/'), $filename);
 
         $image_resize = Image::make($target_file)->orientate();           
         $image_resize->resize(250, 250,);
         $image_resize->stream();
 
-        Storage::disk('local')->put('public'.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$filename, $image_resize, 'public');
+        Storage::disk('local')->put('public/assets/img/'.$type.'/'.$filename, $image_resize, 'public');
 
         $unique_id = Auth::User()->id.'_'.date('Ymd');
         $header = DB::table('attendances')
