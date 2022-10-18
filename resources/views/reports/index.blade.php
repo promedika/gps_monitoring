@@ -38,7 +38,7 @@
                         <option value="">Pilih User</option>
                         @foreach($users as $user)
                         <option value="{{$user->id}}|{{$user->first_name." ".$user->last_name}}"{{($user->id == Session::get('user_id')) ? 'selected' : ''}}>
-                          {{$user->first_name."".$user->last_name}}
+                          {{$user->first_name." ".$user->last_name}}
                         </option>
                         @endforeach
                       </select>
