@@ -28,5 +28,6 @@ class Post extends Model
         'jabatan_id',
         'jabatan_name',
         'activity',
+        'note',
     ];
 }

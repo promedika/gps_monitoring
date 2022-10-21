@@ -12,6 +12,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use URL;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\HelperController;
 
 class PostController extends Controller
 {
@@ -82,6 +83,16 @@ class PostController extends Controller
                 return redirect()->back()->with('message', "Lokasi Foto Tidak Ditemukan !");   
             }
             $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
+
+            // validate fake gps from ip adress
+            $dataIp = HelperController::getGpsFromIp();
+            $noteFakeGps = 'No';
+            if ($dataIp['data'] !== false) {
+                $imgLocIp = $dataIp['data']['latitude']. "|" .$dataIp['data']['longitude'];
+                if ($imgLoc != $imgLocIp) {
+                    $noteFakeGps = 'Yes';
+                }
+            }
             
             // get image taken date
             $imgDate = exif_read_data($tmp_path);
@@ -141,7 +152,7 @@ class PostController extends Controller
             'jabatan_id' => $jabatan_id,
             'jabatan_name' => $jabatan_name,
             'activity' => $request->activity,
-
+            'note' => $noteFakeGps,
         ]);
 
         $header = DB::table('post_header')

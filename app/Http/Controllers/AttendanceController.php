@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\HelperController;
 
 
 class AttendanceController extends Controller
@@ -43,31 +44,6 @@ class AttendanceController extends Controller
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function startWork(Request $request)
-    // {
-    //     $attendance = new Attendance();
-    //     $attendance->date = Date('Y-m-d');
-    //     $attendance->start_time = Date('H:i:s');
-    //     $attendance->user_id = Auth::User()->id;
-    //     $attendance->save();
-    //     return redirect(route('dashboard.attendances.index'));
-    // }
-
-    // public function finishWork(Request $request)
-    // {
-    //     $currentDate = Date('Y-m-d');
-    //     $attendance = Attendance::whereDate('date',$currentDate)->where('user_id',Auth::User()->id)->first();
-    //     $attendance->end_time = Date('H:i:s');
-    //     $attendance->save();
-    //     return redirect(route('dashboard.attendances.index')); 
-    // }
 
     /**
      * Display the specified resource.
@@ -143,6 +119,16 @@ class AttendanceController extends Controller
             return "Lokasi Foto Tidak Ditemukan !";   
         }
         $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
+
+        // validate fake gps from ip adress
+        $dataIp = HelperController::getGpsFromIp();
+        $noteFakeGps = 'No';
+        if ($dataIp['data'] !== false) {
+            $imgLocIp = $dataIp['data']['latitude']. "|" .$dataIp['data']['longitude'];
+            if ($imgLoc != $imgLocIp) {
+                $noteFakeGps = 'Yes';
+            }
+        }
         
         // get image taken date
         $imgDate = exif_read_data($tmp_path);
@@ -196,6 +182,7 @@ class AttendanceController extends Controller
                 'clock_in_loc' => $imgLoc,
                 'work_hour' => 0,
                 'status' => 'kurang dari jam kerja',
+                'note' => $noteFakeGps,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
@@ -225,6 +212,7 @@ class AttendanceController extends Controller
                 'clock_out_loc' => $imgLoc,
                 'work_hour' => $work_hour->h.':'.$work_hour->i.':'.$work_hour->s,
                 'status' => $status,
+                'note2' => $noteFakeGps,
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
