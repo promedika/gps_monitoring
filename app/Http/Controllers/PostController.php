@@ -88,7 +88,7 @@ class PostController extends Controller
             $dataIp = HelperController::getGpsFromIp();
             $noteFakeGps = 'No';
             if ($dataIp['data'] !== false) {
-                $imgLocIp = $dataIp['data']['latitude']. "|" .$dataIp['data']['longitude'];
+                $imgLocIp = $dataIp['data']->latitude. "|" .$dataIp['data']->longitude;
                 if ($imgLoc != $imgLocIp) {
                     $noteFakeGps = 'Yes';
                 }
