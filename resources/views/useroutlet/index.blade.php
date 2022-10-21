@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+<!-- Select 2 -->
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -167,8 +170,8 @@
           <span id="errorName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="last_name">Nama Tenant</label>
-          <select id="outlet_id_update" name="outlet_id" value="{{ old('outlets_name')}}" class="form-control" required>
+          <label for="outlet_name">Nama Tenant</label>
+          <select id="outlet_dd_update" name="outlet_id_update" value="{{ old('outlets_name')}}" class="form-control" required>
               <option value="">Silahkan Pilih</option>
               @foreach ($outlets as $outlet)
               <option value="{{$outlet->id}}">{{$outlet->name}}</option>
@@ -249,6 +252,8 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<!-- Select 2 -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js')}}"></script>
 
 <script>
     $(document).ready(function(){
@@ -266,6 +271,17 @@
           "info": true,
           "autoWidth": false,
           "responsive": true,
+        });
+
+        $('#outlet-dd').select2({
+                dropdownParent: $('#modalCreateUserOutlet'),
+                width:'100%',
+                theme: 'bootstrap4',
+        });
+        $('#outlet_dd_update').select2({
+            dropdownParent: $('#modalEditUserOutlet'),
+            width:'100%',
+            theme: 'bootstrap4',
         });
         
         jQuery("body").on("click", ".btn-add-useroutlet", function(e){
@@ -309,7 +325,7 @@
                     },
                     success:function(data){
                         $('#name_update').val(data.useroutlets.name);
-                        $('#outlet_id_update').val(data.useroutlets.outlet_id);
+                        $('#outlet_dd_update').val(data.useroutlets.outlet_id);
                         $('#jabatan_update').val(data.useroutlets.jabatan);
                         $('#status_update').val(data.useroutlets.status);
                     },
@@ -331,7 +347,7 @@
                     data:{
                       id:useroutletID,
                       name:$('#name_update').val(),
-                      outlet_id:$('#outlet_id_update').val(),
+                      outlet_id:$('#outlet_dd_update').val(),
                       jabatan:$('#jabatan_update').val(),
                       status:$('#status_update').val(),
                     },

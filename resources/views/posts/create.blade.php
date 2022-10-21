@@ -3,6 +3,9 @@
     Create Attendance
 @endsection
 @section('custom_link_css')
+<!-- Select 2 -->
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endsection
 @section('content')
   <!-- Content Wrapper. Contains page content -->
@@ -49,7 +52,7 @@
                                         {{ session()->get('message') }}
                                     </div>
                                 @endif
-                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" required>
+                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" capture="camera" required>
                             
                                 <!-- error message untuk title -->
                                 
@@ -58,7 +61,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Tenant</label>
                                 <select id="outlet-dd" name="outlet_name" class="form-control" required>
-                                    <option value="">Pilih Lokasi</option>
+                                    <option>Nama Tenant</option>
                                     @foreach ($outlets as $outlet)
                                     <option value="{{$outlet->id.'|'.$outlet->name}}">
                                         {{$outlet->name}}
@@ -97,8 +100,19 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Select 2 -->
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
+        $('#outlet-dd').select2({
+                width:'100%',
+                theme: 'bootstrap4',
+        });
+        
+        $('#useroutlet-dd').select2({
+            width:'100%',
+            theme: 'bootstrap4',
+        }); 
         var site_url = "{{ url('/') }}";
         $('#outlet-dd').on('change', function () {
             var idOutlet = this.value;
@@ -114,7 +128,7 @@
                 success: function (result) {
                     console.log(result);
                     $('#useroutlet-dd').after('<input type="hidden" name="jabatan_name" value="'+result[0].jabatan+'|'+result[0].jabatan_name+'">');
-                    $('#useroutlet-dd').html('<option value="">Select PIC</option>');
+                    $('#useroutlet-dd').html('<option value="">Pilih User</option>');
                     $.each(result, function( key, value ) {
                         let val = value.id + '|' + value.name
                         $("#useroutlet-dd").append('<option value="' + val + '">' + value.name + '</option>');

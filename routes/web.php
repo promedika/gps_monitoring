@@ -11,7 +11,8 @@ use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\MarketingAttController;
 use App\Models\MarketingAtt;
 use App\Http\Controllers\DateTimeController;
-use APp\Http\Controllers\AttendanceReportController;
+use App\Http\Controllers\AttendanceReportController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,11 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
     Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
     Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
+
+    Route::get('/sales', 'App\Http\Controllers\SalesController@index')->name('sales.index');
+    Route::post('/sales/create', 'App\Http\Controllers\SalesController@store')->name('sales.create');
+    Route::get('/sales/input', 'App\Http\Controllers\SalesController@input')->name('sales.input');
+    Route::post('/sales/sales', 'App\Http\Controllers\SalesController@sales')->name('sales.sales');
 
 });
 

@@ -136,6 +136,35 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Sales
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @if (Auth::user()->role !=1)
+              <li class="nav-item">
+                <a href="{{route('sales.index')}}" class="nav-link" style="color: #343a40;">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                    Marketing Sales Target
+                    </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('sales.input')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-user-tie"></i></i>
+                    Marketing Sales
+                  </p>
+                </a>
+              </li>
+              @endif
+            </ul>
+          </li>
           
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">
