@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNoteToPostsTable extends Migration
+class AddIpAddressClockInToAttendancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddNoteToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('note')->after('jabatan_name')->nullable();
+        Schema::table('attendances', function (Blueprint $table) {
+            $table->string('ip_address_clock_in')->after('status')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddNoteToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('attendances', function (Blueprint $table) {
             //
         });
     }

@@ -120,14 +120,28 @@ class AttendanceController extends Controller
         }
         $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
 
-        // validate fake gps from ip adress
+        // get detail location from image
+        $detailImageLocation = '';
+        $detailImagePlaceId = '';
+        $imageLocIp = HelperController::getGeoLocation($imgLocation['latitude'],$imgLocation['longitude']);
+        $detailImageLocation = $imageLocIp['detail_location'];
+        $detailImagePlaceId = $imageLocIp['place_id'];
+
+        // get detail location from ip address
         $dataIp = HelperController::getGpsFromIp();
-        $noteFakeGps = 'No';
+        $ip_address = $dataIp['ip'];
+        $detailDeviceLocation = '';
+        $detailDevicePlaceId = '';
         if ($dataIp['data'] !== false) {
-            $imgLocIp = $dataIp['data']->latitude. "|" .$dataIp['data']->longitude;
-            if ($imgLoc != $imgLocIp) {
-                $noteFakeGps = 'Yes';
-            }
+            $deviceLocIp = HelperController::getGeoLocation($dataIp['data']->latitude,$dataIp['data']->longitude);
+            $detailDeviceLocation = $deviceLocIp['detail_location'];
+            $detailDevicePlaceId = $deviceLocIp['place_id'];
+        }
+
+        // validate fake gps from image and ip address
+        $noteFakeGps = 'No';
+        if ($detailImagePlaceId != $detailDevicePlaceId) {
+            $noteFakeGps = 'Yes';
         }
         
         // get image taken date
@@ -182,9 +196,12 @@ class AttendanceController extends Controller
                 'clock_in_loc' => $imgLoc,
                 'work_hour' => 0,
                 'status' => 'kurang dari jam kerja',
-                'note' => $noteFakeGps,
                 'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s'),
+                'ip_address_clock_in' => $ip_address,
+                'fake_gps_clock_in' => $noteFakeGps,
+                'detail_location_clock_in' => $detailDeviceLocation,
+                'detail_location_image_clock_in' => $detailImageLocation
             ]);
 
             return "Clock In Berhasil !";
@@ -212,8 +229,11 @@ class AttendanceController extends Controller
                 'clock_out_loc' => $imgLoc,
                 'work_hour' => $work_hour->h.':'.$work_hour->i.':'.$work_hour->s,
                 'status' => $status,
-                'note2' => $noteFakeGps,
-                'updated_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s'),
+                'ip_address_clock_out' => $ip_address,
+                'fake_gps_clock_out' => $noteFakeGps,
+                'detail_location_clock_out' => $detailDeviceLocation,
+                'detail_location_image_clock_out' => $detailImageLocation
             ]);
 
             return "Clock Out Berhasil !";

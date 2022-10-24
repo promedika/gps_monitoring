@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNoteToAttendancesTable extends Migration
+class AddIpAddressPostsToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddNoteToAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->string('note')->after('status')->nullable();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('ip_address_posts')->after('jabatan_name')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddNoteToAttendancesTable extends Migration
      */
     public function down()
     {
-        Schema::table('attendances', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
         });
     }

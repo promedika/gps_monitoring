@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNote2ToAttendancesTable extends Migration
+class AddDetailLocationImagePostsToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddNote2ToAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->string('note2')->after('note')->nullable();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->longText('detail_location_image_posts')->after('jabatan_name')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddNote2ToAttendancesTable extends Migration
      */
     public function down()
     {
-        Schema::table('attendances', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
         });
     }
