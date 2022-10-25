@@ -149,6 +149,40 @@
 @section('custom_script_js')
 <script>
 $(document).ready(function(){
+  // start geolocation
+  navigator.geolocation.getCurrentPosition(function (position,showError) {
+    let latitude  = position.coords.latitude;
+    let longitude   = position.coords.longitude;
+    alert(latitude+'|'+longitude);
+  }, function (e) {
+    // alert('Geolocation Tidak Mendukung Pada Browser Anda');
+    let error = showError(e);
+    alert(error);
+  }, {
+    enableHighAccuracy: true
+  });
+
+  function showError(error) {
+    let message = '';
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        message = "User denied the request for Geolocation."
+        break;
+      case error.POSITION_UNAVAILABLE:
+        message = "Location information is unavailable."
+        break;
+      case error.TIMEOUT:
+        message = "The request to get user location timed out."
+        break;
+      case error.UNKNOWN_ERROR:
+        message = "An unknown error occurred."
+        break;
+    }
+
+    return message;
+  }
+  // end geolocation
+  
   $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
