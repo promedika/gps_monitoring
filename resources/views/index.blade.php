@@ -150,39 +150,41 @@
 <script>
 $(document).ready(function(){
   // start geolocation
-  navigator.geolocation.getCurrentPosition(function (position,showError) {
-    let latitude  = position.coords.latitude;
-    let longitude   = position.coords.longitude;
-    alert(latitude+'|'+longitude);
-  }, function (e) {
-    // alert('Geolocation Tidak Mendukung Pada Browser Anda');
-    let error = showError(e);
-    alert(error);
-  }, {
-    enableHighAccuracy: true
-  });
+  get_location();
+  function get_location() {
+    let id;
+    let target;
+    let options;
 
-  function showError(error) {
-    let message = '';
-    switch(error.code) {
-      case error.PERMISSION_DENIED:
-        message = "User denied the request for Geolocation."
-        break;
-      case error.POSITION_UNAVAILABLE:
-        message = "Location information is unavailable."
-        break;
-      case error.TIMEOUT:
-        message = "The request to get user location timed out."
-        break;
-      case error.UNKNOWN_ERROR:
-        message = "An unknown error occurred."
-        break;
+    function success(pos) {
+      const crd = pos.coords;
+      alert(crd.latitude+'||'+crd.longitude);
+
+      if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+        alert('Congratulations, you reached the target');
+        navigator.geolocation.clearWatch(id);
+      }
     }
 
-    return message;
+    function error(err) {
+      alert(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    target = {
+      latitude : 0,
+      longitude: 0
+    };
+
+    options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    id = navigator.geolocation.watchPosition(success, error, options);
   }
   // end geolocation
-  
+
   $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
