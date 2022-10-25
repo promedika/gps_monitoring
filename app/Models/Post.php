@@ -29,5 +29,9 @@ class Post extends Model
         'jabatan_name',
         'activity',
         'note',
+        'ip_address_posts',
+        'fake_gps_posts',
+        'detail_location_posts',
+        'detail_location_image_posts'
     ];
 }
