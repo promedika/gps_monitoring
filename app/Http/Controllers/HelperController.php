@@ -22,7 +22,7 @@ class HelperController extends Controller
     /**
      * Gets IP address.
      */
-    public static function getIpAddress() {
+    public function getIpAddress() {
         $ipAddress = '';
         if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
             // to get shared ISP IP address
