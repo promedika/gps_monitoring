@@ -150,39 +150,84 @@
 <script>
 $(document).ready(function(){
   // start geolocation
-  get_location();
-  function get_location() {
-    let id;
-    let target;
-    let options;
 
-    function success(pos) {
-      const crd = pos.coords;
-      alert(crd.latitude+'||'+crd.longitude);
+  var apiGeolocationSuccess = function(position) {
+      alert("API geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
+  };
 
-      if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
-        alert('Congratulations, you reached the target');
-        navigator.geolocation.clearWatch(id);
-      }
+  var tryAPIGeolocation = function() {
+      jQuery.post( "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyATpfOjgFUxKVqwqMJxeK6gzTtMYLMthn4", function(success) {
+          apiGeolocationSuccess({coords: {latitude: success.location.lat, longitude: success.location.lng}});
+    })
+    .fail(function(err) {
+      alert("API Geolocation error! \n\n"+err);
+    });
+  };
+
+  var browserGeolocationSuccess = function(position) {
+      alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
+  };
+
+  var browserGeolocationFail = function(error) {
+    switch (error.code) {
+      case error.TIMEOUT:
+        alert("Browser geolocation error !\n\nTimeout.");
+        break;
+      case error.PERMISSION_DENIED:
+        if(error.message.indexOf("Only secure origins are allowed") == 0) {
+          tryAPIGeolocation();
+        }
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Browser geolocation error !\n\nPosition unavailable.");
+        break;
     }
+  };
 
-    function error(err) {
-      alert(`ERROR(${err.code}): ${err.message}`);
+  var tryGeolocation = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          browserGeolocationSuccess,
+        browserGeolocationFail,
+        {maximumAge: 50000, timeout: 20000, enableHighAccuracy: true});
     }
+  };
 
-    target = {
-      latitude : 0,
-      longitude: 0
-    };
+  tryGeolocation();
 
-    options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
+  // get_location();
+  // function get_location() {
+  //   let id;
+  //   let target;
+  //   let options;
 
-    id = navigator.geolocation.watchPosition(success, error, options);
-  }
+  //   function success(pos) {
+  //     const crd = pos.coords;
+  //     alert(crd.latitude+'||'+crd.longitude);
+
+  //     if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+  //       alert('Congratulations, you reached the target');
+  //       navigator.geolocation.clearWatch(id);
+  //     }
+  //   }
+
+  //   function error(err) {
+  //     alert(`ERROR(${err.code}): ${err.message}`);
+  //   }
+
+  //   target = {
+  //     latitude : 0,
+  //     longitude: 0
+  //   };
+
+  //   options = {
+  //     enableHighAccuracy: true,
+  //     timeout: 5000,
+  //     maximumAge: 0
+  //   };
+
+  //   id = navigator.geolocation.watchPosition(success, error, options);
+  // }
   // end geolocation
 
   $.ajaxSetup({
