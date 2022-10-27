@@ -23,14 +23,10 @@ class HelperController extends Controller
             $geocodeFromLatLong = file_get_contents($url);
             $output = json_decode($geocodeFromLatLong);
 
-            $plus_code = $output->plus_code;
-            $results = $output->results[0];
-            $status = $output->status;
-
             $data = [
-                'plus_code' => $plus_code,
-                'results' => $results,
-                'status' => $status
+                'plus_code' => $output->plus_code,
+                'results' => $output->results[0],
+                'status' => $output->status
             ];
 
             $global_code = substr(trim($data['plus_code']->global_code), 0, 6);
@@ -42,7 +38,7 @@ class HelperController extends Controller
             if (!empty($global_code)) {
                 $return = [
                     'place_id' => $global_code,
-                    'detail_location' => json_encode($output)
+                    'detail_location' => json_encode($data)
                 ];
                 return $return;
             } else {
