@@ -32,7 +32,7 @@ class HelperController extends Controller
             $global_code = substr(trim($data['plus_code']->global_code), 0, 6);
 
             //Get address from json data
-            $global_code = ($status=="OK") ? $global_code : '';
+            $global_code = ($data['status']=="OK") ? $global_code : '';
 
             //Return place_id of the given latitude and longitude
             if (!empty($global_code)) {
