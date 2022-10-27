@@ -103,9 +103,12 @@ class PostController extends Controller
             }
 
             // validate fake gps from image and ip address
+            $allowed_hosts = ['::1', 'localhost'];
             $noteFakeGps = 'No';
             if ($detailImagePlaceId != $detailDevicePlaceId) {
-                $noteFakeGps = 'Yes';
+                if (!in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+                    $noteFakeGps = 'Yes';
+                }
             }
             
             // get image taken date
@@ -122,7 +125,7 @@ class PostController extends Controller
                 
                 $difDate = date_diff($tfDate,$ogDate);
                 if($difDate->i > 1){
-                    // return redirect()->back()->with('message', 'Request Time Out !');
+                    return redirect()->back()->with('message', 'Request Time Out !');
                 }
             }
 
@@ -133,10 +136,12 @@ class PostController extends Controller
             $image->move(public_path('/assets/img/posts/'), $filename);
 
             $image_resize = Image::make($target_file)->orientate();           
-            $image_resize->resize(250, 250,);
-            $image_resize->stream();
+            $image_resize->resize(250, 250);
 
-            Storage::disk('local')->put('public/assets/img/posts/'.$filename, $image_resize, 'public');
+            // $image_resize->resize(250, null, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            $image_resize->save();
         };
         $outlet = explode('|',$request->outlet_name);
         $outlet_id = $outlet[0];

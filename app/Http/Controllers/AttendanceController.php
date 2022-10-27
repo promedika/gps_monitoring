@@ -139,9 +139,12 @@ class AttendanceController extends Controller
         }
 
         // validate fake gps from image and ip address
+        $allowed_hosts = ['::1', 'localhost'];
         $noteFakeGps = 'No';
         if ($detailImagePlaceId != $detailDevicePlaceId) {
-            $noteFakeGps = 'Yes';
+            if (!in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+                $noteFakeGps = 'Yes';
+            }
         }
         
         // get image taken date
@@ -176,10 +179,12 @@ class AttendanceController extends Controller
         $image->move(public_path('/assets/img/'.$type.'/'), $filename);
 
         $image_resize = Image::make($target_file)->orientate();           
-        $image_resize->resize(250, 250,);
-        $image_resize->stream();
+        $image_resize->resize(250, 250);
 
-        Storage::disk('local')->put('public/assets/img/'.$type.'/'.$filename, $image_resize, 'public');
+        // $image_resize->resize(250, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        $image_resize->save();
 
         $unique_id = Auth::User()->id.'_'.date('Ymd');
         $header = DB::table('attendances')
