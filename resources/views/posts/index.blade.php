@@ -48,6 +48,9 @@
                                 <th scope="col">jabatan</th>
                                 <th scope="col">Aktifitas</th>
                                 <th scope="col">Peta</th>
+                                @if (Auth::user()->role !=1)
+                                <th scope="col">Fake GPS</th>
+                                @endif
                               </tr>
                             </thead>
                             <tbody>
@@ -87,6 +90,9 @@
                                             src="https://maps.google.com/maps?width=400&amp;height=400&amp;hl=en&amp;q={{$latitude}},{{$longitude}}+({{$post->user_fullname}})&amp;t=k&amp;z=19&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                                         </iframe>
                                     </td>
+                                    @if (Auth::user()->role !=1)
+                                    <td>{{$post->fake_gps_posts}}</td>
+                                    @endif
                                 </tr>
                               @endforeach
                             </tbody>

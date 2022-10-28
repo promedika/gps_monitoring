@@ -96,10 +96,6 @@
   </div>
 @endsection
 @section('custom_script_js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Select 2 -->
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
@@ -139,9 +135,9 @@
         $('#submit').click(function(){
             if(
                 $('#upload').val() != '' &&
-                $('#outlet-dd') != '' &&
-                $('#useroutlet-dd') != '' &&
-                $('#activity')
+                $('#outlet-dd').val() != '' &&
+                $('#useroutlet-dd').val() != '' &&
+                $('#activity').val() != ''
             ){
                 $('#loader').modal('show');
             }
