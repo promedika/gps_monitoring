@@ -71,11 +71,11 @@
                       @foreach ($targets as $target)
                             <tr>
                                 <td>{{$target->first_name}} {{$target->last_name}}</td>
-                                <td>{{$target->sales_target}}</td>
+                                <td>{{number_format($target->sales_target,0,",",".")}}</td>
                                 <td>{{explode(' ',$target->sales_start)[0]}}</td>
                                 <td>{{explode(' ',$target->sales_end)[0]}}</td>
                                 <td>{{$target->status}}</td>
-                                <td>{{$target->pencapaian}}</td>
+                                <td>{{number_format($target->pencapaian,0,",",".")}}</td>
                             </tr>
                             @endforeach
                     </tbody>
@@ -121,7 +121,7 @@
           
           <div class="form-group">
             <label for="sales_target">Sales Target</label>
-            <input type="number" name="sales_target" id="sales_target" class="form-control"required>
+            <input type="text" name="sales_target" id="sales_target" class="form-control"required>
             <span id="errorSalesTarget" class="text-red"></span>
           </div>
           <div class="form-group">
@@ -233,7 +233,42 @@
             $('#sales_end').datetimepicker({
             format: 'YYYY-MM-DD'
             });
+
+            jQuery("body").on("blur", "#sales_target", function(e){
+                let val = jQuery(this).val();
+                jQuery(this).val(custom_formatRupiahJs(val));
+            });
+
+            jQuery("body").on("keypress", "#sales_target", function(e){
+                if (!custom_hanyaAngkas(e)) { 
+                    alert('Harus diisi dengan angka!');
+                }
+            });
         })
+
+        // set custom format rupiah
+        function custom_formatRupiahJs(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+            split = number_string.split(","),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if(ribuan){
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
+        }
+
+        // set custom validation number
+        function custom_hanyaAngkas(event){
+            let charCode = (event.which) ? event.which : event.keyCode;
+            return ( charCode > 31 && (charCode < 48 || charCode > 57) ) ? false : true;
+        }
     })
 </script>
 @endsection

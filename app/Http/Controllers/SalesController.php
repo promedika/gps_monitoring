@@ -43,12 +43,14 @@ class SalesController extends Controller
             'sales_end'=>'required',
         ]);
 
-        $target_id = Auth::User()->id.'_'.date('Ymd');
+        $target_id = Auth::User()->id.'_'.time();
+
+        $sales_target = (int) trim(str_replace(".", "", $request->sales_target));
 
         DB::table('mkt_sales')->insert([
             'id' => $target_id,
             'user_id' => $request->user_id,
-            'sales_target' => $request->sales_target,
+            'sales_target' => $sales_target,
             'sales_start' => $request->sales_start,
             'sales_end' => $request->sales_end,
             'created_at' => date('Y-m-d H:i:s'),
@@ -96,8 +98,9 @@ class SalesController extends Controller
         foreach ($target as $key => $value) {
             if ($sales_date >= strtotime($value->sales_start) 
                 && $sales_date <= strtotime($value->sales_end)) {
+                    $sales_value = (int) trim(str_replace(".", "", $request->sales_value));
                     $mkt_id = $value->id;
-                    $pencapaian = $value->pencapaian+$request->sales_value;
+                    $pencapaian = $value->pencapaian+$sales_value;
                     $sales_target = $value->sales_target;
                     $status = $pencapaian >= $sales_target ? 'Memenuhi Target' : 'Belum Memenuhi'; 
             }
@@ -110,7 +113,7 @@ class SalesController extends Controller
             'jns_kerja' => $request->jns_kerja,
             'jml_alat' => $request->jml_alat,
             'mkt_sales_id' => $mkt_id,
-            'sales_value' => $request->sales_value,
+            'sales_value' => $sales_value,
             'keterangan' => $request->keterangan,
             'status' => $request->status,
             'created_at' => date('Y-m-d H:i:s'),

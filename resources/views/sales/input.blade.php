@@ -77,7 +77,7 @@
                                 <td>{{$input->name}}</td>
                                 <td>{{$input->jns_kerja}}</td>
                                 <td>{{$input->jml_alat}}</td>
-                                <td>{{$input->sales_value}}</td>
+                                <td>{{number_format($input->sales_value,0,",",".")}}</td>
                                 <td>{{$input->keterangan}}</td>
                                 <td>{{$input->status}}</td>
                             </tr>
@@ -103,7 +103,7 @@
         <form action="" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Buat Target Baru</h4>
+          <h4 class="modal-title">Buat Data Sales</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -153,7 +153,7 @@
           </div>
           <div class="form-group">
             <label for="sales_value">Nilai Sales</label>
-            <input type="number" name="sales_value" id="sales_value" class="form-control"required>
+            <input type="text" name="sales_value" id="sales_value" class="form-control"required>
             <span id="errorSalesValue" class="text-red"></span>
           </div>
           <div class="form-group">
@@ -248,7 +248,7 @@
                 theme: 'bootstrap4',
             });
 
-             $('#user_id').on('change', function() {
+            $('#user_id').on('change', function() {
             console.log('test');
             var data = $("#user_id option:selected").val();
             $(".user_id").val(data);
@@ -260,7 +260,7 @@
                 theme:'bootstrap4'
             });
 
-             $('#tenant_id').on('change', function() {
+            $('#tenant_id').on('change', function() {
             console.log('test');
             var data = $("#tenant_id option:selected").val();
             $(".tenant_id").val(data);
@@ -269,7 +269,42 @@
             $('#salesdate').datetimepicker({
             format: 'YYYY-MM-DD'
             });
+
+            jQuery("body").on("blur", "#sales_value", function(e){
+                let val = jQuery(this).val();
+                jQuery(this).val(custom_formatRupiahJs(val));
+            });
+
+            jQuery("body").on("keypress", "#sales_value", function(e){
+                if (!custom_hanyaAngkas(e)) { 
+                    alert('Harus diisi dengan angka!');
+                }
+            });
         })
+
+        // set custom format rupiah
+        function custom_formatRupiahJs(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+            split = number_string.split(","),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if(ribuan){
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
+        }
+
+        // set custom validation number
+        function custom_hanyaAngkas(event){
+            let charCode = (event.which) ? event.which : event.keyCode;
+            return ( charCode > 31 && (charCode < 48 || charCode > 57) ) ? false : true;
+        }
     })
 </script>
 @endsection

@@ -19,7 +19,7 @@ class CreateSalesHistoriesTable extends Migration
             $table->dateTime('sales_date')->nullable();
             $table->string('tenant_id')->nullable();
             $table->bigInteger('sales_value')->nullable();
-            $table->integer('mkt_sales_id')->nullable();
+            $table->string('mkt_sales_id')->nullable();
             $table->integer('jml_alat')->nullable();
             $table->string('jns_kerja')->nullable();
             $table->string('keterangan')->nullable();
