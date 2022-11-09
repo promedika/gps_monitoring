@@ -42,6 +42,7 @@
               <div class="card">
                 <div class="card-header">
                     <a href="#" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                    <button class="btn btn-success" id="excel" title="excel"><i class="fas fa-download"></i></button>
                   {{-- <a href="#" title="Add" class="btn btn-success col-2 btn-import-user"><i class="fa solid fa-file-import"></i></a> --}}
                   </div>
                 @if(session()->has('message'))
@@ -59,23 +60,23 @@
                   <table class="table table-bordered table-hover" id="table">
                     <thead>
                       <tr>
-                        <th>Nama</th>
-                        <th>Sales Target</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Status</th>
-                        <th>Progress</th>
+                        <th data-f-bold="true" data-a-h="center">Nama</th>
+                        <th data-f-bold="true" data-a-h="center">Sales Target</th>
+                        <th data-f-bold="true" data-a-h="center">Start</th>
+                        <th data-f-bold="true" data-a-h="center">End</th>
+                        <th data-f-bold="true" data-a-h="center">Status</th>
+                        <th data-f-bold="true" data-a-h="center">Progress</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach ($targets as $target)
                             <tr>
                                 <td>{{$target->first_name}} {{$target->last_name}}</td>
-                                <td>{{number_format($target->sales_target,0,",",".")}}</td>
+                                <td style="text-align: right;" data-a-h="right">{{number_format($target->sales_target,0,",",".")}}</td>
                                 <td>{{explode(' ',$target->sales_start)[0]}}</td>
                                 <td>{{explode(' ',$target->sales_end)[0]}}</td>
                                 <td>{{$target->status}}</td>
-                                <td>{{number_format($target->pencapaian,0,",",".")}}</td>
+                                <td style="text-align: right;" data-a-h="right">{{number_format($target->pencapaian,0,",",".")}}</td>
                             </tr>
                             @endforeach
                     </tbody>
@@ -170,6 +171,7 @@
 <!-- Datepicker --> 
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<script src="{{asset('assets/AdminLTE-3.2.0/plugins/jquery-table/tableToExcel.js')}}"></script>
 <script>
     $(document).ready(function(){
         $.ajaxSetup({
@@ -269,6 +271,22 @@
             let charCode = (event.which) ? event.which : event.keyCode;
             return ( charCode > 31 && (charCode < 48 || charCode > 57) ) ? false : true;
         }
+
+        $('#excel').on('click', function (e) {
+          e.preventDefault();
+
+          let table = $("#table")[0];
+          let filename = "marketing-sales-target.xlsx";
+
+          TableToExcel.convert(table, {
+            name: filename,
+            sheet: {
+              name: "Report"
+            }
+          });
+
+
+        });
     })
 </script>
 @endsection

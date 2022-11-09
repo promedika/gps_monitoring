@@ -76,8 +76,8 @@
                                 <td>{{$input->first_name}} {{$input->last_name}}</td>
                                 <td>{{$input->name}}</td>
                                 <td>{{$input->jns_kerja}}</td>
-                                <td>{{$input->jml_alat}}</td>
-                                <td>{{number_format($input->sales_value,0,",",".")}}</td>
+                                <td style="text-align: right;">{{$input->jml_alat}}</td>
+                                <td style="text-align: right;">{{number_format($input->sales_value,0,",",".")}}</td>
                                 <td>{{$input->keterangan}}</td>
                                 <td>{{$input->status}}</td>
                             </tr>
