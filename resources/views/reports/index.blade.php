@@ -132,7 +132,7 @@
                                 <tr class="visit">
                                     <td data-b-a-s="thin" data-a-h="center" colspan="{{count($data[0])+1}}">
                                       <div class="alert alert-danger">
-                                          <h6 align="center"> Data post Belum Tersedia</h6>
+                                          <h6 align="center"> Data kunjugan Belum Tersedia</h6>
                                       </div>
                                     </td>
                                 </tr>
@@ -234,7 +234,7 @@
                               <tr class="visit">
                                   <td data-b-a-s="thin" data-a-h="center" colspan="{{count($data[0])+1}}">
                                     <div class="alert alert-danger">
-                                        <h6 align="center"> Data post Belum Tersedia</h6>
+                                        <h6 align="center"> Data kunjungan Belum Tersedia</h6>
                                     </div>
                                   </td>
                               </tr>

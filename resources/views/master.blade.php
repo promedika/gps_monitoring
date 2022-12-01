@@ -136,6 +136,7 @@
               </li>
             </ul>
           </li>
+          @if (Auth::user()->role !=1)
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
@@ -145,7 +146,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              @if (Auth::user()->role !=1)
               <li class="nav-item">
                 <a href="{{route('sales.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fas fa-users"></i>
@@ -162,9 +162,9 @@
                   </p>
                 </a>
               </li>
-              @endif
             </ul>
           </li>
+          @endif
           
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">

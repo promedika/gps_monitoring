@@ -42,6 +42,7 @@
               <div class="card">
                 <div class="card-header">
                     <a href="#" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                    <button class="btn btn-success" id="excel" title="excel"><i class="fas fa-download"></i></button>
                   {{-- <a href="#" title="Add" class="btn btn-success col-2 btn-import-user"><i class="fa solid fa-file-import"></i></a> --}}
                   </div>
                 @if(session()->has('message'))
@@ -198,6 +199,7 @@
 <!-- Datepicker --> 
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<script src="{{asset('assets/AdminLTE-3.2.0/plugins/jquery-table/tableToExcel.js')}}"></script>
 <script>
     $(document).ready(function(){
         $.ajaxSetup({
@@ -305,6 +307,22 @@
             let charCode = (event.which) ? event.which : event.keyCode;
             return ( charCode > 31 && (charCode < 48 || charCode > 57) ) ? false : true;
         }
+
+        $('#excel').on('click', function (e) {
+          e.preventDefault();
+
+          let table = $("#table")[0];
+          let filename = "marketing-sales.xlsx";
+
+          TableToExcel.convert(table, {
+            name: filename,
+            sheet: {
+              name: "Report"
+            }
+          });
+
+
+        });
     })
 </script>
 @endsection

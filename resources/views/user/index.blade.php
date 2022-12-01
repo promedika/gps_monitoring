@@ -165,7 +165,6 @@
               <option value="" style="display:none;">Pilih departemen</option>
               <option value="0">IT</option>
               <option value="1">Marketing</option>
-              <option value="2">H.R Department</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -245,7 +244,6 @@
               <option value="" style="display:none;">Pilih departemen</option>
               <option value="0">IT</option>
               <option value="1">Marketing</option>
-              <option value="2">H.R Department</option>
           </select>
           <span id="errorDepartment" class="text-red"></span>
         </div>
