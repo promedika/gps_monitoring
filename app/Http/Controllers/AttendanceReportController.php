@@ -136,6 +136,7 @@ class AttendanceReportController extends Controller
                             AND p.jabatan_name = '".$tmp_visit['jabatan_name']."'
                             AND p.outlet_name = '".$tmp_visit['outlet_name']."'
                             AND p.imgTaken LIKE '%".$imgTaken."%'
+                            AND p.user_id = '".$params['user_id']."'
                         ");
                 
                 $tmp_visit2[$k_date_custom] = count($check);
