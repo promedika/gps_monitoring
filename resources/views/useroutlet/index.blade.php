@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    User Tenant
+    User RS
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -18,12 +18,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">User Tenant</h1>
+          <h1 class="m-0">User RS</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-            <li class="breadcrumb-item active">User Tenant</li>
+            <li class="breadcrumb-item active">User RS</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -47,7 +47,7 @@
                           <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Nama Tenant</th>
+                            <th>Nama RS</th>
                             <th>Jabatan</th>
                             <th>Status</th>
                             <th></th>
@@ -92,7 +92,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Buat User Tenant Baru</h4>
+          <h4 class="modal-title">Buat User RS Baru</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -106,7 +106,7 @@
             <span id="errorName" class="text-red"></span>
           </div>
           <div class="form-group">
-            <label for="outlet_name">Nama Tenant</label>
+            <label for="outlet_name">Nama RS</label>
             <select id="outlet-dd" name="outlet_id" class="form-control" required>
               <option value="">Pilih Lokasi</option>
               @foreach ($outlets as $outlet)
@@ -156,7 +156,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Ubah User Tenant</h4>
+        <h4 class="modal-title">Ubah User RS</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -170,7 +170,7 @@
           <span id="errorName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="outlet_name">Nama Tenant</label>
+          <label for="outlet_name">Nama RS</label>
           <select id="outlet_dd_update" name="outlet_id_update" value="{{ old('outlets_name')}}" class="form-control" required>
               <option value="">Silahkan Pilih</option>
               @foreach ($outlets as $outlet)
@@ -216,7 +216,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Hapus User Tenant</h4>
+        <h4 class="modal-title">Hapus User RS</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

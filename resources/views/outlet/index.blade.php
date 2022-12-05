@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Tenant
+    Rumah Sakit
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -15,12 +15,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tenant</h1>
+          <h1 class="m-0">Rumah Sakit</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-            <li class="breadcrumb-item active">Tenant</li>
+            <li class="breadcrumb-item active">Rumah Sakit</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -49,7 +49,7 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Nama Tenant</th>
+                            <th>Nama Rumah Sakit</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -88,7 +88,7 @@
         @csrf
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Import Data Tenant</h4>
+        <h4 class="modal-title">Import Data RS</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -120,7 +120,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Buat Tenant Baru</h4>
+          <h4 class="modal-title">Buat RS Baru</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -129,7 +129,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="name">Nama Tenant</label>
+            <label for="name">Nama RS</label>
             <input type="text" name="name" id="name" class="form-control" required>
             <span id="errorName" class="text-red"></span>
           </div>
@@ -152,7 +152,7 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Ubah Tenant
+        <h4 class="modal-title">Ubah RS
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -161,7 +161,7 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Nama Tenant</label>
+          <label for="name">Nama RS</label>
           <input type="text" name="name" id="name_update" class="form-control" required>
           <span id="errorName" class="text-red"></span>
         </div>
@@ -184,7 +184,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Hapus Tenant</h4>
+          <h4 class="modal-title">Hapus RS</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
