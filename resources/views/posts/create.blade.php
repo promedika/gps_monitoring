@@ -52,11 +52,12 @@
                                         {{ session()->get('message') }}
                                     </div>
                                 @endif
-                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" capture="camera" required>
+                                <button id="open_cam" class="btn btn-md btn-info"><i class="fa fa-camera-retro"></i> Kamera</button>
+                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" capture="camera" required style="display: none;">
                             
                                 <!-- error message untuk title -->
                                 
-                            </div><br>
+                            </div>
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Tenant</label>
@@ -142,6 +143,12 @@
                 $('#loader').modal('show');
             }
             
+        });
+
+        // open camera
+        $('#open_cam').on('click', function (e) {
+            e.preventDefault();
+            $('#upload').trigger('click');
         });
 
     });
