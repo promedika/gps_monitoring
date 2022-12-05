@@ -60,9 +60,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="font-weight-bold">Nama Tenant</label>
+                                <label class="font-weight-bold">Nama RS</label>
                                 <select id="outlet-dd" name="outlet_name" class="form-control" required>
-                                    <option>Nama Tenant</option>
+                                    <option>Nama RS</option>
                                     @foreach ($outlets as $outlet)
                                     <option value="{{$outlet->id.'|'.$outlet->name}}">
                                         {{$outlet->name}}

@@ -112,7 +112,7 @@
                 <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-building"></i>
-                    Tenant
+                    Rumah Sakit
                   </p>
                 </a>
               </li>
@@ -121,7 +121,7 @@
                 <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user"></i></i>
-                    User Tenant
+                    User RS
                   </p>
                 </a>
               </li>
@@ -130,7 +130,7 @@
                 <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user-tie"></i></i>
-                    Jabatan User
+                    Jabatan User RS
                   </p>
                 </a>
               </li>
