@@ -54,6 +54,7 @@
                                 @endif
                                 <button id="open_cam" class="btn btn-md btn-info"><i class="fa fa-camera-retro"></i> Kamera</button>
                                 <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" capture="camera" required style="display: none;">
+                                <span id="open_cam_name"></span>
                             
                                 <!-- error message untuk title -->
                                 
@@ -143,6 +144,11 @@
                 $('#loader').modal('show');
             }
             
+        });
+
+        $('#upload').on('change', function (e) {
+            e.preventDefault();
+            $('#open_cam_name').text(e.target.files[0].name);
         });
 
         // open camera

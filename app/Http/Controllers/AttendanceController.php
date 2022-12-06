@@ -107,23 +107,42 @@ class AttendanceController extends Controller
             return "Anda Belum Melakukan Clock In Hari ini";
         }
 
-        try {
-            exif_read_data($tmp_path);
-        } catch (\Throwable $th) {
-            return "Lokasi Atau Tanggal Tidak Ditemukan  !";
+        if (preg_match('/iPhone|iPod|iPad/', $_SERVER['HTTP_USER_AGENT'])) {
+            /* This is iOS */
+            // get detail location from ip address
+            $tmpDataIp = HelperController::getGpsFromIp();
+
+            if (!isset($dataIp['data']) || $dataIp['data'] === false || is_null($dataIp['data'])) {
+                return "Lokasi Atau Tanggal Tidak Ditemukan  !";
+            }
+
+            $imgLocationLatitude = $dataIp['data']->latitude;
+            $imgLocationLongitude = $dataIp['data']->longitude;
+        }
+        else {
+            try {
+                exif_read_data($tmp_path);
+            } catch (\Throwable $th) {
+                return "Lokasi Atau Tanggal Tidak Ditemukan  !";
+            }
+
+            //get geolocation of image
+            $imgLocation = $this->get_image_location($tmp_path);
+            if (!$imgLocation || empty($imgLocation)) {
+                return "Lokasi Foto Tidak Ditemukan !";   
+            }
+            else {
+                $imgLocationLatitude = $imgLocation['latitude'];
+                $imgLocationLongitude = $imgLocation['longitude'];
+            }
         }
 
-        //get geolocation of image
-        $imgLocation = $this->get_image_location($tmp_path);
-        if (!$imgLocation || empty($imgLocation)) {
-            return "Lokasi Foto Tidak Ditemukan !";   
-        }
-        $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
+        $imgLoc = !empty($imgLocation) ? $imgLocationLatitude. "|" .$imgLocationLongitude : 'Geotags not found';
 
         // get detail location from image
         $detailImageLocation = '';
         $detailImagePlaceId = '';
-        $imageLocIp = HelperController::getGeoLocation($imgLocation['latitude'],$imgLocation['longitude']);
+        $imageLocIp = HelperController::getGeoLocation($imgLocationLatitude,$imgLocationLongitude);
         $detailImageLocation = $imageLocIp['detail_location'];
         $detailImagePlaceId = $imageLocIp['place_id'];
 
