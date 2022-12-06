@@ -61,11 +61,11 @@
                     <thead>
                       <tr>
                         <th data-f-bold="true" data-a-h="center">Nama</th>
-                        <th data-f-bold="true" data-a-h="center">Sales Target</th>
-                        <th data-f-bold="true" data-a-h="center">Start</th>
-                        <th data-f-bold="true" data-a-h="center">End</th>
-                        <th data-f-bold="true" data-a-h="center">Status</th>
-                        <th data-f-bold="true" data-a-h="center">Progress</th>
+                        <th data-f-bold="true" data-a-h="center">Target</th>
+                        <th data-f-bold="true" data-a-h="center">Sales</th>
+                        <th data-f-bold="true" data-a-h="center">S/T (%)</th>
+                        <th data-f-bold="true" data-a-h="center">Bulan Awal</th>
+                        <th data-f-bold="true" data-a-h="center">Bulan Akhir</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -73,10 +73,10 @@
                             <tr>
                                 <td>{{$target->first_name}} {{$target->last_name}}</td>
                                 <td style="text-align: right;" data-a-h="right">{{number_format($target->sales_target,0,",",".")}}</td>
-                                <td>{{explode(' ',$target->sales_start)[0]}}</td>
-                                <td>{{explode(' ',$target->sales_end)[0]}}</td>
-                                <td>{{$target->status}}</td>
                                 <td style="text-align: right;" data-a-h="right">{{number_format($target->pencapaian,0,",",".")}}</td>
+                                <td>{{($target->pencapaian/$target->sales_target)*100}}</td>
+                                <td>{{date('F Y',strtotime(explode(' ',$target->sales_start)[0]))}}</td>
+                                <td>{{date('F Y',strtotime(explode(' ',$target->sales_end)[0]))}}</td>
                             </tr>
                             @endforeach
                     </tbody>

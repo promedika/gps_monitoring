@@ -27,7 +27,7 @@ class SalesController extends Controller
         return redirect('error.404');
         }
     }
-
+ 
     public function create()
     {
         $users = User::get(["id","first_name"." "."last_name"]);
@@ -57,7 +57,6 @@ class SalesController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'status' => 'Belum Memenuhi',
         ]);
-
         return redirect(route('sales.index'))->with(['success' => 'Data Berhasil Disimpan!']);
     }
 

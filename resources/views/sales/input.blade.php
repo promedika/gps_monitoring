@@ -62,7 +62,7 @@
                       <tr>
                         <th>Tanggal Sales</th>
                         <th>Nama P.I.C</th>
-                        <th>Nama Tenant</th>
+                        <th>Nama RS</th>
                         <th>Jenis Pekerjaan</th>
                         <th>Jumlah Alat</th>
                         <th>Nilai Sales</th>
@@ -132,7 +132,7 @@
             </div>
           
           <div class="form-group">
-            <label for="tenant_id">Nama Tenant</label>
+            <label for="tenant_id">Nama RS</label>
             <select name="tenant_id" id="tenant_id" class="form-control" required>
                 @foreach ($outlets as $outlet)
                 <option value="{{$outlet->id}}">
