@@ -109,6 +109,7 @@ class AttendanceController extends Controller
 
         if (preg_match('/iPhone|iPod|iPad/', $_SERVER['HTTP_USER_AGENT'])) {
             /* This is iOS */
+            dd('ios');
             // get detail location from ip address
             $tmpDataIp = HelperController::getGpsFromIp();
 
@@ -120,6 +121,7 @@ class AttendanceController extends Controller
             $imgLocationLongitude = $dataIp['data']->longitude;
         }
         else {
+            dd('selain ios');
             try {
                 exif_read_data($tmp_path);
             } catch (\Throwable $th) {
