@@ -250,5 +250,18 @@ class AttendanceReportController extends Controller
     
         return $return;
     }
+
+    public function reportsVisit() {
+        //get posts
+        $posts = Post::all();
+
+        foreach ($posts as $k => $v) {
+            $imgTaken = is_null($v->imgTaken) ? '-' : $v->imgTaken;
+            $v->hari = Carbon::parse(explode(' ',$imgTaken)[0])->translatedFormat('l');
+        }
+        
+        //render view with posts
+        return view('reports.kunjungan', compact('posts'));
+    }
     
 }

@@ -83,6 +83,7 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::get('/reports', 'App\Http\Controllers\AttendanceReportController@index')->name('reports.index');
     Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
+    Route::get('/reports/visit', 'App\Http\Controllers\AttendanceReportController@reportsVisit')->name('reports.visit');
 
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
 

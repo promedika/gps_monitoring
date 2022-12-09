@@ -174,16 +174,7 @@
               </p>
             </a>
           </li>
-          @if (Auth::user()->role !=1)
-          <li class="nav-item">
-            <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
-              <p>
-                <i class="nav-icon fas fa-book-open"></i>
-                Laporan Absensi
-              </p>
-            </a>
-          </li>
-          @endif
+          
           <li class="nav-item"">
             <a href="{{route('dashboard.attendances.index')}}" class="nav-link">
               <p>
@@ -192,6 +183,40 @@
               </p>
             </a>
           </li>
+
+          @if (Auth::user()->role !=1)
+          <li class="nav-item">
+            <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
+              <p>
+                <i class="nav-icon fas fa-book-open"></i>
+                Laporan Marketing
+              </p>
+            </a>
+          </li>
+          @endif
+
+          @if (Auth::user()->role !=1)
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book-open"></i>
+              <p>
+                Laporan
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+            <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
+              <p>
+                <i class="nav-icon fas fa-book"></i>
+                Laporan Kunjugan
+              </p>
+            </a>
+          </li>
+            </ul>
+          </li>
+          @endif
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
