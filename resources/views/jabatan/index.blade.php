@@ -154,7 +154,7 @@
   
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary">Delete</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         </form>

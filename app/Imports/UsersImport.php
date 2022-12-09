@@ -23,7 +23,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
         DB::table('users')->insert([
             "first_name" => $row['first_name'],
             "last_name" => isset($row['last_name']) ? $row['last_name'] : ' ',
-            "email" => $row['email'],
+            'nik'  => $row['nik'],
+            'phone'  => $row['phone'],
             "password" => Hash::make($row['password']),
             "department" => $row['department'],
             "role"  =>  $row['role'],
@@ -45,7 +46,9 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            '*.email' => 'unique:users|email'
+            'nik' => 'unique:users',
+            'phone' => 'unique:users',
+
         ];
     }
     

@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Exception;
 use Illuminate\Support\Facades\File;
 use PhpParser\Node\Stmt\Switch_;
-
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     /**
@@ -47,21 +47,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        //membuat validasi
         // dd($request);
         $this->validate($request,[
             'first_name'=>'required',
-            'email'=>'required|unique:users|email',
+            'nik'=>'required',
+            'phone'=>'required',
             'password'=>'required',
             'department' =>'required',
             'role'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
         ]);
+    
+        $user = DB::table('users')->where('phone',$request->phone)->get();
+        
+        if (count($user)>0){
+            return 'nomor handphone sudah terdaftar';
+        }
+        $user = DB::table('users')->where('nik',$request->nik)->get();
+        
+        if (count($user)>0){
+            return 'nik sudah terdaftar';
+        }
+
         $user = new user();
         $user->first_name = $request->first_name;
         $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
-        $user->email = $request->email;
+        $user->nik = $request->nik;
+        $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->department = $request->department;
         $user->role = $request->role;
@@ -70,9 +84,16 @@ class UserController extends Controller
         $user->created_by = Auth::User()->id;
         $user->updated_by = Auth::User()->id;
         $user->status = 'active';
-        $user->save();
+        
 
-        return redirect(route('dashboard.users.index'));
+        //return redirect(route('dashboard.users.index'));
+        //membuat return dengan try
+        try {
+            $user->save();
+            return 'Data Berhasil Disimpan';
+        } catch (\Throwable $th) {
+            return 'Data Gagal Disimpan';
+        }
     }
 
     /**
@@ -111,7 +132,8 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'first_name'=>'required',
-            'email'=>'required|email',
+            'nik'=>'required',
+            'phone'=>'required',
             'role'=>'required',
             'department'=>'required',
             'start_date'=>'required',
@@ -123,7 +145,8 @@ class UserController extends Controller
         $user = User::find($id);
         $user->first_name = $request->first_name;
         $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
-        $user->email = $request->email;
+        $user->nik = $request->nik;
+        $user->phone = $request->phone;
         if($request->password !='' && strlen(trim($request->password)) > 0){
             $user->password = Hash::make($request->password);
         }
@@ -134,6 +157,7 @@ class UserController extends Controller
         $user->updated_by = Auth::User()->id;
         $user->status = $request->status;
         $user->save();
+        
         return redirect(route('dashboard.users.index'));
     }
 

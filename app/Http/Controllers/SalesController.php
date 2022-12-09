@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {   
+    
     public function index()
     {
         

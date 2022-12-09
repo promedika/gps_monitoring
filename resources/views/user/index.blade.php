@@ -56,7 +56,8 @@
                     <thead>
                       <tr>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>NIK</th>
+                        <th>Phone</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
@@ -67,7 +68,8 @@
                       @foreach ($users as $user)
                             <tr>
                                 <td>{{$user->first_name}} {{$user->last_name}}</td>
-                                <td>{{$user->email}}</td>
+                                <td>{{$user->nik}}</td>
+                                <td>{{$user->phone}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
                                 <td>{{$user->status}}</td>
@@ -150,9 +152,14 @@
           <span id="errorLastName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email" class="form-control"required>
-          <span id="errorEmail" class="text-red"></span>
+          <label for="nik">NIK</label>
+          <input type="number" name="nik" id="nik" class="form-control"required>
+          <span id="errorNik" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="number" name="phone" id="phone" class="form-control"required>
+          <span id="errorPhone" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -229,9 +236,14 @@
           <span id="errorLastName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email_update" class="form-control" readonly>
-          <span id="errorEmail" class="text-red"></span>
+          <label for="nik">NIK</label>
+          <input type="text" name="nik" id="nik_update" class="form-control" readonly>
+          <span id="errorNik" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" name="phone" id="phone_update" class="form-control" readonly>
+          <span id="errorPhone" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>
@@ -311,7 +323,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn btn-primary">Hapus</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
       </div>
       </form>
@@ -383,18 +395,21 @@
                     },
                     success:function(data){
                         console.log('success create');
+                        alert(data);
                         location.reload();
                     },
                     error:function(response){
+                      
                         $('#errorFirstName').text(response.responseJSON.errors.first_name);
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
-                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
+                        $('#errorPhone').text(response.responseJSON.errors.phone);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
-
+                        
                         modal_id.find('.modal-footer button').prop('disabled',false);
                         modal_id.find('.modal-header button').prop('disabled',false);
                     }
@@ -417,7 +432,8 @@
                         console.log('success edit');
                         $('#first_name_update').val(data.data.first_name);
                         $('#last_name_update').val(data.data.last_name);
-                        $('#email_update').val(data.data.email);
+                        $('#nik_update').val(data.data.nik);
+                        $('#phone_update').val(data.data.phone);
                         $('#password_update').val(data.data.password);
                         $('#department_update').val(data.data.department);
                         $('#role_update').val(data.data.role);
@@ -428,7 +444,8 @@
                     error:function(response){
                         $('#errorFirstName').text(response.responseJSON.errors.first_name);
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
-                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
+                        $('#errorPhone').text(response.responseJSON.errors.phone);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);
@@ -450,7 +467,8 @@
                       id:userID,
                       first_name:$('#first_name_update').val(),
                       last_name:$('#last_name_update').val(),
-                      email:$('#email_update').val(),
+                      nik:$('#nik_update').val(),
+                      phone:$('#phone_update').val(),
                       password:$('#password_update').val(),
                       department:$('#department_update').val(),
                       role:$('#role_update').val(),
@@ -469,7 +487,8 @@
                     error:function(response){
                         $('#errorFirstName').text(response.responseJSON.errors.first_name);
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
-                        $('#errorEmail').text(response.responseJSON.errors.email);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
+                        $('#errorPhone').text(response.responseJSON.errors.phone);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
                         $('#errorRole').text(response.responseJSON.errors.role);

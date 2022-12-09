@@ -35,15 +35,20 @@
           </div>
         @endif
         <div class="input-group mb-3">
-          <input class="form-control" placeholder="Email" type="email" name="email" required>
+          <input class="form-control" placeholder="Masukan Nomor Handphone" type="number" name="phone" required>
+          @if ($errors->has('phone'))
+ 
+          <span class="text-danger">{{ $errors->first('phone') }}</span>
+
+      @endif
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-phone"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input class="form-control" placeholder="Password" type="password" name="password" required>
+          <input class="form-control" placeholder="Masukan Password" type="password" name="password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

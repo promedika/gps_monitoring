@@ -97,7 +97,7 @@
       <div class="modal-body">
         <div class="form-group">
           <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
-          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/tenant_template.xlsx')}}">Download Template</a><br><br>
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/rs_template.xlsx')}}">Download Template</a><br><br>
           <label for="name">Pilih File</label>
           <input type="file" name="file" class="name" id="name" accept=".xlsx" required >
           <span id="errorName" class="text-red"></span>
@@ -193,7 +193,7 @@
   
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-primary">Hapus</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         </div>
         </form>
