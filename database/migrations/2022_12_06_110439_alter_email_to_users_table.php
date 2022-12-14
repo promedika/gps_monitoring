@@ -13,8 +13,14 @@ class AlterEmailToUsersTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasColumn('users','email')){
+            //drop the id column
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('email');
+            });
+        }
+
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('email');
             $table->string('email')->nullable();
         });
     }
@@ -27,7 +33,7 @@ class AlterEmailToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            // $table->dropColumn('email');
         });
     }
 }
