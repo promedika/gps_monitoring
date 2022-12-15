@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "~3.0",
         "realrashid/sweet-alert": "^5.1",
-        "stevebauman/location": "^6.5"
+        "stevebauman/location": "^6.5",
+        "laravel/sanctum": "^2.15"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
