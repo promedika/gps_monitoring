@@ -18,8 +18,10 @@ class AdminUserSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Super',
             'last_name' =>  'User',
-            'phone' =>  '0857777',
+            'nik' =>  '123456',
+            'phone' =>  '021123456789',
             'password' =>   Hash::make('promedika'),
+            'email' => 'super.user@gmail.com',
             'role'  =>  '0',
             'created_by' => '1',
             'updated_by' => '1',

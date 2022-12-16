@@ -13,8 +13,15 @@ class AddTelephoneToUsersTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasColumn('users','phone')){
+            //drop the id column
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('phone');
+            });
+        }
+
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone')->unique();
+            $table->string('phone');
         });
     }
 
@@ -26,7 +33,7 @@ class AddTelephoneToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            //$table->dropColumn('phone');
         });
     }
 }

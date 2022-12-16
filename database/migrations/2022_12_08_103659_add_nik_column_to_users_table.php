@@ -13,8 +13,15 @@ class AddNikColumnToUsersTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasColumn('users','nik')){
+            //drop the id column
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('nik');
+            });
+        }
+
         Schema::table('users', function (Blueprint $table) {
-            $table->string('nik')->unique();
+            $table->string('nik');
         });
     }
 
@@ -26,7 +33,7 @@ class AddNikColumnToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            //$table->dropColumn('nik');
         });
     }
 }
