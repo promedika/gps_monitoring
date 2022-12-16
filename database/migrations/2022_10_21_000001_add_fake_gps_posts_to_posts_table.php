@@ -14,7 +14,7 @@ class AddFakeGpsPostsToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('fake_gps_posts')->after('jabatan_name')->nullable();
+            $table->string('fake_gps_posts')->nullable();
         });
     }
 

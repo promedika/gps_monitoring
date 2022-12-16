@@ -211,7 +211,18 @@
                 <i class="nav-icon fas fa-book"></i>
                 Laporan Kunjugan
               </p>
+              <a href="{{route('reports.absensi')}}" class="nav-link" style="color: #343a40;">
+                <p>
+                  <i class="nav-icon fas fa-clock"></i>
+                  Laporan Absensi
+                </p>
             </a>
+            <a href="{{route('reports.telat')}}" class="nav-link" style="color: #343a40;">
+              <p>
+                <i class="nav-icon fas fa-hourglass"></i>
+                Laporan Telat Absensi
+              </p>
+          </a>
           </li>
             </ul>
           </li>

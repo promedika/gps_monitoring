@@ -14,7 +14,7 @@ class AddDetailLocationImageClockOutToAttendancesTable extends Migration
     public function up()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->longText('detail_location_image_clock_out')->after('status')->nullable();
+            $table->longText('detail_location_image_clock_out')->nullable();
         });
     }
 

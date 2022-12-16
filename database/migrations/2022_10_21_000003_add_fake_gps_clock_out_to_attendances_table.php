@@ -14,7 +14,7 @@ class AddFakeGpsClockOutToAttendancesTable extends Migration
     public function up()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->string('fake_gps_clock_out')->after('note')->nullable();
+            $table->string('fake_gps_clock_out')->nullable();
         });
     }
 

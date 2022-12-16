@@ -14,7 +14,7 @@ class AddDetailLocationImagePostsToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->longText('detail_location_image_posts')->after('jabatan_name')->nullable();
+            $table->longText('detail_location_image_posts')->nullable();
         });
     }
 

@@ -14,7 +14,7 @@ class AddDetailLocationClockInToAttendancesTable extends Migration
     public function up()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->longText('detail_location_clock_in')->after('status')->nullable();
+            $table->longText('detail_location_clock_in')->nullable();
         });
     }
 

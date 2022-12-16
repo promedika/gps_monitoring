@@ -85,6 +85,10 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
     Route::get('/reports/visit', 'App\Http\Controllers\AttendanceReportController@reportsVisit')->name('reports.visit');
 
+    Route::get('/reports/absensi', 'App\Http\Controllers\AttendanceReportController@reportsAbsensi')->name('reports.absensi');
+    Route::get('/reports/telat', 'App\Http\Controllers\AttendanceReportController@reportsTelat')->name('reports.telat');
+    Route::post('/reports/filter', 'App\Http\Controllers\AttendanceReportController@filter')->name('reports.filter');
+    
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
     Route::get('dropdown', [DropdownController::class, 'index']);

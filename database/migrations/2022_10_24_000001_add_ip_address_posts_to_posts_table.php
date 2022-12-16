@@ -14,7 +14,7 @@ class AddIpAddressPostsToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('ip_address_posts')->after('jabatan_name')->nullable();
+            $table->string('ip_address_posts')->nullable();
         });
     }
 

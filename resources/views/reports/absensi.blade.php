@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Laporan Kunjungan Marketing</h1>
+            <h1>Laporan Absensi</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-              <li class="breadcrumb-item active">Laporan Kunjungan</li>
+              <li class="breadcrumb-item active">Laporan Absensi</li>
             </ol>
           </div>
         </div>
@@ -37,36 +37,37 @@
                         <table class="table table-bordered table-hover" id="table">
                             <thead>
                               <tr>
+                               
+                                <th scope="col">NIK</th>
+                                <th scope="col">Nama Karyawan</th>
                                 <th scope="col">Hari</th>
                                 <th scope="col">Tanggal</th>
-                                <th scope="col">Bulan</th>
-                                <th scope="col">Jam</th>
-                                <th scope="col">P.I.C</th>
-                                <th scope="col">Lokasi</th>
-                                <th scope="col">User RS</th>
-                                <th scope="col">Jabatan User RS</th>
-                                <th scope="col">Aktifitas</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Jam Masuk</th>
+                                <th scope="col">Jam Pulang</th>
+                                <th scope="col">Total Jam Kerja</th>
                               </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $nomor = 1;
-                                     ?>
-                                @foreach ($posts as $post)
-                                <tr class="data_post">
-                                    @php
-                                        $imgTaken = is_null($post->imgTaken) ? '-' : $post->imgTaken;
-                                    @endphp
-                                    <td>{{ $post->hari }}</td>
-                                    <td>{{date('d-m-Y',strtotime(explode(' ',$imgTaken)[0]))}}</td>
-                                    <td>{{date('F Y',strtotime(explode(' ',$imgTaken)[0]))}}</td>
-                                    <td>{{date('G:i:s',strtotime(explode('now',$imgTaken)[0]))}}</td>
-                                    <td>{{ $post->user_fullname}}</td>
-                                    <td>{{ $post->outlet_name }}</td>
-                                    <td>{!! $post->outlet_user !!}</td>
-                                    <td>{{$post->jabatan_name}}</td>
-                                    <td>{{$post->activity}}</td>
-                                </tr>
+                            
+                              @foreach ($attendances as $attendance)
+                                    <tr class="data_post">
+                                      @php
+                                      $created_at = is_null($attendance->created_at) ? '-' : $attendance->created_at;
+                                  @endphp
+                                  @php
+                                   $updated_at = is_null($attendance->updated_at) ? '-' : $attendance->updated_at;
+                                   @endphp
+                                        <td>{{$attendance->nik}}</td>
+                                        <td>{{$attendance->user_fullname}}</td>
+                                        <td>{{ $attendance->hari }}</td>
+                                        <td>{{date('d-m-Y',strtotime(explode(' ',$created_at)[0]))}}</td>
+                                        <td>Marketing</td>
+                                        <td>{{date('G:i:s',strtotime(explode('now',$created_at)[0]))}}</td>
+                                        <td>{{date('G:i:s',strtotime(explode('now',$updated_at)[0]))}}</td>
+                                        <td>{{$attendance->work_hour}}</td>
+                                    </tr>
+                               
                                 @endforeach
                             </tbody>
                           </table> 
@@ -122,7 +123,7 @@
       "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
 
-    $('title').text('Laporan Kunjungan Marketing');
+    $('title').text('Laporan Absensi');
   });
 </script>
 @endsection

@@ -14,7 +14,7 @@ class AddIpAddressClockOutToAttendancesTable extends Migration
     public function up()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->string('ip_address_clock_out')->after('status')->nullable();
+            $table->string('ip_address_clock_out')->nullable();
         });
     }
 
