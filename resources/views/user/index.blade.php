@@ -110,7 +110,7 @@
       <div class="modal-body">
         <div class="form-group">
           <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
-          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/pic_template.xlsx')}}">Download Template</a><br><br>
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/pic_template_update.xlsx')}}">Download Template</a><br><br>
           <label for="name">Pilih File</label>
           <input type="file" name="file" class="name" id="name" accept=".xlsx, .xls" required >
           <span id="errorName" class="text-red"></span>
@@ -172,6 +172,11 @@
               <option value="" style="display:none;">Pilih departemen</option>
               <option value="0">IT</option>
               <option value="1">Marketing</option>
+              <option value="2">Kalibrasi</option>
+              <option value="3">IPM</option>
+              <option value="4">UK</option>
+              <option value="5">Servis</option>
+              <option value="6">HRD</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -184,6 +189,9 @@
               @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
+              <option value="3">Teknisi Member</option>
+              <option value="4">Teknisi Report</option>
+              <option value="5">HRD Report</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
@@ -256,6 +264,11 @@
               <option value="" style="display:none;">Pilih departemen</option>
               <option value="0">IT</option>
               <option value="1">Marketing</option>
+              <option value="2">Kalibrasi</option>
+              <option value="3">IPM</option>
+              <option value="4">UK</option>
+              <option value="5">Servis</option>
+              <option value="6">HRD</option>
           </select>
           <span id="errorDepartment" class="text-red"></span>
         </div>
@@ -268,6 +281,9 @@
               @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
+              <option value="3">Teknisi Member</option>
+              <option value="4">Teknisi Report</option>
+              <option value="5">HRD Report</option>
           </select>
           <span id="errorRole" class="text-red"></span>
         </div>
