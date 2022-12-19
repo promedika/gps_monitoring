@@ -36,24 +36,24 @@
                 @csrf
                 
                 <div class="card-header" style="display: flex">
-                  <div class="col-2  form-group">
-                     <div class="input-group date" id="first_date" data-target-input="nearest">
+                  <div class="col-2 form-group">
+                    <div class="input-group date" id="first_date" data-target-input="nearest">
                       <input value="{{(is_null(Session::get('first_date'))) ? "Pilih Bulan Awal" : Session::get('first_date')}}" name="first_date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#first_date" readonly required/>
-                <div class="card-header" style="display:flex">
-                   </div>
-                 </div>
-                </div>
-                <div class="col-2 form-group">
-                <div class="input-group date" id="end_date" data-target-input="nearest">
-                 <input value="{{(is_null(Session::get('end_date'))) ? "Pilih Bulan Akhir" : Session::get('end_date')}}" name="end_date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#end_date" readonly required/>
-                 </div>
-                </div>
-                 <div>
+                    </div>
+                  </div>
+
+                  <div class="col-2 form-group">
+                    <div class="input-group date" id="end_date" data-target-input="nearest">
+                      <input value="{{(is_null(Session::get('end_date'))) ? "Pilih Bulan Akhir" : Session::get('end_date')}}" name="end_date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#end_date" readonly required/>
+                    </div>
+                  </div>
+
+                  <div>
                      <input type="submit" value="Submit" class="btn btn-primary">
-                     </div>
+                  </div>
                 </div>
-                          </form>
-    </div>
+              </form>
+            </div>
         </div>
       </div>
     </div>

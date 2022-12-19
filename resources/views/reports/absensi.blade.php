@@ -62,7 +62,7 @@
                                         <td>{{$attendance->user_fullname}}</td>
                                         <td>{{ $attendance->hari }}</td>
                                         <td>{{date('d-m-Y',strtotime(explode(' ',$created_at)[0]))}}</td>
-                                        <td>Marketing</td>
+                                        <td>{{$attendance->department}}</td>
                                         <td>{{date('G:i:s',strtotime(explode('now',$created_at)[0]))}}</td>
                                         <td>{{date('G:i:s',strtotime(explode('now',$updated_at)[0]))}}</td>
                                         <td>{{$attendance->work_hour}}</td>

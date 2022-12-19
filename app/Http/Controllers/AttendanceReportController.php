@@ -286,6 +286,24 @@ class AttendanceReportController extends Controller
         $posts = Post::all();
 
         foreach ($posts as $k => $v) {
+            //get users
+            $user = User::find($v->user_id);
+
+            if (Auth::User()->department != 0) {
+                if (Auth::User()->department != $user->department) {
+                    continue;
+                }
+            }
+
+            $department = '';
+            if ($user->department == 0) {
+                $department = 'IT';
+            }
+            elseif ($user->department == 1) {
+                $department = 'Marketing';
+            }
+            $v->department = $department;
+
             $imgTaken = is_null($v->imgTaken) ? '-' : $v->imgTaken;
             $v->hari = Carbon::parse(explode(' ', $imgTaken)[0])->translatedFormat('l');
         }
@@ -301,21 +319,38 @@ class AttendanceReportController extends Controller
         ->join('users','attendances.user_id','=','users.id')
         ->select('attendances.user_fullname', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour','users.nik','users.department')
         ->get();
-        foreach ($attendances as $k => $v) {
-    $created_at = is_null($v->created_at) ? '-' : $v->created_at;
-    $updated_at = is_null($v->updated_at) ? '-' : $v->updated_at;
-    $v->hari = Carbon::parse(explode(' ', $created_at)[0])->translatedFormat('l');
-    $v->hari = Carbon::parse(explode(' ', $updated_at)[0])->translatedFormat('l');
-}
-            return view('reports.absensi', compact('attendances'));
-        }
 
-        public function reportsTelat(Request $request)
-        {
-            $first_date = $request->first_date;
-            $end_date = $request->end_date;
-            Session::forget('first_date');
-            Session::forget('end_date');    
+        foreach ($attendances as $k => $v) {
+            if (Auth::User()->department != 0) {
+                if (Auth::User()->department != $v->department) {
+                    continue;
+                }
+            }
+
+            $department = '';
+            if ($v->department == 0) {
+                $department = 'IT';
+            }
+            elseif ($v->department == 1) {
+                $department = 'Marketing';
+            }
+            $v->department = $department;
+
+            $created_at = is_null($v->created_at) ? '-' : $v->created_at;
+            $updated_at = is_null($v->updated_at) ? '-' : $v->updated_at;
+            $v->hari = Carbon::parse(explode(' ', $created_at)[0])->translatedFormat('l');
+            $v->hari = Carbon::parse(explode(' ', $updated_at)[0])->translatedFormat('l');
+        }
+        
+        return view('reports.absensi', compact('attendances'));
+    }
+
+    public function reportsTelat(Request $request)
+    {
+        $first_date = $request->first_date;
+        $end_date = $request->end_date;
+        Session::forget('first_date');
+        Session::forget('end_date');    
         $thn_awal = date('Y');
         $bln_awal = date('m');
 
@@ -330,6 +365,7 @@ class AttendanceReportController extends Controller
             , a.work_hour
             , a.created_at
             , u.nik
+            , u.department
             FROM attendances a
             LEFT JOIN users u 
                 ON a.user_id = u.id 
@@ -341,6 +377,22 @@ class AttendanceReportController extends Controller
         // get duplicate value from attendances
         $duplicate_value = [];
         foreach ($attendances as $k => $v) {
+            if (Auth::User()->department != 0) {
+                if (Auth::User()->department != $v->department) {
+                    continue;
+                }
+            }
+
+            $department = '';
+            if ($v->department == 0) {
+                $department = 'IT';
+            }
+            elseif ($v->department == 1) {
+                $department = 'Marketing';
+            }
+
+            $v->department = $department;
+
             $duplicate_value[$v->user_id] = $v;
         }
 
@@ -379,7 +431,7 @@ class AttendanceReportController extends Controller
                 'no' => $no++,
                 'nik' => $v_dupplicate->nik,
                 'nama_karyawan' => $v_dupplicate->user_fullname,
-                'departemen' => 'Marketing',
+                'departemen' => $v_dupplicate->department,
                 'hari_kerja' => 21,
                 'bulan' => date('F Y',strtotime(explode(' ',$v_dupplicate->created_at)[0])),
                 'late' => $late,
@@ -392,12 +444,11 @@ class AttendanceReportController extends Controller
             ];
         }
 
-       //dd($custom_att);
-      
-             return view('reports.telat', compact('custom_att'));
+        return view('reports.telat', compact('custom_att'));
     }
+
     public function filter(Request $request)
-        {
+    {
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::put('first_date', $request->first_date);
@@ -418,6 +469,7 @@ class AttendanceReportController extends Controller
             , a.work_hour
             , a.created_at
             , u.nik
+            , u.department
             FROM attendances a
             LEFT JOIN users u 
                 ON a.user_id = u.id 
@@ -429,6 +481,21 @@ class AttendanceReportController extends Controller
         // get duplicate value from attendances
         $duplicate_value = [];
         foreach ($attendances as $k => $v) {
+            if (Auth::User()->department != 0) {
+                if (Auth::User()->department != $v->department) {
+                    continue;
+                }
+            }
+
+            $department = '';
+            if ($v->department == 0) {
+                $department = 'IT';
+            }
+            elseif ($v->department == 1) {
+                $department = 'Marketing';
+            }
+
+            $v->department = $department;
             $duplicate_value[$v->user_id] = $v;
         }
 
@@ -467,7 +534,7 @@ class AttendanceReportController extends Controller
                 'no' => $no++,
                 'nik' => $v_dupplicate->nik,
                 'nama_karyawan' => $v_dupplicate->user_fullname,
-                'departemen' => 'Marketing',
+                'departemen' => $v_dupplicate->department,
                 'hari_kerja' => 21,
                 'bulan' => date('F Y',strtotime(explode(' ',$v_dupplicate->created_at)[0])),
                 'late' => $late,
@@ -480,8 +547,6 @@ class AttendanceReportController extends Controller
             ];
         }
 
-       //dd($custom_att);
-      
-             return view('reports.telat', compact('custom_att'));
+        return view('reports.telat', compact('custom_att'));
     }
-    }
+}
