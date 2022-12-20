@@ -49,7 +49,7 @@ class AttendanceReportController extends Controller
                 ->join('users', 'users.id', '=', 'attedances.user_id')
                 ->select('attedances'.'clock_in_time', 'clock_in_out', 'work_hour', 'users'.'nik', 'department')
                 ->get();
-        dd($data);
+        // dd($data);
         return view('reports.absensi', compact('attedances', 'users'));
     }
 
@@ -90,7 +90,7 @@ class AttendanceReportController extends Controller
             ->join('users', 'users.id', '=', 'attedances.user_id')
             ->select('attedances'.'clock_in_time', 'clock_in_out', 'work_hour', 'users'.'nik', 'department')
             ->get();
-        dd($data);
+        // dd($data);
         return view('reports.absensi', compact('attedances', 'posts'));
     }
 
@@ -317,16 +317,20 @@ class AttendanceReportController extends Controller
       
         $attendances = DB::table('attendances')
         ->join('users','attendances.user_id','=','users.id')
-        ->select('attendances.user_fullname', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour','users.nik','users.department')
-        ->get();
+        ->select('attendances.user_fullname', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour','users.nik','users.department');
+
+        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
+            if (Auth::User()->role == 2) {
+                $attendances = $attendances->where('users.department',1);
+            }
+            elseif (Auth::User()->role == 4) {
+                $attendances = $attendances->whereIn('users.department',[2,3,4,5]);
+            }
+        }
+        
+        $attendances = $attendances->get();
 
         foreach ($attendances as $k => $v) {
-            if (Auth::User()->department != 0) {
-                if (Auth::User()->department != $v->department) {
-                    continue;
-                }
-            }
-
             $department = '';
             if ($v->department == 0) {
                 $department = 'IT';
@@ -334,6 +338,22 @@ class AttendanceReportController extends Controller
             elseif ($v->department == 1) {
                 $department = 'Marketing';
             }
+            elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            }
+            elseif ($v->department == 3) {
+                $department = 'IPM';
+            }
+            elseif ($v->department == 4) {
+                $department = 'UK';
+            }
+            elseif ($v->department == 5) {
+                $department = 'Servis';
+            }
+            elseif ($v->department == 6) {
+                $department = 'HRD';
+            }
+
             $v->department = $department;
 
             $created_at = is_null($v->created_at) ? '-' : $v->created_at;
@@ -341,7 +361,7 @@ class AttendanceReportController extends Controller
             $v->hari = Carbon::parse(explode(' ', $created_at)[0])->translatedFormat('l');
             $v->hari = Carbon::parse(explode(' ', $updated_at)[0])->translatedFormat('l');
         }
-        
+
         return view('reports.absensi', compact('attendances'));
     }
 

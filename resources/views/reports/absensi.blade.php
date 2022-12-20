@@ -52,12 +52,11 @@
                             
                               @foreach ($attendances as $attendance)
                                     <tr class="data_post">
-                                      @php
-                                      $created_at = is_null($attendance->created_at) ? '-' : $attendance->created_at;
-                                  @endphp
-                                  @php
-                                   $updated_at = is_null($attendance->updated_at) ? '-' : $attendance->updated_at;
-                                   @endphp
+                                        @php
+                                        $created_at = is_null($attendance->created_at) ? '-' : $attendance->created_at;
+                                      
+                                        $updated_at = is_null($attendance->updated_at) ? '-' : $attendance->updated_at;
+                                        @endphp
                                         <td>{{$attendance->nik}}</td>
                                         <td>{{$attendance->user_fullname}}</td>
                                         <td>{{ $attendance->hari }}</td>
