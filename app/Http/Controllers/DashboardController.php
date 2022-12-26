@@ -15,6 +15,10 @@ class DashboardController extends Controller
     {
         return view('index');
     }
+    public Function index1()
+    {
+        return view('index1');
+    }
     public function logout(Request $request)
     {
         Auth::logout();

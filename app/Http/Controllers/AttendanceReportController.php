@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Post;
-use App\Models\Outlet;
-use App\Models\UserOutlet;
-use DataTables;
-use App\Models\PostHeader;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Attendance;
-use App\Exports\ReportExport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AttendanceReportController extends Controller
@@ -31,7 +25,7 @@ class AttendanceReportController extends Controller
             $tmp_data = [
                 'date' => now(),
                 'user_id' => null,
-                'status' => 'no'
+                'status' => 'no',
             ];
 
             $data = $this->getDateTime($tmp_data);
@@ -46,9 +40,9 @@ class AttendanceReportController extends Controller
     public function absensi()
     {
         $data = DB::table('attedances')
-                ->join('users', 'users.id', '=', 'attedances.user_id')
-                ->select('attedances'.'clock_in_time', 'clock_in_out', 'work_hour', 'users'.'nik', 'department')
-                ->get();
+            ->join('users', 'users.id', '=', 'attedances.user_id')
+            ->select('attedances' . 'clock_in_time', 'clock_in_out', 'work_hour', 'users' . 'nik', 'department')
+            ->get();
         // dd($data);
         return view('reports.absensi', compact('attedances', 'users'));
     }
@@ -70,7 +64,7 @@ class AttendanceReportController extends Controller
         $tmp_data = [
             'date' => $request->date,
             'user_id' => $user_id,
-            'status' => 'yes'
+            'status' => 'yes',
         ];
 
         Session::put('user_id', $user_id);
@@ -88,49 +82,47 @@ class AttendanceReportController extends Controller
     {
         $data = DB::table('attedances')
             ->join('users', 'users.id', '=', 'attedances.user_id')
-            ->select('attedances'.'clock_in_time', 'clock_in_out', 'work_hour', 'users'.'nik', 'department')
+            ->select('attedances' . 'clock_in_time', 'clock_in_out', 'work_hour', 'users' . 'nik', 'department')
             ->get();
         // dd($data);
         return view('reports.absensi', compact('attedances', 'posts'));
     }
 
-
     public function getDateTime($params)
     {
         $return = [];
         $param_year = explode('-', $params['date'])[0];
-        $param_month = strlen(explode('-', $params['date'])[1]) == 1 ? '0'.explode('-', $params['date'])[1] : explode('-', $params['date'])[1];
+        $param_month = strlen(explode('-', $params['date'])[1]) == 1 ? '0' . explode('-', $params['date'])[1] : explode('-', $params['date'])[1];
 
         $month = $params['date'];
         $start = Carbon::parse($month)->startOfMonth();
         $end = Carbon::parse($month)->endOfMonth();
-
 
         $tmp_table_header_2 = [];
         $tmp_table_header_2_no = 1;
         $dates = [];
         while ($start->lte($end)) {
             $dates[] = $start->copy();
-            $tmp_table_header_2[] = 'day_'.$tmp_table_header_2_no++;
+            $tmp_table_header_2[] = 'day_' . $tmp_table_header_2_no++;
             $start->addDay();
         }
 
-        $tmp_table_header_1 = ['outlet_user','jabatan_name','outlet_name'];
+        $tmp_table_header_1 = ['outlet_user', 'jabatan_name', 'outlet_name'];
         $tmp_table_header_3 = ['col_count'];
 
         $table_header[] = array_merge($tmp_table_header_1, $tmp_table_header_2, $tmp_table_header_3);
 
         $query = DB::select("
-                    SELECT * 
-                    FROM posts p  
-                    WHERE 1=1 
-                    AND p.user_id = '".$params['user_id']."'
-                    AND p.imgTaken LIKE '%".$month."%'
+                    SELECT *
+                    FROM posts p
+                    WHERE 1=1
+                    AND p.user_id = '" . $params['user_id'] . "'
+                    AND p.imgTaken LIKE '%" . $month . "%'
                 ");
 
         $tmp_post = [];
         foreach ($query as $k => $v) {
-            $tmp_post[$v->outlet_user.'|'.$v->jabatan_name.'|'.$v->outlet_name] = $v;
+            $tmp_post[$v->outlet_user . '|' . $v->jabatan_name . '|' . $v->outlet_name] = $v;
         }
         unset($query);
 
@@ -141,24 +133,24 @@ class AttendanceReportController extends Controller
             $tmp_visit = [
                 'outlet_user' => $v_tmp->outlet_user,
                 'jabatan_name' => $v_tmp->jabatan_name,
-                'outlet_name' => $v_tmp->outlet_name
+                'outlet_name' => $v_tmp->outlet_name,
 
             ];
 
             foreach ($dates as $k_date => $v_date) {
-                $k_date_custom = 'day_'.$k_date+1;
-                $k_date2 = strlen($k_date+1) == 1 ? '0'.$k_date+1 : $k_date+1;
-                $imgTaken = $param_year.'-'.$param_month.'-'.$k_date2;
+                $k_date_custom = 'day_' . $k_date + 1;
+                $k_date2 = strlen($k_date + 1) == 1 ? '0' . $k_date + 1 : $k_date + 1;
+                $imgTaken = $param_year . '-' . $param_month . '-' . $k_date2;
 
                 $check = DB::select("
-                            SELECT * 
-                            FROM posts p  
-                            WHERE 1=1 
-                            AND p.outlet_user = '".$tmp_visit['outlet_user']."'
-                            AND p.jabatan_name = '".$tmp_visit['jabatan_name']."'
-                            AND p.outlet_name = '".$tmp_visit['outlet_name']."'
-                            AND p.imgTaken LIKE '%".$imgTaken."%'
-                            AND p.user_id = '".$params['user_id']."'
+                            SELECT *
+                            FROM posts p
+                            WHERE 1=1
+                            AND p.outlet_user = '" . $tmp_visit['outlet_user'] . "'
+                            AND p.jabatan_name = '" . $tmp_visit['jabatan_name'] . "'
+                            AND p.outlet_name = '" . $tmp_visit['outlet_name'] . "'
+                            AND p.imgTaken LIKE '%" . $imgTaken . "%'
+                            AND p.user_id = '" . $params['user_id'] . "'
                         ");
 
                 $tmp_visit2[$k_date_custom] = count($check);
@@ -185,16 +177,16 @@ class AttendanceReportController extends Controller
         $tmp_table_footer_2 = [];
         foreach ($tmp_table_header_2 as $k => $v) {
             $tmp_day = str_replace('day_', '', $v);
-            $tmp_day = strlen($tmp_day+1) == 1 ? '0'.$tmp_day : $tmp_day;
+            $tmp_day = strlen($tmp_day + 1) == 1 ? '0' . $tmp_day : $tmp_day;
 
-            $imgTaken = $param_year.'-'.$param_month.'-'.$tmp_day;
+            $imgTaken = $param_year . '-' . $param_month . '-' . $tmp_day;
 
             $check = DB::select("
-                        SELECT count(*) total 
-                        FROM posts p  
-                        WHERE 1=1 
-                        AND p.user_id = '".$params['user_id']."'
-                        AND p.imgTaken LIKE '%".$imgTaken."%'
+                        SELECT count(*) total
+                        FROM posts p
+                        WHERE 1=1
+                        AND p.user_id = '" . $params['user_id'] . "'
+                        AND p.imgTaken LIKE '%" . $imgTaken . "%'
                     ");
 
             $tmp_table_footer_2[] = $check[0]->total;
@@ -214,7 +206,7 @@ class AttendanceReportController extends Controller
     {
         $return = [];
         $param_year = explode('-', $params['date'])[0];
-        $param_month = strlen(explode('-', $params['date'])[1]) == 1 ? '0'.explode('-', $params['date'])[1] : explode('-', $params['date'])[1];
+        $param_month = strlen(explode('-', $params['date'])[1]) == 1 ? '0' . explode('-', $params['date'])[1] : explode('-', $params['date'])[1];
 
         $month = $params['date'];
         $start = Carbon::parse($month)->startOfMonth();
@@ -231,7 +223,7 @@ class AttendanceReportController extends Controller
         $dates = [];
         while ($start->lte($end)) {
             $dates[] = $start->copy();
-            $attDate_2[] = 'day_'.$attDate_2_no++;
+            $attDate_2[] = 'day_' . $attDate_2_no++;
             $start->addDay();
         }
 
@@ -245,16 +237,16 @@ class AttendanceReportController extends Controller
                 continue;
             }
 
-            $k_date = strlen($k) == 1 ? '0'.$k : $k;
-            $imgTaken = $param_year.'-'.$param_month.'-'.$k_date;
+            $k_date = strlen($k) == 1 ? '0' . $k : $k;
+            $imgTaken = $param_year . '-' . $param_month . '-' . $k_date;
 
             $query = DB::select("
                         SELECT a.clock_in_time, a.clock_out_time,a.work_hour
-                        FROM attendances a  
-                        WHERE 1=1 
-                        AND a.user_id = '".$params['user_id']."'
-                        AND a.clock_in_time LIKE '%".$imgTaken."%'
-                        AND a.clock_out_time LIKE '%".$imgTaken."%'
+                        FROM attendances a
+                        WHERE 1=1
+                        AND a.user_id = '" . $params['user_id'] . "'
+                        AND a.clock_in_time LIKE '%" . $imgTaken . "%'
+                        AND a.clock_out_time LIKE '%" . $imgTaken . "%'
 
                     ");
 
@@ -263,7 +255,7 @@ class AttendanceReportController extends Controller
             }
 
             $tmp_attIn_2 = count($query) > 0 ? $query[0]->clock_in_time : '0000-00-00 00:00:00';
-            $tmp_attOut_2 = count($query) > 0  && !is_null($query[0]->clock_out_time) ? $query[0]->clock_out_time : '0000-00-00 00:00:00';
+            $tmp_attOut_2 = count($query) > 0 && !is_null($query[0]->clock_out_time) ? $query[0]->clock_out_time : '0000-00-00 00:00:00';
             $attIn_2[] = explode(' ', trim($tmp_attIn_2))[1];
             $attOut_2[] = explode(' ', trim($tmp_attOut_2))[1];
             $tmp_workhour = count($query) > 0 ? $query[0]->work_hour : '0';
@@ -275,7 +267,7 @@ class AttendanceReportController extends Controller
         $attOut = array_merge($attOut, $attOut_2);
         $attWorkHour = array_merge($attWorkHour, $attWorkHour_2);
 
-        $return = count($not_found) == count($dates) ? [$attDate] : [$attDate,$attIn,$attOut,$attWorkHour];
+        $return = count($not_found) == count($dates) ? [$attDate] : [$attDate, $attIn, $attOut, $attWorkHour];
 
         return $return;
     }
@@ -298,8 +290,7 @@ class AttendanceReportController extends Controller
             $department = '';
             if ($user->department == 0) {
                 $department = 'IT';
-            }
-            elseif ($user->department == 1) {
+            } elseif ($user->department == 1) {
                 $department = 'Marketing';
             }
             $v->department = $department;
@@ -314,43 +305,34 @@ class AttendanceReportController extends Controller
 
     public function reportsAbsensi()
     {
-      
         $attendances = DB::table('attendances')
-        ->join('users','attendances.user_id','=','users.id')
-        ->select('attendances.user_fullname', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour','users.nik','users.department');
+            ->join('users', 'attendances.user_id', '=', 'users.id')
+            ->select('attendances.id', 'attendances.user_fullname', 'attendances.clock_in_time', 'attendances.clock_in_img', 'attendances.clock_in_loc', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour', 'attendances.user_id', 'users.nik', 'users.department');
 
         if (Auth::User()->department != 0 || Auth::User()->department != 6) {
             if (Auth::User()->role == 2) {
-                $attendances = $attendances->where('users.department',1);
-            }
-            elseif (Auth::User()->role == 4) {
-                $attendances = $attendances->whereIn('users.department',[2,3,4,5]);
+                $attendances = $attendances->where('users.department', 1);
+            } elseif (Auth::User()->role == 4) {
+                $attendances = $attendances->whereIn('users.department', [2, 3, 4, 5]);
             }
         }
-        
-        $attendances = $attendances->get();
 
+        $attendances = $attendances->get();
         foreach ($attendances as $k => $v) {
             $department = '';
             if ($v->department == 0) {
                 $department = 'IT';
-            }
-            elseif ($v->department == 1) {
+            } elseif ($v->department == 1) {
                 $department = 'Marketing';
-            }
-            elseif ($v->department == 2) {
+            } elseif ($v->department == 2) {
                 $department = 'Kalibrasi';
-            }
-            elseif ($v->department == 3) {
+            } elseif ($v->department == 3) {
                 $department = 'IPM';
-            }
-            elseif ($v->department == 4) {
+            } elseif ($v->department == 4) {
                 $department = 'UK';
-            }
-            elseif ($v->department == 5) {
+            } elseif ($v->department == 5) {
                 $department = 'Servis';
-            }
-            elseif ($v->department == 6) {
+            } elseif ($v->department == 6) {
                 $department = 'HRD';
             }
 
@@ -365,12 +347,61 @@ class AttendanceReportController extends Controller
         return view('reports.absensi', compact('attendances'));
     }
 
+    public function show_detail(Request $request)
+    {
+        // $attendances = Attendance::find($id);
+        //  dd($request->id);
+
+        $attendances = DB::table('attendances')
+            ->join('users', 'attendances.user_id', '=', 'users.id')
+            ->select('attendances.user_fullname',
+                'attendances.clock_in_time',
+                'attendances.clock_in_img',
+                'attendances.clock_in_loc',
+                'attendances.created_at',
+                'attendances.updated_at',
+                'attendances.work_hour',
+                'attendances.user_id',
+                'users.nik',
+                'users.department')
+            ->where('attendances.id',$request->id)
+            ->get();
+        foreach ($attendances as $k => $v) {
+            $department = '';
+            if ($v->department == 0) {
+                $department = 'IT';
+            } elseif ($v->department == 1) {
+                $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
+            }
+            $v->department = $department;
+            $late_limit = date_create(date('08:06:00'));
+            $clock_in = date_create(date('H:i:s', strtotime($v->clock_in_time)));
+            $difDate = date_diff($late_limit, $clock_in);
+            $v->late = $difDate->h.':'.$difDate->i.':'.$difDate->s;
+            $created_at = is_null($v->created_at) ? '-' : $v->created_at;
+            $updated_at = is_null($v->updated_at) ? '-' : $v->updated_at;
+            $v->hari = Carbon::parse(explode(' ', $created_at)[0])->translatedFormat('l');
+            $v->hari = Carbon::parse(explode(' ', $updated_at)[0])->translatedFormat('l');
+        }
+        return view('reports.show_detail', compact('attendances'));
+    }
+
     public function reportsTelat(Request $request)
     {
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::forget('first_date');
-        Session::forget('end_date');    
+        Session::forget('end_date');
         $thn_awal = date('Y');
         $bln_awal = date('m');
 
@@ -387,9 +418,9 @@ class AttendanceReportController extends Controller
             , u.nik
             , u.department
             FROM attendances a
-            LEFT JOIN users u 
-                ON a.user_id = u.id 
-            WHERE 1=1 
+            LEFT JOIN users u
+                ON a.user_id = u.id
+            WHERE 1=1
                 AND a.created_at >= '$thn_awal-$bln_awal-01'
                 AND a.created_at <= '$thn_akhir-$bln_akhir-31'"
         );
@@ -406,8 +437,7 @@ class AttendanceReportController extends Controller
             $department = '';
             if ($v->department == 0) {
                 $department = 'IT';
-            }
-            elseif ($v->department == 1) {
+            } elseif ($v->department == 1) {
                 $department = 'Marketing';
             }
 
@@ -427,8 +457,8 @@ class AttendanceReportController extends Controller
 
             foreach ($attendances as $k => $v) {
                 $late_limit = date_create(date('08:06:00'));
-                $clock_in = date_create(date('H:i:s',strtotime($v->clock_in_time)));
-                $difDate = date_diff($late_limit,$clock_in);
+                $clock_in = date_create(date('H:i:s', strtotime($v->clock_in_time)));
+                $difDate = date_diff($late_limit, $clock_in);
 
                 if ($k_dupplicate == $v->user_id) {
                     $tmp_late = ($difDate->h != 0 || $difDate->i != 0 | $difDate->s != 0) ? 1 : 0;
@@ -453,14 +483,14 @@ class AttendanceReportController extends Controller
                 'nama_karyawan' => $v_dupplicate->user_fullname,
                 'departemen' => $v_dupplicate->department,
                 'hari_kerja' => 21,
-                'bulan' => date('F Y',strtotime(explode(' ',$v_dupplicate->created_at)[0])),
+                'bulan' => date('F Y', strtotime(explode(' ', $v_dupplicate->created_at)[0])),
                 'late' => $late,
                 'not_in_out' => $not_in_out,
                 'not_in' => $not_in,
                 'not_out' => $not_out,
                 'jumlah' => $jumlah,
                 'denda' => $custom_denda,
-                'potongan' => $custom_potongan
+                'potongan' => $custom_potongan,
             ];
         }
 
@@ -474,12 +504,11 @@ class AttendanceReportController extends Controller
         Session::put('first_date', $request->first_date);
         Session::put('end_date', $request->end_date);
 
-        $thn_awal = explode('-',$first_date)[0];
-        $bln_awal = explode('-',$first_date)[1];
+        $thn_awal = explode('-', $first_date)[0];
+        $bln_awal = explode('-', $first_date)[1];
 
-        $thn_akhir = explode('-',$end_date)[0];
-        $bln_akhir = explode('-',$end_date)[1];
-
+        $thn_akhir = explode('-', $end_date)[0];
+        $bln_akhir = explode('-', $end_date)[1];
 
         $attendances = DB::SELECT("SELECT a.id
             , a.user_id
@@ -491,9 +520,9 @@ class AttendanceReportController extends Controller
             , u.nik
             , u.department
             FROM attendances a
-            LEFT JOIN users u 
-                ON a.user_id = u.id 
-            WHERE 1=1 
+            LEFT JOIN users u
+                ON a.user_id = u.id
+            WHERE 1=1
                 AND a.created_at >= '$thn_awal-$bln_awal-01'
                 AND a.created_at <= '$thn_akhir-$bln_akhir-31'"
         );
@@ -510,8 +539,7 @@ class AttendanceReportController extends Controller
             $department = '';
             if ($v->department == 0) {
                 $department = 'IT';
-            }
-            elseif ($v->department == 1) {
+            } elseif ($v->department == 1) {
                 $department = 'Marketing';
             }
 
@@ -530,8 +558,8 @@ class AttendanceReportController extends Controller
 
             foreach ($attendances as $k => $v) {
                 $late_limit = date_create(date('08:06:00'));
-                $clock_in = date_create(date('H:i:s',strtotime($v->clock_in_time)));
-                $difDate = date_diff($late_limit,$clock_in);
+                $clock_in = date_create(date('H:i:s', strtotime($v->clock_in_time)));
+                $difDate = date_diff($late_limit, $clock_in);
 
                 if ($k_dupplicate == $v->user_id) {
                     $tmp_late = ($difDate->h != 0 || $difDate->i != 0 | $difDate->s != 0) ? 1 : 0;
@@ -556,17 +584,72 @@ class AttendanceReportController extends Controller
                 'nama_karyawan' => $v_dupplicate->user_fullname,
                 'departemen' => $v_dupplicate->department,
                 'hari_kerja' => 21,
-                'bulan' => date('F Y',strtotime(explode(' ',$v_dupplicate->created_at)[0])),
+                'bulan' => date('F Y', strtotime(explode(' ', $v_dupplicate->created_at)[0])),
                 'late' => $late,
                 'not_in_out' => $not_in_out,
                 'not_in' => $not_in,
                 'not_out' => $not_out,
                 'jumlah' => $jumlah,
                 'denda' => $custom_denda,
-                'potongan' => $custom_potongan
+                'potongan' => $custom_potongan,
             ];
         }
 
         return view('reports.telat', compact('custom_att'));
+    }
+
+    public function gps2Num($coordPart)
+    {
+        $parts = explode('/', $coordPart);
+        if (count($parts) <= 0) {
+            return 0;
+        }
+
+        if (count($parts) == 1) {
+            return $parts[0];
+        }
+
+        return floatval($parts[0]) / floatval($parts[1]);
+    }
+
+    /**
+     * get_image_location
+     * Returns an array of latitude and longitude from the Image file
+     * @param $image file path
+     * @return multitype:array|boolean
+     */
+    public function get_image_location($image = '')
+    {
+        $exif = exif_read_data($image, 0, true);
+
+        if ($exif
+            && isset($exif['GPS']['GPSLatitudeRef'])
+            && isset($exif['GPS']['GPSLatitude'])
+            && isset($exif['GPS']['GPSLongitudeRef'])
+            && isset($exif['GPS']['GPSLongitude'])
+        ) {
+            $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
+            $GPSLatitude = $exif['GPS']['GPSLatitude'];
+            $GPSLongitudeRef = $exif['GPS']['GPSLongitudeRef'];
+            $GPSLongitude = $exif['GPS']['GPSLongitude'];
+
+            $lat_degrees = count($GPSLatitude) > 0 ? $this->gps2Num($GPSLatitude[0]) : 0;
+            $lat_minutes = count($GPSLatitude) > 1 ? $this->gps2Num($GPSLatitude[1]) : 0;
+            $lat_seconds = count($GPSLatitude) > 2 ? $this->gps2Num($GPSLatitude[2]) : 0;
+
+            $lon_degrees = count($GPSLongitude) > 0 ? $this->gps2Num($GPSLongitude[0]) : 0;
+            $lon_minutes = count($GPSLongitude) > 1 ? $this->gps2Num($GPSLongitude[1]) : 0;
+            $lon_seconds = count($GPSLongitude) > 2 ? $this->gps2Num($GPSLongitude[2]) : 0;
+
+            $lat_direction = ($GPSLatitudeRef == 'W' or $GPSLatitudeRef == 'S') ? -1 : 1;
+            $lon_direction = ($GPSLongitudeRef == 'W' or $GPSLongitudeRef == 'S') ? -1 : 1;
+
+            $latitude = $lat_direction * ($lat_degrees + ($lat_minutes / 60) + ($lat_seconds / (60 * 60)));
+            $longitude = $lon_direction * ($lon_degrees + ($lon_minutes / 60) + ($lon_seconds / (60 * 60)));
+
+            return array('latitude' => $latitude, 'longitude' => $longitude);
+        } else {
+            return false;
+        }
     }
 }

@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Imports\UsersImport;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
-use Exception;
-use Illuminate\Support\Facades\File;
-use PhpParser\Node\Stmt\Switch_;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+
 class UserController extends Controller
 {
     /**
@@ -21,11 +20,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(Auth::User()->role != 1){
-        $users = User::all();
-        return view('user.index', compact('users'));
-        }else{
-        return redirect('error.404');
+        if (Auth::User()->role != 1) {
+            $users = User::all();
+            return view('user.index', compact('users'));
+        } else {
+            return redirect('error.404');
         }
     }
 
@@ -49,25 +48,25 @@ class UserController extends Controller
     {
         //membuat validasi
         // dd($request);
-        $this->validate($request,[
-            'first_name'=>'required',
-            'nik'=>'required',
-            'phone'=>'required',
-            'password'=>'required',
-            'department' =>'required',
-            'role'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
+        $this->validate($request, [
+            'first_name' => 'required',
+            'nik' => 'required',
+            'phone' => 'required',
+            'password' => 'required',
+            'department' => 'required',
+            'role' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
-    
-        $user = DB::table('users')->where('phone',$request->phone)->get();
-        
-        if (count($user)>0){
+
+        $user = DB::table('users')->where('phone', $request->phone)->get();
+
+        if (count($user) > 0) {
             return 'nomor handphone sudah terdaftar';
         }
-        $user = DB::table('users')->where('nik',$request->nik)->get();
-        
-        if (count($user)>0){
+        $user = DB::table('users')->where('nik', $request->nik)->get();
+
+        if (count($user) > 0) {
             return 'nik sudah terdaftar';
         }
 
@@ -84,7 +83,6 @@ class UserController extends Controller
         $user->created_by = Auth::User()->id;
         $user->updated_by = Auth::User()->id;
         $user->status = 'active';
-        
 
         //return redirect(route('dashboard.users.index'));
         //membuat return dengan try
@@ -130,24 +128,23 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request,[
-            'first_name'=>'required',
-            'nik'=>'required',
-            'phone'=>'required',
-            'role'=>'required',
-            'department'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
+        $this->validate($request, [
+            'first_name' => 'required',
+            'nik' => 'required',
+            'phone' => 'required',
+            'role' => 'required',
+            'department' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
-        
         $id = $request->id;
         $user = User::find($id);
         $user->first_name = $request->first_name;
         $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
         $user->nik = $request->nik;
         $user->phone = $request->phone;
-        if($request->password !='' && strlen(trim($request->password)) > 0){
+        if ($request->password != '' && strlen(trim($request->password)) > 0) {
             $user->password = Hash::make($request->password);
         }
         $user->role = $request->role;
@@ -157,7 +154,7 @@ class UserController extends Controller
         $user->updated_by = Auth::User()->id;
         $user->status = $request->status;
         $user->save();
-        
+
         return redirect(route('dashboard.users.index'));
     }
 
@@ -196,7 +193,7 @@ class UserController extends Controller
     {
         $id = $request->id;
         $user = User::find($id);
-        if($request->password !='' && strlen(trim($request->password)) > 0){
+        if ($request->password != '' && strlen(trim($request->password)) > 0) {
             $user->password = Hash::make($request->password);
         }
         $user->updated_by = Auth::User()->id;
@@ -208,30 +205,30 @@ class UserController extends Controller
     {
         $extension = $request->file('file')->getClientOriginalExtension();
 
-        $ext = ['xlsx','xls'];
+        $ext = ['xlsx', 'xls'];
 
-        if (!in_array($extension,$ext)){
+        if (!in_array($extension, $ext)) {
 
             return redirect()->route('.dashboard.users.index')->with('message', 'Format file tidak sesuai !');
         }
 
         $tmp_path = $_FILES["file"]["tmp_name"];
         $filename = $_FILES['file']['name'];
-        $target_file = storage_path('app'.DIRECTORY_SEPARATOR.$filename);
+        $target_file = storage_path('app' . DIRECTORY_SEPARATOR . $filename);
 
         // move file upload to storage
         move_uploaded_file($tmp_path, $target_file);
         try {
-            Excel::import(new UsersImport,$target_file);
+            Excel::import(new UsersImport, $target_file);
             $return = 'User Berhasil di Import !';
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
-            
+
             foreach ($failures as $failure) {
                 $return = $failure->errors();
             }
             File::delete($target_file);
-            
+
             return redirect()->route('dashboard.users.index')->with('failure', $return[0]);
         }
         File::delete($target_file);
