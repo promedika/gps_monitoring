@@ -61,6 +61,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
+            <input type='hidden' name='check' value='' id='check'>
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
@@ -80,5 +81,17 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/assets/AdminLTE-3.2.0/dist/js/adminlte.min.js')}}"></script>
+
+<script>
+  $(document).ready(function() {
+      var site_url = "{{ url('/') }}";
+    $('#check').val(screen.width)
+      if (screen.width >= 450) {
+          alert('Anda Harus Absen Menggunakan Handphone !')
+       return false;
+
+      }
+    });
+    </script>
 </body>
 </html>

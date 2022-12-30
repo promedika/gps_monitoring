@@ -16,6 +16,7 @@ class LoginController extends Controller
 
     public function actionlogin(Request $request)
     {
+      
         $this->validate($request,[
             'phone' => 'required|numeric',
             'password'=>'required',
@@ -23,6 +24,10 @@ class LoginController extends Controller
         ]);
             $phone = $request->phone;
             $password = $request->password;
+            
+            if($request->check >=450){
+                return redirect()->back()->with('message', 'Anda Harus Absen Menggunakan Handphone !');
+            }
 
             if(Auth::attempt(['phone' => $phone, 'password' => $password, 'status' => 'active',])) {
                 return redirect('/');
