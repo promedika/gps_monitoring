@@ -67,6 +67,11 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/attendances/start','App\Http\Controllers\AttendanceController@startWork')->name('dashboard.attendances.start');
     Route::post('/attendances/finish','App\Http\Controllers\AttendanceController@finishWork')->name('dashboard.attendances.finish');
     Route::post('attendances.upload','App\Http\Controllers\AttendanceController@uploadAtt')->name('attendances.upload');
+    Route::post('attendances.create','App\Http\Controllers\AttendanceController@create')->name('attendances.create');
+    Route::post('attendances.createin','App\Http\Controllers\AttendanceController@absensiteknisi')->name('attendances.createin');
+    Route::get('attendances.createin','App\Http\Controllers\AttendanceController@absensiteknisi')->name('attendances.createin');
+    Route::post('attendances.createout','App\Http\Controllers\AttendanceController@absensiteknisiout')->name('attendances.createout');
+    Route::get('attendances.createout','App\Http\Controllers\AttendanceController@absensiteknisiout')->name('attendances.createout');
 
     Route::get('/outlets','App\Http\Controllers\OutletController@index')->name('outlet.index');
     Route::post('/outlets/create','App\Http\Controllers\OutletController@store')->name('outlet.create');
@@ -93,7 +98,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/reports/absensi', 'App\Http\Controllers\AttendanceReportController@reportsAbsensi')->name('reports.absensi');
     
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
-
+    
     Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);
 

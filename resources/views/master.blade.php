@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title') | GPS Monitoring</title>
-
+  
   <meta name="csrf-token" content="{{csrf_token()}}"/>
 
   <!-- favicon -->
@@ -211,11 +211,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
             <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
               <p>
                 <i class="nav-icon fas fa-book"></i>
                 Laporan Kunjugan
               </p>
+              @endif
               <a href="{{route('reports.absensi')}}" class="nav-link" style="color: #343a40;">
                 <p>
                   <i class="nav-icon fas fa-clock"></i>

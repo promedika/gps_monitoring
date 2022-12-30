@@ -15,13 +15,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Upload Kunjungan</h1>
+            <h1>Clock In</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-              <li class="breadcrumb-item"><a href="{{route('posts.index')}}">Upload Kunjungan</a></li>
-              <li class="breadcrumb-item active">Buat Upload Kunjungan</li>
 
             </ol>
           </div>
@@ -34,7 +32,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('attendances.upload') }}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
 
@@ -53,8 +51,9 @@
                                     </div>
                                 @endif
                                 <button id="open_cam" class="btn btn-md btn-info"><i class="fa fa-camera-retro"></i> Kamera</button>
-                                <input type="file" id="upload" class="form-control image @error('image') is-invalid @enderror" name="image" capture="camera" required style="display: none;">
-                            
+                                <input type="file" name="file" id="file" class="form-control image @error('image') is-invalid @enderror" capture="camera" required style="display: none;" >
+                           <input type="hidden" name="type" value="clock_in_img">
+                           <input type="hidden" name="note" value="teknisi">
                                 <!-- error message untuk title -->
                                 
                             </div>
@@ -83,7 +82,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Aktifitas</label>
                                 <br>
-                                <textarea id="activity" class=" appearance-none border rounded" rows="6" cols="110" style="max-width: 100%" name="activity" required></textarea> 
+                                <textarea id="activity" class=" appearance-none border rounded" rows="6" cols="110" style="max-width: 100%" name="keterangan" required></textarea> 
                             </div>
                             <br>
 
@@ -136,9 +135,9 @@
         });  
         $('#submit').click(function(){
             if(
-                $('#upload').val() != '' &&
+                $('#file').val() != '' &&
                 $('#outlet-dd').val() != '' &&
-                $('#useroutlet-dd').val() != '' &&
+                // $('#useroutlet-dd').val() != '' &&
                 $('#activity').val() != ''
             ){
                 $('#loader').modal('show');
@@ -149,7 +148,7 @@
         // open camera
         $('#open_cam').on('click', function (e) {
             e.preventDefault();
-            $('#upload').trigger('click');
+            $('#file').trigger('click');
         });
 
     });
