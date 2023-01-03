@@ -32,9 +32,11 @@
           <div class="row">
             <div class="col-12">
                 <div class="card">
+                    {{--
                     <div class="card-header">
                       <a href="{{ route('posts.create') }}" title="Add" class="btn btn-primary btn-block col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
                     </div>
+                    --}}
 
                     <div class="card-body">
                         <table class="table table-bordered table-hover" id="table">

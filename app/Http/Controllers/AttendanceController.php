@@ -244,6 +244,9 @@ class AttendanceController extends Controller
 
     public function uploadAtt(Request $request)
     {
+        if($request->check >=450){
+            return "Anda Harus Absen Menggunakan Handphone!";
+        }
 
         $type = $request->type;
         $image = $request->file('file');

@@ -21,7 +21,7 @@
 
   @yield('custom_link_css')
 </head>
-<body class="hold-tr(ansition sidebar-mini layout-fixed">
+<body class="hold-tr(ansition sidebar-mini layout-fixed" data-widthresolution="">
   <div class="modal fade in" id="loader" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
@@ -315,6 +315,8 @@
               'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
           }
       });
+
+      jQuery('body').data('widthresolution',screen.width);
 
       jQuery("body").on("click", ".btn-edit-user-master-password", function(e) {
             $('#modalEditUserPassword').modal('show');

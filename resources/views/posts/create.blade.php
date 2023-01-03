@@ -87,6 +87,8 @@
                             </div>
                             <br>
 
+                            <input type='hidden' name='check' value='' id='check'>
+
                             <button type="submit" id="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
                         </form> 
@@ -102,6 +104,8 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
+        $('#check').val(screen.width);
+
         $('#outlet-dd').select2({
                 width:'100%',
                 theme: 'bootstrap4',

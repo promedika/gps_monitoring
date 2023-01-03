@@ -232,7 +232,13 @@
             let modal_create = $('#modalCreateNewAtt');
 
             $('#newatt').click(function() {
-                modal_create.modal('show');
+                if (screen.width >= 450) {
+                    alert('Anda Harus Absen Menggunakan Handphone!')
+                    return false;
+                }
+                else {
+                    modal_create.modal('show');
+                }
             })
 
             let modal_riwayat = $('#modalRiwayat');
@@ -272,6 +278,7 @@
                         var form_data = new FormData();
                         form_data.append('file', file_data);
                         form_data.append('type', type_att);
+                        form_data.append('check', screen.width);
                         console.log(form_data);
 
                         $.ajax({

@@ -54,7 +54,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if($request->check >=450){
+            return redirect()->back()->with('message', 'Anda Harus Absen Menggunakan Handphone!');
+        }
+
         //validate form
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,JPG',
