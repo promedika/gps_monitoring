@@ -272,10 +272,20 @@ class AttendanceReportController extends Controller
         return $return;
     }
 
-    public function reportsVisit()
+    public function reportsVisit(Request $request)
     {
+        $first_date = $request->first_date;
+        $end_date = $request->end_date;
+        Session::forget('first_date');
+        Session::forget('end_date');
+        $thn_awal = date('Y');
+        $bln_awal = date('m');
+
+        $thn_akhir = date('Y');
+        $bln_akhir = date('m');
+
         //get posts
-        $posts = Post::all();
+        $posts = Post::whereBetween('created_at', [$thn_awal.'-'.$bln_awal.'-01', $thn_awal.'-'.$bln_awal.'-31'])->get();
 
         foreach ($posts as $k => $v) {
             //get users
@@ -303,11 +313,124 @@ class AttendanceReportController extends Controller
         return view('reports.kunjungan', compact('posts'));
     }
 
-    public function reportsAbsensi()
+    public function reportsVisitFilter(Request $request)
     {
+        $first_date = $request->first_date;
+        $end_date = $request->end_date;
+        Session::put('first_date', $request->first_date);
+        Session::put('end_date', $request->end_date);
+
+        $thn_awal = explode('-', $first_date)[0];
+        $bln_awal = explode('-', $first_date)[1];
+
+        $thn_akhir = explode('-', $end_date)[0];
+        $bln_akhir = explode('-', $end_date)[1];
+
+        //get posts
+        $posts = Post::whereBetween('created_at', [$first_date, $end_date])->get();
+
+        foreach ($posts as $k => $v) {
+            //get users
+            $user = User::find($v->user_id);
+
+            if (Auth::User()->department != 0) {
+                if (Auth::User()->department != $user->department) {
+                    continue;
+                }
+            }
+
+            $department = '';
+            if ($user->department == 0) {
+                $department = 'IT';
+            } elseif ($user->department == 1) {
+                $department = 'Marketing';
+            }
+            $v->department = $department;
+
+            $imgTaken = is_null($v->imgTaken) ? '-' : $v->imgTaken;
+            $v->hari = Carbon::parse(explode(' ', $imgTaken)[0])->translatedFormat('l');
+        }
+
+        //render view with posts
+        return view('reports.kunjungan', compact('posts'));
+    }
+
+    public function reportsAbsensi(Request $request)
+    {
+        $first_date = $request->first_date;
+        $end_date = $request->end_date;
+        Session::forget('first_date');
+        Session::forget('end_date');
+        $thn_awal = date('Y');
+        $bln_awal = date('m');
+
+        $thn_akhir = date('Y');
+        $bln_akhir = date('m');
+
         $attendances = DB::table('attendances')
             ->join('users', 'attendances.user_id', '=', 'users.id')
-            ->select('attendances.id', 'attendances.user_fullname', 'attendances.clock_in_time', 'attendances.clock_in_img', 'attendances.clock_in_loc', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour', 'attendances.user_id', 'users.nik', 'users.department');
+            ->select('attendances.id', 'attendances.user_fullname', 'attendances.clock_in_time', 'attendances.clock_in_img', 'attendances.clock_in_loc', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour', 'attendances.user_id', 'users.nik', 'users.department')
+            ->where('attendances.created_at', '>=', $thn_awal.'-'.$bln_awal.'-01')
+            ->where('attendances.created_at', '<=', $thn_awal.'-'.$bln_awal.'-31');
+
+        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
+            if (Auth::User()->role == 2) {
+                $attendances = $attendances->where('users.department', 1);
+            } elseif (Auth::User()->role == 4) {
+                $attendances = $attendances->whereIn('users.department', [2, 3, 4, 5]);
+            }
+        }
+
+        $attendances = $attendances->get();
+        foreach ($attendances as $k => $v) {
+            $department = '';
+            if ($v->department == 0) {
+                $department = 'IT';
+            } elseif ($v->department == 1) {
+                $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
+            }
+
+            $v->department = $department;
+
+            $created_at = is_null($v->created_at) ? '-' : $v->created_at;
+            $updated_at = is_null($v->updated_at) ? '-' : $v->updated_at;
+            $v->hari = Carbon::parse(explode(' ', $created_at)[0])->translatedFormat('l');
+            $v->hari = Carbon::parse(explode(' ', $updated_at)[0])->translatedFormat('l');
+        }
+
+        return view('reports.absensi', compact('attendances'));
+    }
+
+    public function reportsAbsensiFilter(Request $request)
+    {
+        // dd($request);
+        $first_date = $request->first_date;
+        $end_date = $request->end_date;
+        Session::put('first_date', $request->first_date);
+        Session::put('end_date', $request->end_date);
+
+        $thn_awal = explode('-', $first_date)[0];
+        $bln_awal = explode('-', $first_date)[1];
+
+        $thn_akhir = explode('-', $end_date)[0];
+        $bln_akhir = explode('-', $end_date)[1];
+
+        $attendances = DB::table('attendances')
+            ->join('users', 'attendances.user_id', '=', 'users.id')
+            ->select('attendances.id', 'attendances.user_fullname', 'attendances.clock_in_time', 'attendances.clock_in_img', 'attendances.clock_in_loc', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour', 'attendances.user_id', 'users.nik', 'users.department')
+            // ->where('attendances.created_at', '>=', $thn_awal.'-'.$bln_awal.'-01')
+            // ->where('attendances.created_at', '<=', $thn_awal.'-'.$bln_awal.'-31');
+            ->whereBetween('attendances.created_at', [$first_date, $end_date]);
 
         if (Auth::User()->department != 0 || Auth::User()->department != 6) {
             if (Auth::User()->role == 2) {

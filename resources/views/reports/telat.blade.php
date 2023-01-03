@@ -160,13 +160,13 @@
 
     //Date picker
     $('#first_date').datetimepicker({
-        viewMode: 'months', 
-        format: 'YYYY-MM'
+        // viewMode: 'months', 
+        format: 'YYYY-MM-DD'
     });
     //Date picker
     $('#end_date').datetimepicker({
-        viewMode: 'months', 
-        format: 'YYYY-MM'
+        // viewMode: 'months', 
+        format: 'YYYY-MM-DD'
     });
   });
 </script>

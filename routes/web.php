@@ -89,6 +89,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/reports', 'App\Http\Controllers\AttendanceReportController@index')->name('reports.index');
     Route::post('/reports/show_report', 'App\Http\Controllers\AttendanceReportController@show_report')->name('reports.show_report');
     Route::get('/reports/visit', 'App\Http\Controllers\AttendanceReportController@reportsVisit')->name('reports.visit');
+    Route::post('/reports/visit/filter', 'App\Http\Controllers\AttendanceReportController@reportsVisitFilter')->name('reports.visit.filter');
     Route::post('/reports/show', 'App\Http\Controllers\AttendanceReportController@show')->name('reports.show');
 
     Route::post('/reports/show_detail', 'App\Http\Controllers\AttendanceReportController@show_detail')->name('reports.show_detail');
@@ -96,6 +97,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/reports/telat', 'App\Http\Controllers\AttendanceReportController@reportsTelat')->name('reports.telat');
     Route::post('/reports/filter', 'App\Http\Controllers\AttendanceReportController@filter')->name('reports.filter');
     Route::post('/reports/absensi', 'App\Http\Controllers\AttendanceReportController@reportsAbsensi')->name('reports.absensi');
+     Route::post('/reports/absensi/filter', 'App\Http\Controllers\AttendanceReportController@reportsAbsensiFilter')->name('reports.absensi.filter');
     
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
     

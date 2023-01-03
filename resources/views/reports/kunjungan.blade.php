@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 @endsection
 @section('content')
   <!-- Content Wrapper. Contains page content -->
@@ -25,6 +26,39 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+                <div>
+                  <form action="{{route('reports.visit.filter')}}" method="post" accept-charset="utf-8" id="show-monthly-report">
+
+                    @csrf
+                    
+                    <div class="card-header" style="display: flex">
+                      <div class="col-2 form-group">
+                        <div class="input-group date" id="first_date" data-target-input="nearest">
+                          <input value="{{(is_null(Session::get('first_date'))) ? "Pilih Bulan Awal" : Session::get('first_date')}}" name="first_date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#first_date" readonly required/>
+                        </div>
+                      </div>
+
+                      <div class="col-2 form-group">
+                        <div class="input-group date" id="end_date" data-target-input="nearest">
+                          <input value="{{(is_null(Session::get('end_date'))) ? "Pilih Bulan Akhir" : Session::get('end_date')}}" name="end_date" placeholder="Pilih Bulan & Tahun" type="text" class="form-control datetimepicker-input txtdate" data-toggle="datetimepicker" data-target="#end_date" readonly required/>
+                        </div>
+                      </div>
+
+                      <div>
+                         <input type="submit" value="Submit" class="btn btn-primary">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+          </div>
+        </div>
     </section>
 
     <section class="content">
@@ -90,7 +124,9 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>     
+<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script src="{{asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <script>
     //message with toastr
     @if(session()->has('success'))
@@ -123,6 +159,17 @@
     }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
 
     $('title').text('Laporan Kunjungan Marketing');
+
+    //Date picker
+    $('#first_date').datetimepicker({
+        // viewMode: 'months', 
+        format: 'YYYY-MM-DD'
+    });
+    //Date picker
+    $('#end_date').datetimepicker({
+        // viewMode: 'months', 
+        format: 'YYYY-MM-DD'
+    });
   });
 </script>
 @endsection

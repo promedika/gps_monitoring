@@ -200,7 +200,7 @@
           </li>
           @endif
 
-          @if (Auth::user()->role !=1)
+          @if (Auth::user()->role == 0 || Auth::user()->role == 2 || Auth::user()->role == 5)
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book-open"></i>
