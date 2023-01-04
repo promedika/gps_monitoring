@@ -224,6 +224,27 @@
 @section('custom_script_js')
     <script>
         $(document).ready(function() {
+
+            function getGPS() {
+                if (navigator.geolocation) {  
+                    navigator.geolocation.getCurrentPosition(showGPS, gpsError);
+                } else {  
+                    gpsText = "No GPS Functionality.";
+                    alert(gpsText);
+                }
+            }
+
+            function gpsError(error) {
+                alert("GPS Error: "+error.code+", "+error.message);
+            }
+
+            function showGPS(position) {
+                gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
+                
+                alert(gpsText);
+            }
+            console.log(getGPS());
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
