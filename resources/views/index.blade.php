@@ -224,42 +224,6 @@
 @section('custom_script_js')
     <script>
         $(document).ready(function() {
-
-            const getMobileOS = () => {
-              const ua = navigator.userAgent
-              if (/android/i.test(ua)) {
-                return "Android"
-              }
-              else if ((/iPad|iPhone|iPod/.test(ua))
-                 || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
-                return "iOS"
-              }
-              return "Other"
-            }
-
-            const os = getMobileOS()
-            alert(os)
-
-            function getGPS() {
-                if (navigator.geolocation) {  
-                    navigator.geolocation.getCurrentPosition(showGPS, gpsError);
-                } else {  
-                    gpsText = "No GPS Functionality.";
-                    alert(gpsText);
-                }
-            }
-
-            function gpsError(error) {
-                alert("GPS Error: "+error.code+", "+error.message);
-            }
-
-            function showGPS(position) {
-                gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
-                
-                alert(gpsText);
-            }
-            console.log(getGPS());
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
