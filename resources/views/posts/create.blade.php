@@ -88,6 +88,8 @@
                             <br>
 
                             <input type='hidden' name='check' value='' id='check'>
+                            <input type="hidden" name="tmp_lat" id="tmp_lat" value="">
+                            <input type="hidden" name="tmp_lng" id="tmp_lng" value="">
 
                             <button type="submit" id="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
@@ -105,6 +107,11 @@
 <script>
     $(document).ready(function () {
         $('#check').val(screen.width);
+        if (screen.width >= 450) {
+            alert('Anda Harus Absen Menggunakan Handphone!');
+            location.href = "{{ route('posts.index') }}"
+
+        }
 
         $('#outlet-dd').select2({
                 width:'100%',
@@ -155,6 +162,50 @@
             e.preventDefault();
             $('#upload').trigger('click');
         });
+
+        ///////////// start for ios //////////////
+        let tmp_route = "{{ route('posts.store') }}";
+        const getMobileOS = () => {
+          const ua = navigator.userAgent
+          if (/android/i.test(ua)) {
+            // return "Android" do nothing
+          }
+          else if ((/iPad|iPhone|iPod/.test(ua))
+             || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
+            // return "iOS"
+            tmp_route = "{{ route('posts.storeios') }}";
+          }
+          // return "Other" do nothing
+        }
+
+        // default "global_code" : "6P58QRX4+9QW"
+        let tmp_lat = '-6.2015179';
+        let tmp_lng = '106.8069573';
+
+        function getGPS() {
+            if (navigator.geolocation) {  
+                navigator.geolocation.getCurrentPosition(showGPS, gpsError);
+            } else {  
+                gpsText = "No GPS Functionality.";
+                alert(gpsText);
+            }
+        }
+
+        function gpsError(error) {
+            alert("GPS Error: "+error.code+", "+error.message);
+        }
+
+        function showGPS(position) {
+            gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
+            
+            tmp_lat = position.coords.latitude;
+            tmp_lng = position.coords.longitude;
+        }
+
+        $('form').attr('action',tmp_route);
+        $('#tmp_lng').val(tmp_lng);
+        $('#tmp_lat').val(tmp_lat);
+        ///////////// end for ios //////////////
 
     });
 </script>

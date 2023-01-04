@@ -261,6 +261,46 @@
                 submit_att('clock_out_img');
             });
 
+            ///////////// start for ios //////////////
+            let tmp_route = "{{ route('attendances.upload') }}";
+            const getMobileOS = () => {
+              const ua = navigator.userAgent
+              if (/android/i.test(ua)) {
+                // return "Android" do nothing
+              }
+              else if ((/iPad|iPhone|iPod/.test(ua))
+                 || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
+                // return "iOS"
+                tmp_route = "{{ route('attendances.uploads') }}";
+              }
+              // return "Other" do nothing
+            }
+
+            // default "global_code" : "6P58QRX4+9QW"
+            let tmp_lat = '-6.2015179';
+            let tmp_lng = '106.8069573';
+
+            function getGPS() {
+                if (navigator.geolocation) {  
+                    navigator.geolocation.getCurrentPosition(showGPS, gpsError);
+                } else {  
+                    gpsText = "No GPS Functionality.";
+                    alert(gpsText);
+                }
+            }
+
+            function gpsError(error) {
+                alert("GPS Error: "+error.code+", "+error.message);
+            }
+
+            function showGPS(position) {
+                gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
+                
+                tmp_lat = position.coords.latitude;
+                tmp_lng = position.coords.longitude;
+            }
+            //////////// end for ios ///////////////
+
 
             function submit_att(type_att) {
                 let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';
@@ -279,11 +319,13 @@
                         form_data.append('file', file_data);
                         form_data.append('type', type_att);
                         form_data.append('check', screen.width);
-                        console.log(form_data);
+
+                        form_data.append('tmp_lat', tmp_lat);
+                        form_data.append('tmp_lng', tmp_lng);
 
                         $.ajax({
                             type: 'POST',
-                            url: "{{ route('attendances.upload') }}",
+                            url: tmp_route,
                             data: form_data,
                             cache: false,
                             contentType: false,

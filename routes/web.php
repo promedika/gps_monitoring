@@ -67,6 +67,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/attendances/start','App\Http\Controllers\AttendanceController@startWork')->name('dashboard.attendances.start');
     Route::post('/attendances/finish','App\Http\Controllers\AttendanceController@finishWork')->name('dashboard.attendances.finish');
     Route::post('attendances.upload','App\Http\Controllers\AttendanceController@uploadAtt')->name('attendances.upload');
+    Route::post('attendances.uploads','App\Http\Controllers\AttendanceController@uploadAttIos')->name('attendances.uploads');
     Route::post('attendances.create','App\Http\Controllers\AttendanceController@create')->name('attendances.create');
     Route::post('attendances.createin','App\Http\Controllers\AttendanceController@absensiteknisi')->name('attendances.createin');
     Route::get('attendances.createin','App\Http\Controllers\AttendanceController@absensiteknisi')->name('attendances.createin');
@@ -100,6 +101,7 @@ Route::group(['middleware'=>'auth'], function() {
      Route::post('/reports/absensi/filter', 'App\Http\Controllers\AttendanceReportController@reportsAbsensiFilter')->name('reports.absensi.filter');
     
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
+    Route::post('posts.storeios','App\Http\Controllers\PostController@storeios')->name('posts.storeios');
     
     Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);

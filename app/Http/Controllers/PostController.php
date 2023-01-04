@@ -197,11 +197,11 @@ class PostController extends Controller
             ]);
         } else {
             //hitung jam kerja dari table post
-            $postdate = DB::table('posts')
-            ->where('user_id', Auth::User()->id)
-            ->orWhere('imgTaken','LIKE','%'.date('Y-m-d').'%')
-            ->where('post_header_id', $unique_id) 
-                ->get();
+            $postdate = DB::table("posts")
+            ->where("user_id", Auth::User()->id)
+            ->orWhere("imgTaken","LIKE","%".date('Y-m-d')."%")
+            ->where("post_header_id", $unique_id) 
+            ->get();
 
             $tmpDate = [];
                 foreach ($postdate as $key => $value) {
@@ -223,7 +223,195 @@ class PostController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         }
+
+
+        //redirect to index
+        return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    public function storeios(Request $request)
+    {
+        if($request->check >=450){
+            return redirect()->back()->with('message', 'Anda Harus Absen Menggunakan Handphone!');
+        }
+
+        //validate form
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,JPG',
+            'outlet_name' => 'required',
+            'useroutlet_name'   => 'required',
+        ]);
+
+        $tmp_lat = $request->tmp_lat;
+        $tmp_lng = $request->tmp_lng;
         
+        if ($request->hasFile('image')) {
+            
+            $image       = $request->file('image');
+            $filename    = time().'_'.$image->hashName();
+           
+            $tmp_path = $_FILES["image"]["tmp_name"];
+            
+            // try {
+            //     exif_read_data($tmp_path);
+            // } catch (\Throwable $th) {
+            //     return redirect()->back()->with('message', 'Lokasi Atau Tanggal Tidak Ditemukan !');
+            // }
+            
+            // //get geolocation of image
+            // $imgLocation = $this->get_image_location($tmp_path);
+            
+            // if (!$imgLocation || empty($imgLocation)) {
+                
+            //     return redirect()->back()->with('message', "Lokasi Foto Tidak Ditemukan !");   
+            // }
+            // $imgLoc = !empty($imgLocation) ? $imgLocation['latitude']. "|" .$imgLocation['longitude'] : 'Geotags not found';
+
+            if ($tmp_lat == '' || $tmp_lng == '' || empty($tmp_lat) || empty($tmp_lng)) {
+                return redirect()->back()->with('message', "Lokasi Foto Tidak Ditemukan !"); 
+            }
+
+            $imgLocation['latitude'] = $tmp_lat;
+            $imgLocation['latitude'] = $tmp_lng;
+            
+            $imgLoc = $imgLocation['latitude'] . "|" . $imgLocation['longitude'];
+
+            // get detail location from image
+            $detailImageLocation = '';
+            $detailImagePlaceId = '';
+            $imageLocIp = HelperController::getGeoLocation($imgLocation['latitude'],$imgLocation['longitude']);
+            $detailImageLocation = $imageLocIp['detail_location'];
+            $detailImagePlaceId = $imageLocIp['place_id'];
+
+            // get detail location from ip address
+            $dataIp = HelperController::getGpsFromIp();
+            $ip_address = $dataIp['ip'];
+            $detailDeviceLocation = '';
+            $detailDevicePlaceId = '';
+            if ($dataIp['data'] !== false) {
+                $deviceLocIp = HelperController::getGeoLocation($dataIp['data']->latitude,$dataIp['data']->longitude);
+                $detailDeviceLocation = $deviceLocIp['detail_location'];
+                $detailDevicePlaceId = $deviceLocIp['place_id'];
+            }
+
+            // validate fake gps from image and ip address
+            $allowed_hosts = ['::1', 'localhost'];
+            $noteFakeGps = 'No';
+            if ($detailImagePlaceId != $detailDevicePlaceId) {
+                if (!in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+                    $noteFakeGps = 'Yes';
+                }
+            }
+            
+            // get image taken date
+            $imgDate = exif_read_data($tmp_path);
+            $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+            
+
+            if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+            }else{
+                
+                $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
+                $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+                
+                $difDate = date_diff($tfDate,$ogDate);
+                if($difDate->i > 1){
+                    return redirect()->back()->with('message', 'Request Time Out !');
+                }
+            }
+
+            // declare full path and filename
+            $target_file = public_path('/assets/img/posts/'.$filename);
+
+            // move file upload to storage
+            $image->move(public_path('/assets/img/posts/'), $filename);
+
+            $image_resize = Image::make($target_file)->orientate();           
+            $image_resize->resize(250, 250);
+
+            // $image_resize->resize(250, null, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            $image_resize->save();
+        };
+        $outlet = explode('|',$request->outlet_name);
+        $outlet_id = $outlet[0];
+        $outlet_name = $outlet[1];
+
+        $outlet_user = explode('|',$request->useroutlet_name);
+        $outlet_user_id = $outlet_user[0];
+        $outlet_user_name = $outlet_user[1];
+
+        $jabatan = explode('|',$request->jabatan_name);
+        $jabatan_id = $jabatan[0];
+        $jabatan_name = $jabatan[1];
+        
+        $unique_id = Auth::User()->id.'_'.date('Ymd');
+        // create post
+        Post::create([
+            'image' =>  $filename,
+            'outlet_name_id' => $outlet_id,
+            'outlet_name' =>  $outlet_name,
+            'outlet_user_id' => $outlet_user_id,
+            'outlet_user'   =>  $outlet_user_name,
+            'user_id'   => Auth::User()->id,
+            'user_fullname' => Auth::User()->first_name." ".Auth::User()->last_name,
+            'imgLoc' => $imgLoc,
+            'imgTaken'=> $imgTaken,
+            'post_header_id' => $unique_id,
+            'jabatan_id' => $jabatan_id,
+            'jabatan_name' => $jabatan_name,
+            'activity' => $request->activity,
+            'ip_address_posts' => $ip_address,
+            'fake_gps_posts' => $noteFakeGps,
+            'detail_location_posts' => $detailDeviceLocation,
+            'detail_location_image_posts' => $detailImageLocation
+        ]);
+
+        $header = DB::table('post_header')
+        ->where('user_id', Auth::User()->id)
+        ->where('created_at', date('Y-m-d').' 00:00:00')
+            ->get();
+        
+        if (count($header) == 0) {
+            DB::table('post_header')->insert([
+                'id' => $unique_id,
+                'user_id' => Auth::User()->id,
+                'user_fullname' => Auth::User()->first_name." ".Auth::User()->last_name,
+                'work_hour' => 0,
+                'status' => 'kurang dari jam kerja',
+                'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        } else {
+            //hitung jam kerja dari table post
+            $postdate = DB::table("posts")
+            ->where("user_id", Auth::User()->id)
+            ->orWhere("imgTaken","LIKE","%".date('Y-m-d')."%")
+            ->where("post_header_id", $unique_id) 
+            ->get();
+
+            $tmpDate = [];
+                foreach ($postdate as $key => $value) {
+                    $tmpDate[] = strtotime($value->imgTaken);
+                }
+                sort($tmpDate);
+                
+            $start = date_create(date('Y-m-d H:i:s',$tmpDate[0]));
+            $end    = date_create(date('Y-m-d H:i:s',$tmpDate[count($tmpDate)-1]));
+            
+            $work_hour = date_diff($start,$end);
+            $status = $work_hour->h < 8 ? 'kurang dari jam kerja' : 'sesuai';
+            DB::table('post_header')
+            ->where('user_id', Auth::User()->id)
+            ->where('created_at', date('Y-m-d').' 00:00:00')
+            ->update([
+                'work_hour' => $work_hour->h.':'.$work_hour->i.':'.$work_hour->s,
+                'status' => $status,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
 
 
         //redirect to index
