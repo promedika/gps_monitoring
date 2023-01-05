@@ -274,7 +274,7 @@ class AttendanceReportController extends Controller
 
     public function reportsVisit(Request $request)
     {
-        if (Auth::User()->department != 6) {
+        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
             return redirect('/');
         }
         
@@ -381,7 +381,7 @@ class AttendanceReportController extends Controller
 
     public function reportsAbsensi(Request $request)
     {
-        if (Auth::User()->department != 6) {
+        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
             return redirect('/');
         }
 
@@ -497,9 +497,6 @@ class AttendanceReportController extends Controller
 
     public function show_detail(Request $request)
     {
-        // $attendances = Attendance::find($id);
-        //  dd($request->id);
-
         $attendances = DB::table('attendances')
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->select('attendances.user_fullname',
@@ -546,7 +543,7 @@ class AttendanceReportController extends Controller
 
     public function reportsTelat(Request $request)
     {
-        if (Auth::User()->department != 6) {
+        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
             return redirect('/');
         }
 
