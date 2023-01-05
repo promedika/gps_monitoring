@@ -88,58 +88,60 @@
             </a>
           </li>
 
-          @if (Auth::user()->role == 0 || Auth::user()->role == 2 || Auth::user()->role == 4)
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Master
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
-                    <i class="nav-icon fas fa-users"></i>
+          @if (Auth::User()->department == 0 || Auth::User()->department == 1)
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Master
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                @if (Auth::User()->department == 0 && Auth::user()->role == 0)
+                <li class="nav-item">
+                  <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
+                      <i class="nav-icon fas fa-users"></i>
+                      <p>
+                      P.I.C
+                      </p>
+                  </a>
+                </li>
+                @endif
+                
+                @if (Auth::user()->role == 0 || Auth::user()->role == 2 || Auth::user()->role == 4)
+                <li class="nav-item">
+                  <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
                     <p>
-                    P.I.C
+                      <i class="nav-icon fa fa-building"></i>
+                      Rumah Sakit
                     </p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-building"></i>
-                    Rumah Sakit
-                  </p>
-                </a>
-              </li>
+                  </a>
+                </li>
 
-              @if (Auth::user()->role == 0 || Auth::user()->role == 2)
-              <li class="nav-item">
-                <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-user"></i></i>
-                    User RS
-                  </p>
-                </a>
-              </li>
+                <li class="nav-item">
+                  <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
+                    <p>
+                      <i class="nav-icon fa fa-user"></i></i>
+                      User RS
+                    </p>
+                  </a>
+                </li>
 
-              <li class="nav-item">
-                <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-user-tie"></i></i>
-                    Jabatan User RS
-                  </p>
-                </a>
-              </li>
-              @endif
-            </ul>
-          </li>
+                <li class="nav-item">
+                  <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
+                    <p>
+                      <i class="nav-icon fa fa-user-tie"></i></i>
+                      Jabatan User RS
+                    </p>
+                  </a>
+                </li>
+                @endif
+              </ul>
+            </li>
           @endif
 
-          @if (Auth::user()->role == 0 || Auth::user()->role == 2)
+          @if (Auth::User()->department == 0 || Auth::User()->department == 1)
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
@@ -149,6 +151,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if (Auth::user()->role == 0 || Auth::user()->role == 1 || Auth::user()->role == 2)
               <li class="nav-item">
                 <a href="{{route('sales.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fas fa-users"></i>
@@ -165,11 +168,13 @@
                   </p>
                 </a>
               </li>
+              @endif
             </ul>
           </li>
           @endif
           
-          @if (Auth::user()->role == 0 || Auth::user()->role == 1 || Auth::user()->role == 2)
+          @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+          @else
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">
               <p>
@@ -178,7 +183,7 @@
               </p>
             </a>
           </li>
-          @endif
+          
           
           <li class="nav-item"">
             <a href="{{route('dashboard.attendances.index')}}" class="nav-link">
@@ -188,6 +193,7 @@
               </p>
             </a>
           </li>
+          @endif
 
           @if (Auth::user()->role == 0 || Auth::user()->role == 2)
           <li class="nav-item">
@@ -211,8 +217,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
-            <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
+              @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
+              <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
               <p>
                 <i class="nav-icon fas fa-book"></i>
                 Laporan Kunjugan

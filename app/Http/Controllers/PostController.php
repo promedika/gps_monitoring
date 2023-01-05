@@ -25,10 +25,10 @@ class PostController extends Controller
     {
         
         //get posts
-        if (Auth::User()->role != 1){
-        $posts = Post::all();
+        if (Auth::User()->department == 0 && Auth::User()->role == 0){
+            $posts = Post::all();
         }else{
-        $posts = Post::where('user_id',Auth::User()->id)->get(); 
+            $posts = Post::where('user_id',Auth::User()->id)->get(); 
         }
         
         //render view with posts

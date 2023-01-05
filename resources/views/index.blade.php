@@ -23,6 +23,37 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
+        @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">GPS Monitoring</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                Welcome to GPS Monitoring System, this system for marketing attendance, monitoring target sales and marketing report.
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </section>
+        @endif
+        <!-- /.content -->
+
+        <!-- Main content -->
+        @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+        @else
         <section class="content">
             <div class="container-fluid">
                 @if(session()->has('success'))
@@ -42,7 +73,7 @@
                     </div>
                     <div class="col-lg-3 col-6">
                         <!-- small card -->
-                        @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
+                        @if (Auth::User()->department == 0 || Auth::User()->department == 1)
                             <div class="small-box" style="background-color:lightsalmon">
                                 <div class="inner">
                                     <a href="#" id="riwayat" title="riwayat" style="color:white"><img
@@ -55,9 +86,10 @@
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </section>
+        @endif
         <!-- /.content -->
     </div>
-    @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
+    @if (Auth::User()->department == 0 || Auth::User()->department == 1)
         <div class="modal fade in" id="modalCreateNewAtt">
             <div class="modal-header" style="background-color:#17a2b8;border-bottom:none;width:100%">
                 <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Absensi</h4>

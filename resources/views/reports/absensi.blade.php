@@ -176,7 +176,38 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                "buttons": [ 
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    },
+                ]
             }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
 
             $('title').text('Laporan Absensi');

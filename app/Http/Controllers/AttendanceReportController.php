@@ -14,7 +14,7 @@ class AttendanceReportController extends Controller
 {
     public function index()
     {
-        if (Auth::User()->role != 1) {
+        if (Auth::User()->role == 0 || Auth::User()->role == 2) {
             Session::forget('user_id');
             Session::forget('date');
             Session::forget('user_name');
@@ -274,6 +274,10 @@ class AttendanceReportController extends Controller
 
     public function reportsVisit(Request $request)
     {
+        if (Auth::User()->department != 6) {
+            return redirect('/');
+        }
+        
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::forget('first_date');
@@ -293,15 +297,25 @@ class AttendanceReportController extends Controller
 
             if (Auth::User()->department != 0) {
                 if (Auth::User()->department != $user->department) {
-                    continue;
+                    // continue;
                 }
             }
 
             $department = '';
-            if ($user->department == 0) {
+            if ($v->department == 0) {
                 $department = 'IT';
-            } elseif ($user->department == 1) {
+            } elseif ($v->department == 1) {
                 $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
             }
             $v->department = $department;
 
@@ -335,15 +349,25 @@ class AttendanceReportController extends Controller
 
             if (Auth::User()->department != 0) {
                 if (Auth::User()->department != $user->department) {
-                    continue;
+                    // continue;
                 }
             }
 
             $department = '';
-            if ($user->department == 0) {
+            if ($v->department == 0) {
                 $department = 'IT';
-            } elseif ($user->department == 1) {
+            } elseif ($v->department == 1) {
                 $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
             }
             $v->department = $department;
 
@@ -357,6 +381,10 @@ class AttendanceReportController extends Controller
 
     public function reportsAbsensi(Request $request)
     {
+        if (Auth::User()->department != 6) {
+            return redirect('/');
+        }
+
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::forget('first_date');
@@ -413,7 +441,6 @@ class AttendanceReportController extends Controller
 
     public function reportsAbsensiFilter(Request $request)
     {
-        // dd($request);
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::put('first_date', $request->first_date);
@@ -428,8 +455,6 @@ class AttendanceReportController extends Controller
         $attendances = DB::table('attendances')
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->select('attendances.id', 'attendances.user_fullname', 'attendances.clock_in_time', 'attendances.clock_in_img', 'attendances.clock_in_loc', 'attendances.created_at', 'attendances.updated_at', 'attendances.work_hour', 'attendances.user_id', 'users.nik', 'users.department')
-            // ->where('attendances.created_at', '>=', $thn_awal.'-'.$bln_awal.'-01')
-            // ->where('attendances.created_at', '<=', $thn_awal.'-'.$bln_awal.'-31');
             ->whereBetween('attendances.created_at', [$first_date, $end_date]);
 
         if (Auth::User()->department != 0 || Auth::User()->department != 6) {
@@ -521,6 +546,10 @@ class AttendanceReportController extends Controller
 
     public function reportsTelat(Request $request)
     {
+        if (Auth::User()->department != 6) {
+            return redirect('/');
+        }
+
         $first_date = $request->first_date;
         $end_date = $request->end_date;
         Session::forget('first_date');
@@ -553,7 +582,7 @@ class AttendanceReportController extends Controller
         foreach ($attendances as $k => $v) {
             if (Auth::User()->department != 0) {
                 if (Auth::User()->department != $v->department) {
-                    continue;
+                    // continue;
                 }
             }
 
@@ -562,6 +591,16 @@ class AttendanceReportController extends Controller
                 $department = 'IT';
             } elseif ($v->department == 1) {
                 $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
             }
 
             $v->department = $department;
@@ -655,7 +694,7 @@ class AttendanceReportController extends Controller
         foreach ($attendances as $k => $v) {
             if (Auth::User()->department != 0) {
                 if (Auth::User()->department != $v->department) {
-                    continue;
+                    // continue;
                 }
             }
 
@@ -664,6 +703,16 @@ class AttendanceReportController extends Controller
                 $department = 'IT';
             } elseif ($v->department == 1) {
                 $department = 'Marketing';
+            } elseif ($v->department == 2) {
+                $department = 'Kalibrasi';
+            } elseif ($v->department == 3) {
+                $department = 'IPM';
+            } elseif ($v->department == 4) {
+                $department = 'UK';
+            } elseif ($v->department == 5) {
+                $department = 'Servis';
+            } elseif ($v->department == 6) {
+                $department = 'HRD';
             }
 
             $v->department = $department;

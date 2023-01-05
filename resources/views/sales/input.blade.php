@@ -41,7 +41,9 @@
           <div class="col-12">
               <div class="card">
                 <div class="card-header">
+                    @if (Auth::user()->role == 0)
                     <a href="#" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                    @endif
                     <button class="btn btn-success" id="excel" title="excel"><i class="fas fa-download"></i></button>
                   {{-- <a href="#" title="Add" class="btn btn-success col-2 btn-import-user"><i class="fa solid fa-file-import"></i></a> --}}
                   </div>

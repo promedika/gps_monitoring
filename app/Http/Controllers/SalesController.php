@@ -14,18 +14,29 @@ class SalesController extends Controller
     
     public function index()
     {
-        
-        if(Auth::User()->role != 1){
+        if(Auth::User()->role == 0 || Auth::User()->role == 1 || Auth::User()->role == 2){
             $users = User::all();
-            $targets = DB::select("
-            SELECT s.first_name, s.last_name, m.sales_target, m.sales_start, m.sales_end, m.status, m.pencapaian
-            FROM mkt_sales m
-            LEFT JOIN users s ON m.user_id = s.id
-            ");
+            $auth_user_id = Auth::User()->id;
 
-        return view('sales.index', compact('targets','users'));
-        }else{
-        return redirect('error.404');
+            if (Auth::User()->role == 0) {
+                $targets = DB::select("
+                    SELECT s.first_name, s.last_name, m.sales_target, m.sales_start, m.sales_end, m.status, m.pencapaian, m.user_id
+                    FROM mkt_sales m
+                    LEFT JOIN users s ON m.user_id = s.id
+                ");
+            } else {
+                $targets = DB::select("
+                    SELECT s.first_name, s.last_name, m.sales_target, m.sales_start, m.sales_end, m.status, m.pencapaian, m.user_id
+                    FROM mkt_sales m
+                    LEFT JOIN users s ON m.user_id = s.id
+                    WHERE 1=1
+                    AND m.user_id = '$auth_user_id'
+                ");
+            }
+
+            return view('sales.index', compact('targets','users'));
+        } else {
+            return redirect('error.404');
         }
     }
  
@@ -63,15 +74,36 @@ class SalesController extends Controller
 
     public function input()
     {
-        $users = User::get(["id","first_name","last_name"]);
-        $outlets = Outlet::get(["id","name"]);
-        $inputs = DB::select("
-        SELECT u.first_name, u.last_name, o.name, h.sales_date, h.sales_value, h.jml_alat, h.jns_kerja, h.keterangan, h.status
-        FROM sales_histories h
-        LEFT JOIN users u ON h.user_id = u.id
-        LEFT JOIN outlets o ON h.tenant_id = o.id
-        ");
-        return view('sales.input',compact('users','outlets','inputs'));
+        if (Auth::User()->role == 0 || Auth::User()->role == 1 || Auth::User()->role == 2) {
+            $users = User::get(["id","first_name","last_name"]);
+            $outlets = Outlet::get(["id","name"]);
+
+            $auth_user_id = Auth::User()->id;
+
+            if (Auth::User()->role == 0) {
+                $inputs = DB::select("
+                    SELECT u.first_name, u.last_name, o.name, h.sales_date, h.sales_value, h.jml_alat, h.jns_kerja, h.keterangan, h.status, h.user_id
+                    FROM sales_histories h
+                    LEFT JOIN users u ON h.user_id = u.id
+                    LEFT JOIN outlets o ON h.tenant_id = o.id
+                ");
+
+                return view('sales.input',compact('users','outlets','inputs'));
+            } else {
+                $inputs = DB::select("
+                    SELECT u.first_name, u.last_name, o.name, h.sales_date, h.sales_value, h.jml_alat, h.jns_kerja, h.keterangan, h.status, h.user_id
+                    FROM sales_histories h
+                    LEFT JOIN users u ON h.user_id = u.id
+                    LEFT JOIN outlets o ON h.tenant_id = o.id
+                    WHERE 1=1
+                    AND h.user_id = '$auth_user_id'
+                ");
+
+                return view('sales.input',compact('users','outlets','inputs'));
+            }
+        } else {
+            return redirect('error.404');
+        }
     }
 
     public function sales(Request $request)

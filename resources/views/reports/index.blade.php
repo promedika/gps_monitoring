@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Laporan Absensi
+    Laporan Marketing
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
@@ -12,12 +12,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Laporan Absensi</h1>
+            <h1 class="m-0">Laporan Marketing</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-              <li class="breadcrumb-item active">Laporan Absensi</li>
+              <li class="breadcrumb-item active">Laporan Marketing</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

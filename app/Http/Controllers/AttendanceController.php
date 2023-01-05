@@ -21,15 +21,13 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        if (Auth::User()->role != 1) {
+        if (Auth::User()->department == 0 && Auth::User()->role == 0) {
             $attendances = Attendance::all();
         } else {
             $attendances = Attendance::where('user_id', Auth::User()->id)->get();
         }
-        // $attendances = DB::table('attendances')->where('user_id', Auth::User()->id)->get();
 
         return view('attendance.index', compact('attendances'));
-
     }
 
     /**
