@@ -19,7 +19,7 @@ class HelperController extends Controller
     public static function getGeoLocation($latitude,$longitude){
         if (!empty($latitude) && !empty($longitude)) {
             //Send request and receive json data by address
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.env('GEOCODE_KEY');
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCGMvF-ej89TElpykF68LSUGhvy7j-Sm6Y';
             $geocodeFromLatLong = file_get_contents($url);
             $output = json_decode($geocodeFromLatLong);
 

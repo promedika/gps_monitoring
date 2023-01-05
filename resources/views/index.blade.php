@@ -23,7 +23,7 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+        @if (Auth::User()->department == 6)
         <section class="content">
 
             <!-- Default box -->
@@ -52,7 +52,7 @@
         <!-- /.content -->
 
         <!-- Main content -->
-        @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+        @if (Auth::User()->department == 6)
         @else
         <section class="content">
             <div class="container-fluid">
@@ -339,8 +339,6 @@
 
                 modal_create.find('#' + type_att).on('change', function(e) {
                     e.preventDefault();
-
-                    console.log(type_att);
 
                     // validate image
                     let validate = validate_img('' + type_att);

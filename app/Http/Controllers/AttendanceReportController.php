@@ -239,6 +239,7 @@ class AttendanceReportController extends Controller
 
             $k_date = strlen($k) == 1 ? '0' . $k : $k;
             $imgTaken = $param_year . '-' . $param_month . '-' . $k_date;
+            // $imgTaken = $param_year . '-' . $param_month;
 
             $query = DB::select("
                         SELECT a.clock_in_time, a.clock_out_time,a.work_hour
@@ -246,7 +247,7 @@ class AttendanceReportController extends Controller
                         WHERE 1=1
                         AND a.user_id = '" . $params['user_id'] . "'
                         AND a.clock_in_time LIKE '%" . $imgTaken . "%'
-                        AND a.clock_out_time LIKE '%" . $imgTaken . "%'
+                        -- AND a.clock_out_time LIKE '%" . $imgTaken . "%'
 
                     ");
 
@@ -274,7 +275,7 @@ class AttendanceReportController extends Controller
 
     public function reportsVisit(Request $request)
     {
-        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
+        if (Auth::User()->department == 1 || Auth::User()->department == 2 || Auth::User()->department == 3 || Auth::User()->department == 4 || Auth::User()->department == 5) {
             return redirect('/');
         }
         
@@ -381,7 +382,7 @@ class AttendanceReportController extends Controller
 
     public function reportsAbsensi(Request $request)
     {
-        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
+        if (Auth::User()->department == 1 || Auth::User()->department == 2 || Auth::User()->department == 3 || Auth::User()->department == 4 || Auth::User()->department == 5) {
             return redirect('/');
         }
 
@@ -543,7 +544,7 @@ class AttendanceReportController extends Controller
 
     public function reportsTelat(Request $request)
     {
-        if (Auth::User()->department != 0 || Auth::User()->department != 6) {
+        if (Auth::User()->department == 1 || Auth::User()->department == 2 || Auth::User()->department == 3 || Auth::User()->department == 4 || Auth::User()->department == 5) {
             return redirect('/');
         }
 

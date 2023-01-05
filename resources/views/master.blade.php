@@ -88,7 +88,7 @@
             </a>
           </li>
 
-          @if (Auth::User()->department == 0 || Auth::User()->department == 1)
+          @if (Auth::User()->department == 0 || (Auth::User()->department == 1 && Auth::user()->role != 1))
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -173,7 +173,7 @@
           </li>
           @endif
           
-          @if (Auth::User()->department == 6 || (Auth::User()->department == 1 && Auth::User()->role == 0))
+          @if (Auth::User()->department == 6)
           @else
           <li class="nav-item">
             <a href="{{route('posts.index')}}" class="nav-link">
@@ -206,7 +206,7 @@
           </li>
           @endif
 
-          @if (Auth::user()->role == 0 || Auth::user()->role == 5)
+          @if ((Auth::User()->department == 0 && Auth::user()->role == 0) || (Auth::User()->department == 6 && Auth::user()->role == 5))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book-open"></i>
@@ -217,26 +217,24 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              @if (Auth::User()->department == 0 || Auth::User()->department == 1 || Auth::User()->department == 6)
-              <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
-              <p>
-                <i class="nav-icon fas fa-book"></i>
-                Laporan Kunjugan
-              </p>
-              @endif
-              <a href="{{route('reports.absensi')}}" class="nav-link" style="color: #343a40;">
+                <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
                 <p>
-                  <i class="nav-icon fas fa-clock"></i>
-                  Laporan Absensi
+                  <i class="nav-icon fas fa-book"></i>
+                  Laporan Kunjugan
                 </p>
-            </a>
-            <a href="{{route('reports.telat')}}" class="nav-link" style="color: #343a40;">
-              <p>
-                <i class="nav-icon fas fa-hourglass"></i>
-                Laporan Telat Absensi
-              </p>
-          </a>
-          </li>
+                <a href="{{route('reports.absensi')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fas fa-clock"></i>
+                    Laporan Absensi
+                  </p>
+                </a>
+                <a href="{{route('reports.telat')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fas fa-hourglass"></i>
+                    Laporan Telat Absensi
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
           @endif
