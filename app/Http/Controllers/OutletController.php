@@ -160,7 +160,7 @@ class OutletController extends Controller
 
         $tmp_path = $_FILES["file"]["tmp_name"];
         $filename = $_FILES['file']['name'];
-        $target_file = storage_path('app'.DIRECTORY_SEPARATOR.$filename);
+        $target_file = storage_path('app/'.$filename);
 
         // move file upload to storage
         move_uploaded_file($tmp_path, $target_file);
@@ -168,11 +168,13 @@ class OutletController extends Controller
         try {
             Excel::import(new OutletsImport,$target_file);
             $return = 'Outlet Berhasil di Import !';
-        } catch (\Throwable $th) {
-            $return = 'Proses import gagal !';
-        }
+            File::delete($target_file);
+        } catch (Exception $e) {
+            // $return = 'Proses import gagal !';
+            File::delete($target_file);
+            $return = 'Caught exception: '. $e->getMessage(). "\n";
 
-        File::delete($target_file);
+        }
 
         return redirect()->route('outlet.index')->with('message', $return);
     }
