@@ -299,11 +299,13 @@
               const ua = navigator.userAgent
               if (/android/i.test(ua)) {
                 // return "Android" do nothing
+                alert('android');
               }
               else if ((/iPad|iPhone|iPod/.test(ua))
                  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
                 // return "iOS"
                 tmp_route = "{{ route('attendances.uploads') }}";
+                alert('ios');
               }
               // return "Other" do nothing
             }
@@ -332,6 +334,7 @@
                 tmp_lng = position.coords.longitude;
             }
             //////////// end for ios ///////////////
+            alert('lat : '+tmp_lat+' | lng : '+tmp_lng);
 
 
             function submit_att(type_att) {
