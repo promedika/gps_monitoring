@@ -63,8 +63,6 @@
                                             <th>Name</th>
                                             <th>NIK</th>
                                             <th>Phone</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -75,8 +73,6 @@
                                                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                                 <td>{{ $user->nik }}</td>
                                                 <td>{{ $user->phone }}</td>
-                                                <td>{{ date('d-m-Y', strtotime($user->start_date)) }}</td>
-                                                <td>{{ date('d-m-Y', strtotime($user->end_date)) }}</td>
                                                 <td>{{ $user->status }}</td>
                                                 <td>
                                                     <a href="#" user-id="{{ $user->id }}" title=""

@@ -29,7 +29,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
             "department" => $row['department'],
             "role"  =>  $row['role'],
             "start_date" => date('Y-m-d', strtotime($row['start_date'])),
-            "end_date" => date('Y-m-d', strtotime($row['end_date'])),
+            "end_date" => isset($row['end_date']) ? date('Y-m-d', strtotime($row['end_date'])) : '2050-12-31',
             "created_by" => Auth::User()->id,
             "updated_by" =>Auth::User()->id,
             "created_at" => Carbon::now(),
@@ -47,7 +47,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'nik' => 'unique:users',
-            'phone' => 'unique:users',
 
         ];
     }
