@@ -51,7 +51,7 @@
                                 <th scope="col">Aktifitas</th>
                                 <th scope="col">Peta</th>
                                 @if (Auth::user()->role !=1)
-                                <th scope="col">Fake GPS</th>
+                                {{--<th scope="col">Fake GPS</th>--}}
                                 @endif
                               </tr>
                             </thead>
@@ -93,7 +93,7 @@
                                         </iframe>
                                     </td>
                                     @if (Auth::user()->role !=1)
-                                    <td>{{$post->fake_gps_posts}}</td>
+                                    {{--<td>{{$post->fake_gps_posts}}</td>--}}
                                     @endif
                                 </tr>
                               @endforeach
