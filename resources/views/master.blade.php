@@ -220,7 +220,7 @@
                 <a href="{{route('reports.visit')}}" class="nav-link" style="color: #343a40;">
                 <p>
                   <i class="nav-icon fas fa-book"></i>
-                  Laporan Kunjugan
+                  Laporan Kunjungan
                 </p>
                 <a href="{{route('reports.absensi')}}" class="nav-link" style="color: #343a40;">
                   <p>
