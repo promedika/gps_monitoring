@@ -308,7 +308,31 @@
                 alert('ios');
               }
               // return "Other" do nothing
+              alert('other');
             }
+
+            function iOS() {
+                return [
+                    'iPad Simulator',
+                    'iPhone Simulator',
+                    'iPod Simulator',
+                    'iPad',
+                    'iPhone',
+                    'iPod'
+                ].includes(navigator.platform)
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            }
+
+            let check_ios = iOS();
+            if (check_ios) {
+                alert('ios checked');
+                tmp_route = "{{ route('attendances.uploads') }}";
+            } else {
+                alert('others checked');
+            }
+            getMobileOS();
+            alert(tmp_route);
 
             // default "global_code" : "6P58QRX4+9QW"
             let tmp_lat = '-6.2015179';
