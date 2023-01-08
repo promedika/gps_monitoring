@@ -110,19 +110,20 @@
         if (screen.width >= 450) {
             alert('Anda Harus Absen Menggunakan Handphone!');
             location.href = "{{ route('posts.index') }}"
-
         }
 
         $('#outlet-dd').select2({
-                width:'100%',
-                theme: 'bootstrap4',
+            width:'100%',
+            theme: 'bootstrap4',
         });
         
         $('#useroutlet-dd').select2({
             width:'100%',
             theme: 'bootstrap4',
-        }); 
+        });
+
         var site_url = "{{ url('/') }}";
+        
         $('#outlet-dd').on('change', function () {
             var idOutlet = this.value;
             $("#useroutlet-dd").html('');
@@ -145,6 +146,7 @@
                 }
             });
         });  
+        
         $('#submit').click(function(){
             if(
                 $('#upload').val() != '' &&
@@ -169,18 +171,45 @@
           const ua = navigator.userAgent
           if (/android/i.test(ua)) {
             // return "Android" do nothing
+            alert('android');
           }
           else if ((/iPad|iPhone|iPod/.test(ua))
              || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
             // return "iOS"
             tmp_route = "{{ route('posts.storeios') }}";
+            alert('ios');
           }
-          // return "Other" do nothing
+          else {
+            alert('windows or etc');
+          }
         }
 
+        function iOS() {
+            return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform)
+            // iPad on iOS 13 detection
+            || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+        }
+
+        let check_ios = iOS();
+        if (check_ios) {
+            tmp_route = "{{ route('posts.storeios') }}";
+        }
+
+        getMobileOS();
+        alert(check_ios);
+
         // default "global_code" : "6P58QRX4+9QW"
-        let tmp_lat = '-6.2015179';
-        let tmp_lng = '106.8069573';
+        $('#tmp_lng').val('106.8069573');
+        $('#tmp_lat').val('-6.2015179');
+
+        getGPS();
 
         function getGPS() {
             if (navigator.geolocation) {  
@@ -198,13 +227,11 @@
         function showGPS(position) {
             gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
             
-            tmp_lat = position.coords.latitude;
-            tmp_lng = position.coords.longitude;
+            $('#tmp_lng').val(position.coords.longitude);
+            $('#tmp_lat').val(position.coords.latitude);
         }
 
         $('form').attr('action',tmp_route);
-        $('#tmp_lng').val(tmp_lng);
-        $('#tmp_lat').val(tmp_lat);
         ///////////// end for ios //////////////
 
     });

@@ -332,19 +332,12 @@
 
             getMobileOS();
             alert(check_ios);
-            alert(tmp_route);
 
             // default "global_code" : "6P58QRX4+9QW"
-            let tmp_lat = '-6.2015179';
-            let tmp_lng = '106.8069573';
+            $('body').data('tmplat','-6.2015179');
+            $('body').data('tmplng','106.8069573');
 
-            $('body').data('tmplat',tmp_lat);
-            $('body').data('tmplng',tmp_lng);
-
-            tmp_lat = $('body').data('tmplat');
-            tmp_lng = $('body').data('tmplng');
-
-            alert('lat-def : '+tmp_lat+' | lng-def : '+tmp_lng);
+            getGPS();
 
             function getGPS() {
                 if (navigator.geolocation) {  
@@ -362,23 +355,17 @@
             function showGPS(position) {
                 gpsText = "Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude;
                 
-                tmp_lat = position.coords.latitude;
-                tmp_lng = position.coords.longitude;
-                $('body').data('tmplat',tmp_lat);
-                $('body').data('tmplng',tmp_lng);
-                alert(gpsText);
-                alert('lat-fix : '+tmp_lat+' | lng-fix : '+tmp_lng);
+                $('body').data('tmplat',position.coords.latitude);
+                $('body').data('tmplng',position.coords.longitude);
             }
             //////////// end for ios ///////////////
-            getGPS();
-
-            
 
             function submit_att(type_att) {
                 let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';
 
                 modal_create.find('#' + type_att).on('change', function(e) {
                     e.preventDefault();
+                    alert("lat:"+$('body').data('tmplat')+" | lng:"+$('body').data('tmplng'));
 
                     // validate image
                     let validate = validate_img('' + type_att);
@@ -390,8 +377,8 @@
                         form_data.append('type', type_att);
                         form_data.append('check', screen.width);
 
-                        form_data.append('tmp_lat', tmp_lat);
-                        form_data.append('tmp_lng', tmp_lng);
+                        form_data.append('tmp_lat', $('body').data('tmplat'));
+                        form_data.append('tmp_lng', $('body').data('tmplng'));
 
                         $.ajax({
                             type: 'POST',
