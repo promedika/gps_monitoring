@@ -307,8 +307,9 @@
                 tmp_route = "{{ route('attendances.uploads') }}";
                 alert('ios');
               }
-              // return "Other" do nothing
-            //   alert('other');
+              else {
+                alert('windows or etc');
+              }
             }
 
             function iOS() {
@@ -326,17 +327,24 @@
 
             let check_ios = iOS();
             if (check_ios) {
-                alert('ios checked');
                 tmp_route = "{{ route('attendances.uploads') }}";
-            } else {
-                alert('others checked');
             }
+
             getMobileOS();
+            alert(check_ios);
             alert(tmp_route);
 
             // default "global_code" : "6P58QRX4+9QW"
             let tmp_lat = '-6.2015179';
             let tmp_lng = '106.8069573';
+
+            $('body').data('tmplat',tmp_lat);
+            $('body').data('tmplng',tmp_lng);
+
+            tmp_lat = $('body').data('tmplat');
+            tmp_lng = $('body').data('tmplng');
+
+            alert('lat-def : '+tmp_lat+' | lng-def : '+tmp_lng);
 
             function getGPS() {
                 if (navigator.geolocation) {  
@@ -356,12 +364,15 @@
                 
                 tmp_lat = position.coords.latitude;
                 tmp_lng = position.coords.longitude;
+                $('body').data('tmplat',tmp_lat);
+                $('body').data('tmplng',tmp_lng);
                 alert(gpsText);
+                alert('lat-fix : '+tmp_lat+' | lng-fix : '+tmp_lng);
             }
             //////////// end for ios ///////////////
-            alert('lat : '+tmp_lat+' | lng : '+tmp_lng);
-            alert(getGPS());
+            getGPS();
 
+            
 
             function submit_att(type_att) {
                 let message_att = type_att == 'clock_in_img' ? 'clock in' : 'clock out';
