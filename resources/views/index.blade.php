@@ -308,7 +308,7 @@
                 alert('ios');
               }
               // return "Other" do nothing
-              alert('other');
+            //   alert('other');
             }
 
             function iOS() {
@@ -356,9 +356,11 @@
                 
                 tmp_lat = position.coords.latitude;
                 tmp_lng = position.coords.longitude;
+                alert(gpsText);
             }
             //////////// end for ios ///////////////
             alert('lat : '+tmp_lat+' | lng : '+tmp_lng);
+            alert(getGPS());
 
 
             function submit_att(type_att) {
