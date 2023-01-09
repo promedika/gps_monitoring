@@ -186,7 +186,7 @@ class AttendanceReportController extends Controller
                         FROM posts p
                         WHERE 1=1
                         AND p.user_id = '" . $params['user_id'] . "'
-                        AND p.imgTaken LIKE '%" . $imgTaken . "%'
+                        AND p.imgTaken LIKE '%" . date('Y-m-d',strtotime($imgTaken)) . "%'
                     ");
 
             $tmp_table_footer_2[] = $check[0]->total;
