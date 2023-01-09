@@ -307,11 +307,12 @@
                                 required>
                             <span id="errorStartDate" class="text-red"></span>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="end_date">Tanggal Keluar</label>
                             <input type="date" name="end_date" id="end_date_update" class="form-control" required>
                             <span id="errorEndDate" class="text-red"></span>
-                        </div>
+                        </div> --}}
+                        <input type="hidden" name="end_date" id="end_date_update" class="form-control" required>
                         <div class="form-group">
                             <label for="end_date">Status</label>
                             <select name="status" id="status_update" class="form-control" required>

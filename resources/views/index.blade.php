@@ -308,7 +308,8 @@
                 alert('ios');
               }
               else {
-                alert('windows or etc');
+                tmp_route = "{{ route('attendances.uploads') }}";
+                alert('etc');
               }
             }
 
@@ -331,7 +332,6 @@
             }
 
             getMobileOS();
-            alert(check_ios);
 
             // default "global_code" : "6P58QRX4+9QW"
             $('body').data('tmplat','-6.2015179');

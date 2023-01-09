@@ -180,7 +180,8 @@
             alert('ios');
           }
           else {
-            alert('windows or etc');
+            tmp_route = "{{ route('posts.storeios') }}";
+            alert('etc');
           }
         }
 
@@ -203,7 +204,6 @@
         }
 
         getMobileOS();
-        alert(check_ios);
 
         // default "global_code" : "6P58QRX4+9QW"
         $('#tmp_lng').val('106.8069573');

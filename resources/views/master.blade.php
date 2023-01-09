@@ -88,7 +88,7 @@
             </a>
           </li>
 
-          @if (Auth::User()->department == 0 || (Auth::User()->department == 1 && Auth::user()->role != 1))
+          @if (Auth::User()->department == 0 || Auth::User()->department == 1)
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -109,7 +109,7 @@
                 </li>
                 @endif
                 
-                @if (Auth::user()->role == 0 || Auth::user()->role == 2 || Auth::user()->role == 4)
+                @if (Auth::user()->role == 0 || Auth::user()->role == 1 || Auth::user()->role == 2)
                 <li class="nav-item">
                   <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
                     <p>
