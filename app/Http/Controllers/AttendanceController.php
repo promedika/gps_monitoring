@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -92,30 +93,32 @@ class AttendanceController extends Controller
             }
         }
 
-        // get image taken date
-        $imgDate = exif_read_data($tmp_path);
-        $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+        // // get image taken date
+        // $imgDate = exif_read_data($tmp_path);
+        // $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
-        if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-            return "Tanggal Foto Tidak Sesuai !";
-        } else {
+        // if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+        //     return "Tanggal Foto Tidak Sesuai !";
+        // } else {
 
-            $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
-            $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
-            $now = date_create(date('Y-m-d H:i:s'));
+        //     $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
+        //     $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
+        //     $now = date_create(date('Y-m-d H:i:s'));
 
-            $difDate = date_diff($ogDate, $now);
+        //     $difDate = date_diff($ogDate, $now);
 
-            if ($difDate->h > 0 || $difDate->i > 0) {
-                return 'Jam Foto Tidak Sesuai !';
-            }
+        //     if ($difDate->h > 0 || $difDate->i > 0) {
+        //         return 'Jam Foto Tidak Sesuai !';
+        //     }
 
-            $difDate = date_diff($tfDate, $ogDate);
+        //     $difDate = date_diff($tfDate, $ogDate);
 
-            if ($difDate->i > 1) {
-                return 'Request Time Out !';
-            }
-        }
+        //     if ($difDate->i > 1) {
+        //         return 'Request Time Out !';
+        //     }
+        // }
+
+        $imgTaken = Carbon::now();
 
         // declare full path and filename
         $target_file = public_path('/assets/img/' . $type . '/' . $filename);
@@ -313,30 +316,32 @@ class AttendanceController extends Controller
             }
         }
 
-        // get image taken date
-        $imgDate = exif_read_data($tmp_path);
-        $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+        // // get image taken date
+        // $imgDate = exif_read_data($tmp_path);
+        // $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
-        if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-            return "Tanggal Foto Tidak Sesuai !";
-        } else {
+        // if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+        //     return "Tanggal Foto Tidak Sesuai !";
+        // } else {
 
-            $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
-            $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
-            $now = date_create(date('Y-m-d H:i:s'));
+        //     $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
+        //     $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
+        //     $now = date_create(date('Y-m-d H:i:s'));
 
-            $difDate = date_diff($ogDate, $now);
+        //     $difDate = date_diff($ogDate, $now);
 
-            if ($difDate->h > 0 || $difDate->i > 0) {
-                return 'Jam Foto Tidak Sesuai !';
-            }
+        //     if ($difDate->h > 0 || $difDate->i > 0) {
+        //         return 'Jam Foto Tidak Sesuai !';
+        //     }
 
-            $difDate = date_diff($tfDate, $ogDate);
+        //     $difDate = date_diff($tfDate, $ogDate);
 
-            if ($difDate->i > 1) {
-                return 'Request Time Out !';
-            }
-        }
+        //     if ($difDate->i > 1) {
+        //         return 'Request Time Out !';
+        //     }
+        // }
+
+        $imgTaken = Carbon::now();
 
         // declare full path and filename
         $target_file = public_path('/assets/img/' . $type . '/' . $filename);
@@ -486,30 +491,32 @@ class AttendanceController extends Controller
             }
         }
 
-        // get image taken date
-        $imgDate = exif_read_data($tmp_path);
-        $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+        // // get image taken date
+        // $imgDate = exif_read_data($tmp_path);
+        // $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
 
-        if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-            return "Tanggal Foto Tidak Sesuai !";
-        } else {
+        // if (date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+        //     return "Tanggal Foto Tidak Sesuai !";
+        // } else {
 
-            $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
-            $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
-            $now = date_create(date('Y-m-d H:i:s'));
+        //     $ogDate = date_create(date('Y-m-d H:i:s', strtotime($imgDate['DateTimeOriginal'])));
+        //     $tfDate = date_create(date('Y-m-d H:i:s', $imgDate['FileDateTime']));
+        //     $now = date_create(date('Y-m-d H:i:s'));
 
-            $difDate = date_diff($ogDate, $now);
+        //     $difDate = date_diff($ogDate, $now);
 
-            if ($difDate->h > 0 || $difDate->i > 0) {
-                return 'Jam Foto Tidak Sesuai !';
-            }
+        //     if ($difDate->h > 0 || $difDate->i > 0) {
+        //         return 'Jam Foto Tidak Sesuai !';
+        //     }
 
-            $difDate = date_diff($tfDate, $ogDate);
+        //     $difDate = date_diff($tfDate, $ogDate);
 
-            if ($difDate->i > 1) {
-                return 'Request Time Out !';
-            }
-        }
+        //     if ($difDate->i > 1) {
+        //         return 'Request Time Out !';
+        //     }
+        // }
+
+        $imgTaken = Carbon::now();
 
         // declare full path and filename
         $target_file = public_path('/assets/img/' . $type . '/' . $filename);

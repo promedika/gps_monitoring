@@ -13,6 +13,7 @@ use URL;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\HelperController;
+use Illuminate\Support\Carbon;
 
 class PostController extends Controller
 {
@@ -114,23 +115,25 @@ class PostController extends Controller
                 }
             }
             
-            // get image taken date
-            $imgDate = exif_read_data($tmp_path);
-            $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+            // // get image taken date
+            // $imgDate = exif_read_data($tmp_path);
+            // $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
             
 
-            if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
-            }else{
+            // if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+            //     return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+            // }else{
                 
-                $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
-                $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+            //     $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
+            //     $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
                 
-                $difDate = date_diff($tfDate,$ogDate);
-                if($difDate->i > 1){
-                    return redirect()->back()->with('message', 'Request Time Out !');
-                }
-            }
+            //     $difDate = date_diff($tfDate,$ogDate);
+            //     if($difDate->i > 1){
+            //         return redirect()->back()->with('message', 'Request Time Out !');
+            //     }
+            // }
+
+            $imgTaken = Carbon::now();
 
             // declare full path and filename
             $target_file = public_path('/assets/img/posts/'.$filename);
@@ -303,23 +306,25 @@ class PostController extends Controller
                 }
             }
             
-            // get image taken date
-            $imgDate = exif_read_data($tmp_path);
-            $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
+            // // get image taken date
+            // $imgDate = exif_read_data($tmp_path);
+            // $imgTaken = !empty($imgDate['DateTimeOriginal']) ? $imgDate['DateTimeOriginal'] : null;
             
 
-            if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
-                return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
-            }else{
+            // if(date('Y-m-d') != date('Y-m-d', strtotime($imgTaken))) {
+            //     return redirect()->back()->with('message', 'Tanggal Foto Tidak Sesuai !');
+            // }else{
                 
-                $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
-                $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
+            //     $ogDate = date_create(date('Y-m-d H:i:s',strtotime($imgDate['DateTimeOriginal'])));
+            //     $tfDate = date_create(date('Y-m-d H:i:s',$imgDate['FileDateTime']));
                 
-                $difDate = date_diff($tfDate,$ogDate);
-                if($difDate->i > 1){
-                    return redirect()->back()->with('message', 'Request Time Out !');
-                }
-            }
+            //     $difDate = date_diff($tfDate,$ogDate);
+            //     if($difDate->i > 1){
+            //         return redirect()->back()->with('message', 'Request Time Out !');
+            //     }
+            // }
+
+            $imgTaken = Carbon::now();
 
             // declare full path and filename
             $target_file = public_path('/assets/img/posts/'.$filename);
@@ -568,7 +573,7 @@ class PostController extends Controller
             //hitung jam kerja dari table post
             $postdate = DB::table('posts')
             ->where('user_id', Auth::User()->id)
-            ->orWhere('imgTaken','LIKE','%'.date('Y-m-d').'%')
+            ->orWhere("imgTaken","LIKE","%".date('Y-m-d')."%")
             ->where('post_header_id', $unique_id) 
                 ->get();
 
