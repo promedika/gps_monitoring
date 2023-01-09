@@ -240,9 +240,13 @@
                       modal_id.find('.modal-header button').prop('disabled',true);
                     },
                     success:function(data){
-                        console.log('success create');
+                        alert(data);
                         location.reload();
                     },
+                    error: function(response) {
+                        alert(response);
+                        location.reload();
+                    }
                 })
             })
 

@@ -122,11 +122,16 @@ class SalesController extends Controller
         $target = DB::table('mkt_sales')
         ->where('user_id', $request->user_id)
         ->get();
+
+        if (count($target) == 0) {
+            return 'Marketing sales target harus dibuat terlebih dahulu!';
+        }
         
         // $sales_date = $request->sales_date;
         $sales_date = strtotime($request->sales_date);
         
         $mkt_id = '';
+        $check_sales_date = [];
         foreach ($target as $key => $value) {
             if ($sales_date >= strtotime($value->sales_start) 
                 && $sales_date <= strtotime($value->sales_end)) {
@@ -135,7 +140,12 @@ class SalesController extends Controller
                     $pencapaian = $value->pencapaian+$sales_value;
                     $sales_target = $value->sales_target;
                     $status = $pencapaian >= $sales_target ? 'Memenuhi Target' : 'Belum Memenuhi'; 
+                    $check_sales_date[] = $mkt_id;
             }
+        }
+
+        if (count($check_sales_date) == 0) {
+            return 'Tanggal sales tidak sesuai dengan rentang waktu marketing sales target!';
         }
 
         DB::table('sales_histories')->insert([
@@ -159,5 +169,7 @@ class SalesController extends Controller
             'status' => $status,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+
+        return 'Success create';
     }
 }
