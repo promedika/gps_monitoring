@@ -184,7 +184,7 @@
             <option value="">Pilih Jabatan</option>
             @foreach ($jabatans as $jabatan)
               <option value="{{$jabatan->id}}">{{$jabatan->name}}</option>
-              @endforeach
+            @endforeach
         </select>
         </div>
 
@@ -336,9 +336,9 @@
                     },
                     success:function(data){
                         $('#name_update').val(data.useroutlets.name);
-                        $('#outlet_dd_update').val(data.useroutlets.outlet_id);
-                        $('#jabatan_update').val(data.useroutlets.jabatan);
                         $('#status_update').val(data.useroutlets.status);
+                        $("#outlet_dd_update").val(data.useroutlets.outlet_id).trigger('change');
+                        $("#jabatan_update").val(data.useroutlets.jabatan).trigger('change');
                     },
                     error:function(response){
                         $('#errorName').text(response.responseJSON.errors.name);
