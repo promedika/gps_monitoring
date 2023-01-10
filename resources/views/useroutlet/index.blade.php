@@ -274,11 +274,22 @@
         });
 
         $('#outlet-dd').select2({
-                dropdownParent: $('#modalCreateUserOutlet'),
-                width:'100%',
-                theme: 'bootstrap4',
+            dropdownParent: $('#modalCreateUserOutlet'),
+            width:'100%',
+            theme: 'bootstrap4',
         });
         $('#outlet_dd_update').select2({
+            dropdownParent: $('#modalEditUserOutlet'),
+            width:'100%',
+            theme: 'bootstrap4',
+        });
+
+        $('#jabatan').select2({
+            dropdownParent: $('#modalCreateUserOutlet'),
+            width:'100%',
+            theme: 'bootstrap4',
+        });
+        $('#jabatan_update').select2({
             dropdownParent: $('#modalEditUserOutlet'),
             width:'100%',
             theme: 'bootstrap4',
