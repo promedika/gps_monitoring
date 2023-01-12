@@ -275,7 +275,7 @@ class PostController extends Controller
             }
 
             $imgLocation['latitude'] = $tmp_lat;
-            $imgLocation['latitude'] = $tmp_lng;
+            $imgLocation['longitude'] = $tmp_lng;
             
             $imgLoc = $imgLocation['latitude'] . "|" . $imgLocation['longitude'];
 

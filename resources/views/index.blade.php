@@ -365,7 +365,7 @@
 
                 modal_create.find('#' + type_att).on('change', function(e) {
                     e.preventDefault();
-                    alert("lat:"+$('body').data('tmplat')+" | lng:"+$('body').data('tmplng'));
+                    // alert("lat:"+$('body').data('tmplat')+" | lng:"+$('body').data('tmplng'));
 
                     // validate image
                     let validate = validate_img('' + type_att);
